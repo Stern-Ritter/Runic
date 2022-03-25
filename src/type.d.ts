@@ -1,8 +1,16 @@
 type ActivityOptions = {
   id?: string;
   name: string;
-  time: number;
+  createdDate: number;
+  duration: number;
   distance: number;
-  date: number;
+  calories: number;
   coords: LocationObjectCoords[];
 };
+
+type ActivityIndicators = {
+  createdDate: number,
+  duration: number,
+  distance: number,
+  calories: 0,
+}

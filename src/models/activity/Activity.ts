@@ -3,18 +3,20 @@ import { LocationObjectCoords } from "expo-location";
 class Activity {
   id: string;
   name: string;
-  time: number;
+  createdDate: number;
+  duration: number;
   distance: number;
-  date: number;
+  calories: number;
   coords: LocationObjectCoords[];
 
   constructor(option: ActivityOptions) {
-    const { id, name, time, distance, date, coords } = option;
+    const { id, name, createdDate, duration, distance, calories, coords } = option;
     this.id = typeof id !== "undefined" ? id : "";
     this.name = name;
-    this.time = time;
+    this.createdDate = createdDate;
+    this.duration = duration;
     this.distance = distance;
-    this.date = date;
+    this.calories = calories;
     this.coords = coords;
   }
 }

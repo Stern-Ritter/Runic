@@ -1,3 +1,5 @@
+import { LocationObjectCoords } from "expo-location";
+
 import { 
   START_ACTIVITY,
   PAUSE_ACTIVITY,
@@ -20,7 +22,7 @@ interface IRESUME_ACTIVITY {
 
 interface IADD_COORDINATE {
   type: "ADD_COORDINATE";
-  payload;
+  payload: LocationObjectCoords;
 }
 
 interface ISET_INDICATORS {
