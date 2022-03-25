@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "841740018255",
+    "project_id": "runic-react-native-app",
+    "storage_bucket": "runic-react-native-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841740018255:android:b4928d3180de6ac942403a",
+        "android_client_info": {
+          "package_name": "com.otus.runic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841740018255-cvs34fafb4jmap8f8upcmu71560mvkeh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyJF6IQH-CAG9wnyhHQeA7RTfrCPSfKb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841740018255-cvs34fafb4jmap8f8upcmu71560mvkeh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "841740018255-uvlu1h2bv5tsge6kl644km9l3s8mt326.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.otus.runic"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

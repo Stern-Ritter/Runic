@@ -29,7 +29,7 @@ function Map() {
   const updateIndicators = async () => {
     try {
       const res = await Location.getCurrentPositionAsync({
-        accuracy: 4,
+        accuracy: 6,
         distanceInterval: 3,
       });
       const currentCoords = res.coords;

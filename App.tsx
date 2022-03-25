@@ -16,9 +16,9 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      {/* <Preview />
-      <Activity /> 
-      <Map /> */}
+      {/* <ActivityList />
+      <Preview /> */}
+      <Map />
     </Provider>
   );
 }

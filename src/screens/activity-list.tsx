@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { collection, getDocs } from "firebase/firestore";
+import { store, auth } from "../models/storage";
+import { collectionName} from '../utils/api';
 import styles from "./activity-list.styles";
 
-const workoutsActivities = [
-  { id: 1, name: "Running", time: "48:50", distance: 12, date: "23.02.2022" },
-  { id: 2, name: "Running", time: "48:50", distance: 24, date: "23.02.2022" },
-  { id: 3, name: "Running", time: "48:50", distance: 10, date: "23.02.2022" },
-];
+function ActivityList() { 
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const ref = collection(store, collectionName);
+    getDocs(ref)
+      .then((querySnapshot) => {
+        querySnapshot.forEach((document) => console.log(document.data()));
+      });
+  }, []);
 
-function ActivityList() {
+  const workoutsActivities = [];
+
   const renderItem = ({ item }) => {
     return (
       <View style={styles.itemContainer}>
@@ -34,6 +42,7 @@ function ActivityList() {
   };
 
   const keyExtractor = (item) => item.id;
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Последние тренировки:</Text>
