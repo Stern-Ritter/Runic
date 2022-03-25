@@ -30,7 +30,7 @@ function Map() {
     try {
       const res = await Location.getCurrentPositionAsync({
         accuracy: 6,
-        distanceInterval: 3,
+        distanceInterval: 5,
       });
       const currentCoords = res.coords;
       dispatch({ type: ADD_COORDINATE, payload: currentCoords });
