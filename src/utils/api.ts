@@ -1,4 +1,5 @@
-const collectionName = 'activities';
+const rootCollectionName = 'user';
+const activitiesCollectionName = 'activities';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA84nZZKXPOuM8r1Tpj-rOHYpbVlmhI0ek",
@@ -9,4 +10,8 @@ const firebaseConfig = {
   appId: "1:841740018255:web:a0c73529c42b0ec842403a",
 };
 
-export { collectionName, firebaseConfig };
+export {
+  rootCollectionName, 
+  activitiesCollectionName,
+  firebaseConfig
+};
