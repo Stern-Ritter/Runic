@@ -4,4 +4,16 @@ export {
     RESUME_ACTIVITY,
     ADD_COORDINATE,
     SET_INDICATORS 
-} from "./activity";
+} from "./map";
+
+export {
+    GET_ACTIVITIES,
+    GET_ACTIVITIES_SUCCESS,
+    GET_ACTIVITIES_FAILED,
+    GET_ACTIVITIES_FILTERS,
+    CREATE_ACTIVITY,
+    CREATE_ACTIVITY_SUCCESS,
+    CREATE_ACTIVITY_FAILED,
+    getActivities,
+    createActivity
+} from './activities';
