@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
+import { Provider } from "react-redux";
+import { StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
-import axios from "axios";
 import Preview from "./src/screens/preview";
-import Activity from "./src/screens/activity-list";
+import ActivityList from "./src/screens/activity-list";
 import Map from "./src/components/map/map";
+import store from "./src/services/store/store";
 
 export default function App() {
   const [status, requestPermission] = Location.useForegroundPermissions();
@@ -14,9 +15,11 @@ export default function App() {
   }, []);
 
   return (
-    // <Preview />
-    // <Activity />
-    <Map />
+    <Provider store={store}>
+      {/* <Preview />
+      <Activity /> 
+      <Map /> */}
+    </Provider>
   );
 }
 

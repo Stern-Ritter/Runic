@@ -1,43 +1,91 @@
-import React, { useEffect, useState, useMemo} from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Alert, Platform, StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
+import { getDistance, getPreciseDistance } from "geolib";
 import Loading from "../loading/loading";
+import {
+  START_ACTIVITY,
+  PAUSE_ACTIVITY,
+  RESUME_ACTIVITY,
+  ADD_COORDINATE,
+  SET_INDICATORS,
+} from "../../services/actions";
+import { State } from "../../services/store/store";
+import { formatTime } from "../../utils";
 
 function Map() {
-  const [coords, setCoords] = useState([] as Location.LocationObjectCoords[]);
-  const lastPostion = useMemo(() => {
-    return coords[0];
-  }, [coords]);
+  const dispatch = useDispatch();
+  const {
+    isStarted,
+    isPaused,
+    indicators: { createdDate, duration, distance, calories },
+    coords,
+  } = useSelector((store: State) => store.activity);
 
-  const getCurrentCoords = async () => {
+  const lastPostion = useMemo(() => coords[0], [coords]);
+
+  const updateIndicators = async () => {
     try {
-      const res = await Location.getCurrentPositionAsync();
+      const res = await Location.getCurrentPositionAsync({
+        accuracy: 4,
+        distanceInterval: 3,
+      });
       const currentCoords = res.coords;
-      console.log('до', coords.length);
-      const newCoords = [...coords];
-      newCoords.push(currentCoords);
-      console.log('после', newCoords.length);
-      
-      setCoords(newCoords);
+      dispatch({ type: ADD_COORDINATE, payload: currentCoords });
+
+      const updatedDuration = Date.now() - createdDate;
+      const updatedDistance =
+        distance +
+        (coords.length < 2
+          ? 0
+          : getDistance(
+              {
+                latitude: coords[coords.length - 1].latitude,
+                longitude: coords[coords.length - 1].longitude,
+              },
+              { latitude: coords[coords.length - 2].latitude, longitude: coords[coords.length - 2].longitude }
+            ));
+      const updatedCalories = updatedDistance * 70;
+
+      dispatch({
+        type: SET_INDICATORS,
+        payload: {
+          createdDate,
+          duration: updatedDuration,
+          distance: updatedDistance,
+          calories: updatedCalories,
+        },
+      });
     } catch (err) {
       Alert.alert("Невозможно определить местоположение.", "Ошибка.");
     }
-  }
+  };
 
   useEffect(() => {
-    getCurrentCoords();
-    const interValId = setInterval(() => { getCurrentCoords() }, 7000);
+    updateIndicators();
+    const interValId = setInterval(() => {
+      updateIndicators();
+    }, 5000);
     return () => clearInterval(interValId);
   }, []);
 
   return (
     <>
+      <Text style={{ flex: 1, marginTop: 30, marginLeft: 40 }}>
+        {`
+        Количество координат: ${coords.length}
+        Время: ${formatTime(duration)}
+        Расстояние: ${distance}
+        Калории: ${calories}
+        `}
+      </Text>
       {coords.length === 0 ? (
         <Loading />
       ) : (
         <MapView
-          style={{ flex: 1 }}
+          style={{ flex: 6 }}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           initialRegion={{
@@ -46,7 +94,35 @@ function Map() {
             latitudeDelta: 0.0015,
             longitudeDelta: 0.0015,
           }}
-        />
+        >
+          <Marker
+            pinColor="green"
+            coordinate={{
+              latitude: coords[0].latitude,
+              longitude: coords[0].longitude,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
+          />
+          {
+            coords.map((coord, idx, arr) => {
+              return idx > 1 
+              && (<Polyline 
+                key={idx} 
+                coordinates={[
+                { latitude: coord.latitude,
+                  longitude: coord.longitude },
+                {
+                  latitude: arr[idx - 1].latitude,
+                  longitude: arr[idx - 1].longitude 
+                }]}
+                strokeColor={"#000"}
+                strokeWidth={3}
+                lineDashPattern={[1]}
+                />)
+            })
+          }
+        </MapView>
       )}
     </>
   );

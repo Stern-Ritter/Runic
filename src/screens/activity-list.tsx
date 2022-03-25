@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import styles from "./activity.styles";
+import styles from "./activity-list.styles";
 
 const workoutsActivities = [
   { id: 1, name: "Running", time: "48:50", distance: 12, date: "23.02.2022" },
