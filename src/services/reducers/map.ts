@@ -37,7 +37,7 @@ type MAP_ACTION =
   | IADD_COORDINATE
   | ISET_INDICATORS;
 
-const activityInitialState = {
+const mapInitialState = {
   isStarted: false,
   isPaused: false,
   indicators: {
@@ -46,10 +46,10 @@ const activityInitialState = {
     distance: 0,
     calories: 0,
   },
-  coords: [],
+  coords: [] as LocationObjectCoords[],
 };
 
-const mapReducer = (state = activityInitialState, action: MAP_ACTION) => {
+const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
   switch (action.type) {
     case START_ACTIVITY: {
       return {

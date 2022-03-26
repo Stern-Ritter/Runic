@@ -32,9 +32,9 @@ function Map() {
         accuracy: 6,
         distanceInterval: 5,
       });
+
       const currentCoords = res.coords;
       dispatch({ type: ADD_COORDINATE, payload: currentCoords });
-
       const updatedDuration = Date.now() - createdDate;
       const updatedDistance =
         distance +
