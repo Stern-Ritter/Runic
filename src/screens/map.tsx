@@ -3,14 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Alert, Platform, StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
-import { getDistance, getPreciseDistance } from "geolib";
 import Loading from "../components/loading/loading";
 import {
   START_ACTIVITY,
   PAUSE_ACTIVITY,
   RESUME_ACTIVITY,
   ADD_COORDINATE,
-  SET_INDICATORS,
 } from "../services/actions";
 import { State } from "../services/store/store";
 import formatTime from "../utils/formatTime";
@@ -24,53 +22,31 @@ function Map() {
     coords,
   } = useSelector((store: State) => store.map);
 
-  const lastPostion = useMemo(() => coords[0], [coords]);
+  const lastGeoPosition = useMemo(
+    () => coords[coords.length ? coords.length - 1 : 0],
+    [coords]
+  );
 
-  const updateIndicators = async () => {
+  const updateGeoPosition = async () => {
     try {
-      const res = await Location.getCurrentPositionAsync({
+      const geoPosition = await Location.getCurrentPositionAsync({
         accuracy: 6,
-        distanceInterval: 5,
+        distanceInterval: 4,
       });
 
-      const currentCoords = res.coords;
+      const currentCoords = geoPosition.coords;
       dispatch({ type: ADD_COORDINATE, payload: currentCoords });
-      const updatedDuration = Date.now() - createdDate;
-      const updatedDistance =
-        distance +
-        (coords.length < 2
-          ? 0
-          : getDistance(
-              {
-                latitude: coords[coords.length - 1].latitude,
-                longitude: coords[coords.length - 1].longitude,
-              },
-              {
-                latitude: coords[coords.length - 2].latitude,
-                longitude: coords[coords.length - 2].longitude,
-              }
-            ));
-      const updatedCalories = updatedDistance * 70;
-
-      dispatch({
-        type: SET_INDICATORS,
-        payload: {
-          createdDate,
-          duration: updatedDuration,
-          distance: updatedDistance,
-          calories: updatedCalories,
-        },
-      });
     } catch (err) {
       Alert.alert("Невозможно определить местоположение.", "Ошибка.");
     }
   };
 
   useEffect(() => {
-    updateIndicators();
+    updateGeoPosition();
     const interValId = setInterval(() => {
-      updateIndicators();
-    }, 5000);
+      updateGeoPosition();
+    }, 3000);
+
     return () => clearInterval(interValId);
   }, []);
 
@@ -92,8 +68,8 @@ function Map() {
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           initialRegion={{
-            latitude: lastPostion.latitude,
-            longitude: lastPostion.longitude,
+            latitude: lastGeoPosition.latitude,
+            longitude: lastGeoPosition.longitude,
             latitudeDelta: 0.0015,
             longitudeDelta: 0.0015,
           }}

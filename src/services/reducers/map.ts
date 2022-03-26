@@ -1,11 +1,11 @@
 import { LocationObjectCoords } from "expo-location";
+import getCurrentDistance from "../../utils/getCurrentDistance";
 
 import {
   START_ACTIVITY,
   PAUSE_ACTIVITY,
   RESUME_ACTIVITY,
   ADD_COORDINATE,
-  SET_INDICATORS,
 } from "../actions";
 
 interface ISTART_ACTIVITY {
@@ -25,23 +25,17 @@ interface IADD_COORDINATE {
   payload: LocationObjectCoords;
 }
 
-interface ISET_INDICATORS {
-  type: "SET_INDICATORS";
-  payload: ActivityIndicators;
-}
-
 type MAP_ACTION =
   | ISTART_ACTIVITY
   | IPAUSE_ACTIVITY
   | IRESUME_ACTIVITY
-  | IADD_COORDINATE
-  | ISET_INDICATORS;
+  | IADD_COORDINATE;
 
 const mapInitialState = {
   isStarted: false,
   isPaused: false,
   indicators: {
-    createdDate: 0,
+    createdDate: Date.now(),
     duration: 0,
     distance: 0,
     calories: 0,
@@ -74,18 +68,25 @@ const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
       };
     }
     case ADD_COORDINATE: {
-      return {
-        ...state,
-        coords: [...state.coords, action.payload],
-      };
-    }
-    case SET_INDICATORS: {
+      const coords = [...state.coords, action.payload];
+      const distance =
+        coords.length < 2
+          ? 0
+          : getCurrentDistance(
+              state.indicators.distance,
+              coords[coords.length - 2],
+              coords[coords.length - 1]
+            );
+      const calories = distance * 70;
       return {
         ...state,
         indicators: {
           ...state.indicators,
-          ...action.payload,
+          duration: Date.now() - state.indicators.createdDate,
+          distance,
+          calories,
         },
+        coords,
       };
     }
     default: {
