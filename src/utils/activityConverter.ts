@@ -3,9 +3,10 @@ import Activity from "../models/activity/activity";
 const activityConverter = {
   toFirestore: (activity: Activity) => ({
     name: activity.name,
-    time: activity.time,
+    createdDate: activity.createdDate,
+    duration: activity.duration,
     distance: activity.distance,
-    date: activity.date,
+    calories: activity.calories,
     coords: activity.coords,
   }),
   fromFirestore: (snapshot: any, options: any) => {
@@ -13,9 +14,10 @@ const activityConverter = {
     return new Activity({
       id: snapshot.id,
       name: snapshot.name,
-      time: snapshot.time,
+      createdDate: snapshot.createdDate,
+      duration: snapshot.duration,
       distance: snapshot.distance,
-      date: snapshot.date,
+      calories: snapshot.calories,
       coords: snapshot.coords,
     });
   },
