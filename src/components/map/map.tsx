@@ -13,7 +13,7 @@ import {
   SET_INDICATORS,
 } from "../../services/actions";
 import { State } from "../../services/store/store";
-import { formatTime } from "../../utils";
+import { formatTime } from "../../utils/utils";
 
 function Map() {
   const dispatch = useDispatch();
