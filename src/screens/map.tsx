@@ -1,14 +1,17 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Alert, Platform, StyleSheet, Text, View } from "react-native";
+import { Alert, Platform, StyleSheet, Text, View, Button } from "react-native";
 import * as Location from "expo-location";
-import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, Polyline, PROVIDER_GOOGLE, LatLng } from "react-native-maps";
+import MapMarker from "../components/map-marker/map-marker";
 import Loading from "../components/loading/loading";
-import {
+import Activity from "../models/activity/activity";
+import { 
   START_ACTIVITY,
   PAUSE_ACTIVITY,
   RESUME_ACTIVITY,
   ADD_COORDINATE,
+  createActivity 
 } from "../services/actions";
 import { State } from "../services/store/store";
 import formatTime from "../utils/formatTime";
@@ -22,16 +25,13 @@ function Map() {
     coords,
   } = useSelector((store: State) => store.map);
 
-  const lastGeoPosition = useMemo(
-    () => coords[coords.length ? coords.length - 1 : 0],
-    [coords]
-  );
+  const lastGeoPosition = useMemo(() => coords[coords.length ? coords.length - 1 : 0], [coords]);
 
   const updateGeoPosition = async () => {
     try {
       const geoPosition = await Location.getCurrentPositionAsync({
         accuracy: 6,
-        distanceInterval: 4,
+        distanceInterval: 5,
       });
 
       const currentCoords = geoPosition.coords;
@@ -50,21 +50,46 @@ function Map() {
     return () => clearInterval(interValId);
   }, []);
 
+  const startHandler = useCallback(() => {
+    dispatch({ type: START_ACTIVITY });
+  }, [dispatch])
+
+  const pauseHandler = useCallback(() => {
+    dispatch({ type: PAUSE_ACTIVITY })
+  }, [dispatch]);
+
+  const resumeHandler = useCallback(() => {
+    dispatch( {type: RESUME_ACTIVITY})
+  }, [dispatch]);
+
+  const finishHandler = useCallback((indicators, coords) => {
+    const { createdDate, duration, distance, calories } = indicators;
+    const activity =  new Activity({
+      name: 'Бег',
+      createdDate,
+      duration,
+      distance,
+      calories,
+      coords,
+    })
+    createActivity('testUID', activity);
+  }, [createActivity]);
+
   return (
     <>
       <Text style={{ flex: 1, marginTop: 30, marginLeft: 40 }}>
         {`
         Количество координат: ${coords.length}
         Время: ${formatTime(duration)}
-        Расстояние: ${distance}
-        Калории: ${calories}
+        Расстояние: ${distance.toFixed(2)}
+        Калории: ${calories.toFixed(0)}
         `}
       </Text>
       {coords.length === 0 ? (
         <Loading />
       ) : (
         <MapView
-          style={{ flex: 6 }}
+          style={{ position: "relative", flex: 6 }}
           provider={PROVIDER_GOOGLE}
           showsUserLocation
           initialRegion={{
@@ -73,36 +98,36 @@ function Map() {
             latitudeDelta: 0.0015,
             longitudeDelta: 0.0015,
           }}
+          // onRegionChangeComplete={}
         >
           <Marker
-            pinColor="green"
             coordinate={{
               latitude: coords[0].latitude,
               longitude: coords[0].longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
             }}
-          />
-          {coords.map(
-            (coord, idx, arr) =>
-              idx > 1 && (
-                <Polyline
-                  key={idx}
-                  coordinates={[
-                    { latitude: coord.latitude, longitude: coord.longitude },
-                    {
-                      latitude: arr[idx - 1].latitude,
-                      longitude: arr[idx - 1].longitude,
-                    },
-                  ]}
-                  strokeColor={"#000"}
-                  strokeWidth={3}
-                  lineDashPattern={[1]}
-                />
-              )
-          )}
+          >
+            <MapMarker>Старт</MapMarker>
+          </Marker>
+          <Polyline coordinates={coords} strokeColor={"#4169E1"} strokeWidth={5} lineDashPattern={[1]} />
         </MapView>
       )}
+      <View
+        style={{
+          position: "absolute",
+          bottom: 50,
+          left: 0,
+          padding: 20,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Button onPress={startHandler} title="Старт"></Button>
+        <Button onPress={pauseHandler} title="Пауза"></Button>
+        <Button onPress={resumeHandler} title="Продолжить"></Button>
+        <Button onPress={() => finishHandler({ createdDate, duration, distance, calories }, coords)}
+        title="Завершить"></Button>
+      </View>
     </>
   );
 }

@@ -5,6 +5,7 @@ import {
   START_ACTIVITY,
   PAUSE_ACTIVITY,
   RESUME_ACTIVITY,
+  FINISH_ACTIVITY,
   ADD_COORDINATE,
 } from "../actions";
 
@@ -20,6 +21,10 @@ interface IRESUME_ACTIVITY {
   type: "RESUME_ACTIVITY";
 }
 
+interface IFINISH_ACTIVITY {
+  type: "FINISH_ACTIVITY"
+}
+
 interface IADD_COORDINATE {
   type: "ADD_COORDINATE";
   payload: LocationObjectCoords;
@@ -29,6 +34,7 @@ type MAP_ACTION =
   | ISTART_ACTIVITY
   | IPAUSE_ACTIVITY
   | IRESUME_ACTIVITY
+  | IFINISH_ACTIVITY
   | IADD_COORDINATE;
 
 const mapInitialState = {
@@ -66,6 +72,11 @@ const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
         ...state,
         isPaused: false,
       };
+    }
+    case FINISH_ACTIVITY: {
+      return {
+        ...mapInitialState,
+      }
     }
     case ADD_COORDINATE: {
       const coords = [...state.coords, action.payload];

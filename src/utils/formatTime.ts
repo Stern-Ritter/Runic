@@ -4,7 +4,7 @@ function formatTime(ms: number) {
   const seconds = Math.floor(((ms % 360000) % 60000) / 1000);
   return (
     `${hours}:${minutes < 10 ? `0${minutes}` : minutes}` +
-    `${seconds < 10 ? `0${seconds}` : seconds}`
+    `:${seconds < 10 ? `0${seconds}` : seconds}`
   );
 }
 

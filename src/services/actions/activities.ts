@@ -1,3 +1,4 @@
+import { FINISH_ACTIVITY } from '../actions'
 import { activitiesStorage } from "../../models/storage";
 import Activity from "../../models/activity/activity";
 import { AppDispatch } from "../store/store";
@@ -37,6 +38,7 @@ export function createActivity(userUID: string, activity: Activity) {
       if (id !== null) {
         activity.id = id;
         dispatch({ type: CREATE_ACTIVITY_SUCCESS, payload: activity });
+        dispatch({ type: FINISH_ACTIVITY });
       } else {
         dispatch({ type: CREATE_ACTIVITY_FAILED });
       }
