@@ -27,10 +27,10 @@ interface IADD_COORDINATE {
 
 interface ISET_INDICATORS {
   type: "SET_INDICATORS";
-  payload;
+  payload: ActivityIndicators;
 }
 
-type ACTIVITY_ACTION =
+type MAP_ACTION =
   | ISTART_ACTIVITY
   | IPAUSE_ACTIVITY
   | IRESUME_ACTIVITY
@@ -41,7 +41,7 @@ const activityInitialState = {
   isStarted: false,
   isPaused: false,
   indicators: {
-    createdDate: Date.now(),
+    createdDate: 0,
     duration: 0,
     distance: 0,
     calories: 0,
@@ -49,7 +49,7 @@ const activityInitialState = {
   coords: [],
 };
 
-const activityReducer = (state = activityInitialState, action: ACTIVITY_ACTION) => {
+const mapReducer = (state = activityInitialState, action: MAP_ACTION) => {
   switch (action.type) {
     case START_ACTIVITY: {
       return {
@@ -94,4 +94,4 @@ const activityReducer = (state = activityInitialState, action: ACTIVITY_ACTION) 
   }
 };
 
-export default activityReducer;
+export default mapReducer;
