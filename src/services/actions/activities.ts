@@ -15,7 +15,9 @@ export function getActivities(userUID: string) {
   return async function (dispatch: AppDispatch) {
     dispatch({ type: GET_ACTIVITIES });
     try {
-      const activities: Activity[] | null = await activitiesStorage.getAll(userUID);
+      const activities: Activity[] | null = await activitiesStorage.getAll(
+        userUID
+      );
       if (activities !== null) {
         dispatch({ type: GET_ACTIVITIES_SUCCESS, payload: activities });
       } else {
@@ -28,18 +30,18 @@ export function getActivities(userUID: string) {
 }
 
 export function createActivity(userUID: string, activity: Activity) {
-    return async function (dispatch: AppDispatch) {
-        dispatch({ type: CREATE_ACTIVITY });
-        try {
-          const id = await activitiesStorage.create(userUID, activity);
-          if (id !== null) {
-            activity.id = id;
-            dispatch({ type: CREATE_ACTIVITY_SUCCESS, payload: activity });
-          } else {
-            dispatch({ type: CREATE_ACTIVITY_FAILED });
-          }
-        } catch (err) {
-          dispatch({ type: CREATE_ACTIVITY_FAILED });
-        }
+  return async function (dispatch: AppDispatch) {
+    dispatch({ type: CREATE_ACTIVITY });
+    try {
+      const id = await activitiesStorage.create(userUID, activity);
+      if (id !== null) {
+        activity.id = id;
+        dispatch({ type: CREATE_ACTIVITY_SUCCESS, payload: activity });
+      } else {
+        dispatch({ type: CREATE_ACTIVITY_FAILED });
+      }
+    } catch (err) {
+      dispatch({ type: CREATE_ACTIVITY_FAILED });
     }
+  };
 }

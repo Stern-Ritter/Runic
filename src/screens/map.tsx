@@ -13,7 +13,7 @@ import {
   SET_INDICATORS,
 } from "../services/actions";
 import { State } from "../services/store/store";
-import formatTime from '../utils/formatTime';
+import formatTime from "../utils/formatTime";
 
 function Map() {
   const dispatch = useDispatch();
@@ -45,8 +45,10 @@ function Map() {
                 latitude: coords[coords.length - 1].latitude,
                 longitude: coords[coords.length - 1].longitude,
               },
-              { latitude: coords[coords.length - 2].latitude,
-                 longitude: coords[coords.length - 2].longitude }
+              {
+                latitude: coords[coords.length - 2].latitude,
+                longitude: coords[coords.length - 2].longitude,
+              }
             ));
       const updatedCalories = updatedDistance * 70;
 
@@ -105,22 +107,24 @@ function Map() {
               longitudeDelta: 0.01,
             }}
           />
-          {
-            coords.map((coord, idx, arr) => idx > 1 
-              && (<Polyline 
-                key={idx} 
-                coordinates={[
-                { latitude: coord.latitude,
-                  longitude: coord.longitude },
-                {
-                  latitude: arr[idx - 1].latitude,
-                  longitude: arr[idx - 1].longitude 
-                }]}
-                strokeColor={"#000"}
-                strokeWidth={3}
-                lineDashPattern={[1]}
-                />))
-          }
+          {coords.map(
+            (coord, idx, arr) =>
+              idx > 1 && (
+                <Polyline
+                  key={idx}
+                  coordinates={[
+                    { latitude: coord.latitude, longitude: coord.longitude },
+                    {
+                      latitude: arr[idx - 1].latitude,
+                      longitude: arr[idx - 1].longitude,
+                    },
+                  ]}
+                  strokeColor={"#000"}
+                  strokeWidth={3}
+                  lineDashPattern={[1]}
+                />
+              )
+          )}
         </MapView>
       )}
     </>

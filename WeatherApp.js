@@ -4,7 +4,7 @@ import * as Location from "expo-location";
 import axios from "axios";
 import { weatherApiKey } from "./constants";
 import Loading from "./Loading";
-import Weather from './Weather'; 
+import Weather from "./Weather";
 
 export default function App() {
   const [weather, setWeather] = useState();
@@ -12,8 +12,8 @@ export default function App() {
   const [status, requestPermission] = Location.useForegroundPermissions();
 
   async function getWeather(latitude, longitude) {
-    const {data} = await axios
-    .get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}
+    const { data } =
+      await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}
     &lon=${longitude}&appid=${weatherApiKey}&units=metric`);
     setWeather(data);
     setIsLoading(false);
@@ -22,7 +22,7 @@ export default function App() {
   async function getCurrentCoords() {
     try {
       await requestPermission();
-      const  {coords} = await Location.getCurrentPositionAsync();
+      const { coords } = await Location.getCurrentPositionAsync();
       getWeather(coords.latitude, coords.longitude);
     } catch (err) {
       Alert.alert("Не могу определить местоположение.", "Очень грустно...");
@@ -33,13 +33,13 @@ export default function App() {
     getCurrentCoords();
   }, []);
 
-  return (
-  isLoading ? (
+  return isLoading ? (
     <Loading></Loading>
   ) : (
-    <Weather temp={Math.round(weather.main.temp)} 
-    condition={weather.weather[0].main}></Weather>
-  )
+    <Weather
+      temp={Math.round(weather.main.temp)}
+      condition={weather.weather[0].main}
+    ></Weather>
   );
 }
 

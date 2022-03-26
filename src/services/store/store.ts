@@ -15,4 +15,4 @@ const store = createStore(rootReducer, enhancer);
 type State = ReturnType<typeof rootReducer>;
 type AppDispatch = typeof store.dispatch;
 
-export { store, State, AppDispatch};
+export { store, State, AppDispatch };

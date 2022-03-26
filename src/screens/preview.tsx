@@ -6,7 +6,7 @@ function Preview() {
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
-        <Image style={styles.image} source={require("../assets/images/rune.png")}></Image>
+        {/* <Image style={styles.image} source={require("../assets/images/rune.png")}></Image> */}
         <Text style={styles.title}>Welcome to Runic.</Text>
         <Text style={styles.description}>The best app for running.</Text>
       </View>

@@ -1,11 +1,11 @@
 import { LocationObjectCoords } from "expo-location";
 
-import { 
+import {
   START_ACTIVITY,
   PAUSE_ACTIVITY,
   RESUME_ACTIVITY,
   ADD_COORDINATE,
-  SET_INDICATORS 
+  SET_INDICATORS,
 } from "../actions";
 
 interface ISTART_ACTIVITY {
@@ -57,21 +57,21 @@ const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
         isStarted: true,
         indicators: {
           ...state.indicators,
-          createdDate: Date.now()
-        }
+          createdDate: Date.now(),
+        },
       };
     }
     case PAUSE_ACTIVITY: {
       return {
         ...state,
         isPaused: true,
-      }
+      };
     }
     case RESUME_ACTIVITY: {
       return {
         ...state,
         isPaused: false,
-      }
+      };
     }
     case ADD_COORDINATE: {
       return {

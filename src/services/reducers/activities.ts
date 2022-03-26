@@ -67,7 +67,10 @@ const activitiesInitialState = {
   createActivityFailed: false,
 };
 
-const activitiesReducer = (state = activitiesInitialState, action: ACTIVITIES_ACTION) => {
+const activitiesReducer = (
+  state = activitiesInitialState,
+  action: ACTIVITIES_ACTION
+) => {
   switch (action.type) {
     case GET_ACTIVITIES: {
       return {

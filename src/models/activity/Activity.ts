@@ -10,7 +10,8 @@ class Activity {
   coords: LocationObjectCoords[];
 
   constructor(option: ActivityOptions) {
-    const { id, name, createdDate, duration, distance, calories, coords } = option;
+    const { id, name, createdDate, duration, distance, calories, coords } =
+      option;
     this.id = typeof id !== "undefined" ? id : "";
     this.name = name;
     this.createdDate = createdDate;

@@ -9,8 +9,8 @@ type ActivityOptions = {
 };
 
 type ActivityIndicators = {
-  createdDate: number,
-  duration: number,
-  distance: number,
-  calories: 0,
-}
+  createdDate: number;
+  duration: number;
+  distance: number;
+  calories: 0;
+};
