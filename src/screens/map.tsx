@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Platform, StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import { getDistance, getPreciseDistance } from "geolib";
-import Loading from "../loading/loading";
+import Loading from "../components/loading/loading";
 import {
   START_ACTIVITY,
   PAUSE_ACTIVITY,
   RESUME_ACTIVITY,
   ADD_COORDINATE,
   SET_INDICATORS,
-} from "../../services/actions";
-import { State } from "../../services/store/store";
-import { formatTime } from "../../utils/utils";
+} from "../services/actions";
+import { State } from "../services/store/store";
+import formatTime from '../utils/formatTime';
 
 function Map() {
   const dispatch = useDispatch();
