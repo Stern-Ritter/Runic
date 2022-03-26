@@ -12,7 +12,9 @@ export default function App() {
   const [status, requestPermission] = Location.useForegroundPermissions();
 
   async function getWeather(latitude, longitude) {
-    const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${weatherApiKey}&units=metric`);
+    const {data} = await axios
+    .get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}
+    &lon=${longitude}&appid=${weatherApiKey}&units=metric`);
     setWeather(data);
     setIsLoading(false);
   }

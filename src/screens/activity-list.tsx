@@ -17,8 +17,7 @@ function ActivityList() {
 
   const workoutsActivities = [];
 
-  const renderItem = ({ item }) => {
-    return (
+  const renderItem = ({ item }) => (
       <View style={styles.itemContainer}>
         <View style={styles.infoContainer}>
           <View>
@@ -35,11 +34,8 @@ function ActivityList() {
         </View>
       </View>
     );
-  };
 
-  const renderSeparator = () => {
-    return (<View style={styles.separator}></View>);
-  };
+  const renderSeparator = () => (<View style={styles.separator}></View>);
 
   const keyExtractor = (item) => item.id;
 

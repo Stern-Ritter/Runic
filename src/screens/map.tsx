@@ -22,7 +22,7 @@ function Map() {
     isPaused,
     indicators: { createdDate, duration, distance, calories },
     coords,
-  } = useSelector((store: State) => store.activity);
+  } = useSelector((store: State) => store.map);
 
   const lastPostion = useMemo(() => coords[0], [coords]);
 
@@ -45,7 +45,8 @@ function Map() {
                 latitude: coords[coords.length - 1].latitude,
                 longitude: coords[coords.length - 1].longitude,
               },
-              { latitude: coords[coords.length - 2].latitude, longitude: coords[coords.length - 2].longitude }
+              { latitude: coords[coords.length - 2].latitude,
+                 longitude: coords[coords.length - 2].longitude }
             ));
       const updatedCalories = updatedDistance * 70;
 
@@ -105,8 +106,7 @@ function Map() {
             }}
           />
           {
-            coords.map((coord, idx, arr) => {
-              return idx > 1 
+            coords.map((coord, idx, arr) => idx > 1 
               && (<Polyline 
                 key={idx} 
                 coordinates={[
@@ -119,8 +119,7 @@ function Map() {
                 strokeColor={"#000"}
                 strokeWidth={3}
                 lineDashPattern={[1]}
-                />)
-            })
+                />))
           }
         </MapView>
       )}

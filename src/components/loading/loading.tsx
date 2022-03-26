@@ -1,15 +1,6 @@
 import React from "react";
 import { StatusBar, StyleSheet, Text, View } from "react-native";
 
-export default function Loading() {
-  return (
-    <View style={styles.container}>
-      <StatusBar barStyle="dark-content"></StatusBar>
-      <Text style={styles.text}>Загрузка...</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,3 +14,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
 });
+
+export default function Loading() {
+  return (
+    <View style={styles.container}>
+      <StatusBar barStyle="dark-content"></StatusBar>
+      <Text style={styles.text}>Загрузка...</Text>
+    </View>
+  );
+}

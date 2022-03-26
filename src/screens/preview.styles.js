@@ -1,5 +1,8 @@
 import { StyleSheet } from "react-native";
-import { RICH_BLACK_COLOR, ALICE_BLUE_CLOR, MEDIUM_STATE_BLUE_COLOR, WHITE_COLOR } from "../constants/colors";
+import { RICH_BLACK_COLOR,
+   ALICE_BLUE_CLOR, 
+   MEDIUM_STATE_BLUE_COLOR,
+    WHITE_COLOR } from "../constants/colors";
 
 const styles = StyleSheet.create({
   container: {

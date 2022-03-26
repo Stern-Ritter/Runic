@@ -12,7 +12,8 @@ function getDistance([prevLatitude, prevLongitude]: number[], [latitude, longitu
     6377.830272 *
     Math.acos(
       Math.sin(prevLatitudeInRad) * Math.sin(latitudeInRad) +
-        Math.cos(prevLatitudeInRad * Math.cos(latitudeInRad) * Math.cos(longitudeInRad - prevLongitudeInRad))
+        Math.cos(prevLatitudeInRad * Math.cos(latitudeInRad) *
+         Math.cos(longitudeInRad - prevLongitudeInRad))
     )
   );
 }
