@@ -1,12 +1,8 @@
 import React, { useEffect, useMemo, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert, Platform, StyleSheet, Text, View, Button } from "react-native";
-import {
-  watchPositionAsync,
-  getCurrentPositionAsync,
-  LocationObjectCoords,
-  LocationSubscription,
-} from "expo-location";
+import * as Location from "expo-location";
+import * as TaskManager from "expo-task-manager";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import MapMarker from "../components/map-marker/map-marker";
 import Activity from "../models/activity/Activity";
@@ -21,28 +17,52 @@ import { State } from "../services/store/store";
 import formatTime from "../utils/formatTime";
 
 const geoPositionUpdateInterval = 1000;
+const TASK_FETCH_LOCATION = "TASK_FETCH_LOCATION";
+const fetchLocationOptions = {
+  accuracy: Location.Accuracy.Highest,
+  distanceInterval: 1, // minimum change (in meters) betweens updates
+  deferredUpdatesInterval: 1000, // minimum interval (in milliseconds) between updates
+  foregroundService: {
+    notificationTitle: "Using your location",
+    notificationBody:
+      "To turn off, go back to the app and switch something off.",
+  },
+};
 
 function Map() {
   const dispatch = useDispatch();
   const [duration, setDuration] = useState(0);
   const [startGeoPosition, setStartGeoPosition] =
-    useState<LocationObjectCoords>();
-  const [locationSubscription, setLocationSubscription] =
-    useState<LocationSubscription>();
+    useState<Location.LocationObjectCoords>();
   const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
 
-  const getStartGeoPosition = useCallback(async () => {
+  const getStartGeoPosition = async () => {
     try {
-      const geoPosition = await getCurrentPositionAsync({ accuracy: 4 });
+      const geoPosition = await Location.getCurrentPositionAsync({
+        accuracy: 4,
+      });
       setStartGeoPosition(geoPosition.coords);
     } catch (err) {
       Alert.alert("Ошибка.", "Невозможно определить местоположение.");
     }
-  }, [dispatch, getCurrentPositionAsync]);
+  };
 
   useEffect(() => {
     getStartGeoPosition();
   }, []);
+
+  TaskManager.defineTask(
+    TASK_FETCH_LOCATION,
+    async ({ data: { locations }, error }) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      console.log(locations);
+      const [location] = locations;
+      dispatch({ type: ADD_COORDINATE, payload: location });
+    }
+  );
 
   const {
     isStarted,
@@ -53,84 +73,63 @@ function Map() {
 
   const lastGeoPosition = useMemo(() => coords[coords.length - 1], [coords]);
 
-  // const updateGeoPosition = useCallback(async () => {
-  //   try {
-  //     const geoPosition = await getCurrentPositionAsync({
-  //       accuracy: 5,
-  //       distanceInterval: 3,
-  //     });
-  //     dispatch({ type: ADD_COORDINATE, payload: geoPosition.coords});
-  //   }
-  //   catch (err) {
-  //     Alert.alert("Ошибка.", "Невозможно определить местоположение.");
-  //   }
-  // }, [dispatch, getCurrentPositionAsync]);
-
-  const updateTimer = useCallback(() => {
+  const updateTimer = () => {
     setDuration((prevState) => prevState + geoPositionUpdateInterval);
-  }, [setDuration]);
+  };
 
-  const startHandler = useCallback(async () => {
+  const startHandler = async () => {
     dispatch({ type: START_ACTIVITY });
     dispatch({ type: ADD_COORDINATE, payload: startGeoPosition });
+    Location.startLocationUpdatesAsync(
+      TASK_FETCH_LOCATION,
+      fetchLocationOptions
+    );
     const timerIntervalId = setInterval(updateTimer, 1000);
     setTimerInterval(timerIntervalId);
-    const subscription = watchPositionAsync({ accuracy: 5 }, (geoPosition) => {
-      dispatch({ type: ADD_COORDINATE, payload: geoPosition.coords });
-    });
-    const subscriptionObject = await subscription;
-    setLocationSubscription(subscriptionObject);
-  }, [
-    dispatch,
-    startGeoPosition,
-    setTimerInterval,
-    watchPositionAsync,
-    setLocationSubscription,
-  ]);
+  };
 
-  const pauseHandler = useCallback(() => {
-    if (timerInterval) {
-      clearInterval(timerInterval);
-    }
-    if (locationSubscription) {
-      locationSubscription.remove();
-    }
+  const pauseHandler = () => {
     dispatch({ type: PAUSE_ACTIVITY });
-  }, [dispatch, locationSubscription]);
+    Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
+      (task) => {
+        if (task) {
+          Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION);
+        }
+      }
+    );
+    if (timerInterval) clearInterval(timerInterval);
+  };
 
-  const resumeHandler = useCallback(async () => {
+  const resumeHandler = async () => {
     dispatch({ type: RESUME_ACTIVITY });
+    Location.startLocationUpdatesAsync(
+      TASK_FETCH_LOCATION,
+      fetchLocationOptions
+    );
     const timerIntervalId = setInterval(updateTimer, 1000);
     setTimerInterval(timerIntervalId);
-    const subscription = watchPositionAsync({ accuracy: 5 }, (geoPosition) => {
-      dispatch({ type: ADD_COORDINATE, payload: geoPosition.coords });
-    });
-    const subscriptionObject = await subscription;
-    setLocationSubscription(subscriptionObject);
-  }, [dispatch, setTimerInterval, watchPositionAsync, setLocationSubscription]);
+  };
 
-  const finishHandler = useCallback(
-    (indicators, coords) => {
-      if (timerInterval) {
-        clearInterval(timerInterval);
+  const finishHandler = () => {
+    Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
+      (task) => {
+        if (task) {
+          Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION);
+        }
       }
-      if (locationSubscription) {
-        locationSubscription.remove();
-      }
-      const { createdDate, duration, distance, calories } = indicators;
-      const activity = new Activity({
-        name: "Бег",
-        createdDate,
-        duration,
-        distance,
-        calories,
-        coords,
-      });
-      dispatch(createActivity("testUID", activity));
-      setDuration(0);
-    },
-    [dispatch, createActivity, timerInterval, locationSubscription]
-  );
+    );
+    if (timerInterval) clearInterval(timerInterval);
+    const activity = new Activity({
+      name: "Бег",
+      createdDate,
+      duration,
+      distance,
+      calories,
+      coords,
+    });
+    dispatch(createActivity("testUID", activity));
+    setDuration(0);
+  };
 
   return (
     <>
@@ -203,17 +202,7 @@ function Map() {
               <Button onPress={pauseHandler} title="Пауза" />
             )}
             {isPaused && <Button onPress={resumeHandler} title="Продолжить" />}
-            {isStarted && (
-              <Button
-                onPress={() =>
-                  finishHandler(
-                    { createdDate, duration, distance, calories },
-                    coords
-                  )
-                }
-                title="Завершить"
-              />
-            )}
+            {isStarted && <Button onPress={finishHandler} title="Завершить" />}
           </View>
         </>
       )}

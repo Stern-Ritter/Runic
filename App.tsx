@@ -8,12 +8,23 @@ import Map from "./src/screens/map";
 import { store } from "./src/services/store/store";
 
 export default function App() {
-  const [status, requestPermission] = Location.useForegroundPermissions();
+  const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
+  const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
 
   useEffect(() => {
-    requestPermission();
+    getForPerm();
+    getBackPerm();    
     Location.enableNetworkProviderAsync();
   }, []);
+
+  const getForPerm = async () => {
+    const res = await requestForegroundPermission();
+    console.log('for', res);
+  }
+  const getBackPerm = async () => {
+    const res = await requesBackgroundPermission()
+    console.log('back', res);
+  }
 
   return (
     <Provider store={store}>
