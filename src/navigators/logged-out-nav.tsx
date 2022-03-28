@@ -11,6 +11,8 @@ function LoggedOutNavigation() {
     <Stack.Navigator
       screenOptions={{
         headerBackVisible: false,
+        headerTransparent: true,
+        headerTintColor: MEDIUM_STATE_BLUE_COLOR,
       }}
     >
       <Stack.Screen
@@ -25,8 +27,6 @@ function LoggedOutNavigation() {
         component={Login}
         options={{
           title: "Войти",
-          headerTransparent: true,
-          headerTintColor: MEDIUM_STATE_BLUE_COLOR,
         }}
       />
       <Stack.Screen
@@ -34,8 +34,6 @@ function LoggedOutNavigation() {
         component={CreateAccount}
         options={{
           title: "Регистрация",
-          headerTransparent: true,
-          headerTintColor: MEDIUM_STATE_BLUE_COLOR,
         }}
       />
     </Stack.Navigator>
