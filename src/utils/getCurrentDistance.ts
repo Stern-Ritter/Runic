@@ -17,7 +17,8 @@ function getCurrentDistance(
         latitude: currentCoords.latitude,
         longitude: currentCoords.longitude,
       }
-    ) / 1000;
+    ) /
+      1000;
   return currentDistance;
 }
 

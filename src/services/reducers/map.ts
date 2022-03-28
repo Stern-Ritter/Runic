@@ -22,7 +22,7 @@ interface IRESUME_ACTIVITY {
 }
 
 interface IFINISH_ACTIVITY {
-  type: "FINISH_ACTIVITY"
+  type: "FINISH_ACTIVITY";
 }
 
 interface IADD_COORDINATE {
@@ -41,8 +41,7 @@ const mapInitialState = {
   isStarted: false,
   isPaused: false,
   indicators: {
-    createdDate: Date.now(),
-    duration: 0,
+    createdDate: 0,
     distance: 0,
     calories: 0,
   },
@@ -76,7 +75,7 @@ const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
     case FINISH_ACTIVITY: {
       return {
         ...mapInitialState,
-      }
+      };
     }
     case ADD_COORDINATE: {
       const coords = [...state.coords, action.payload];
@@ -93,7 +92,6 @@ const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
         ...state,
         indicators: {
           ...state.indicators,
-          duration: Date.now() - state.indicators.createdDate,
           distance,
           calories,
         },

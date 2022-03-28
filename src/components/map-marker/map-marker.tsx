@@ -1,14 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-function MapMarker({children} : {children: string}) {
-  return (
-    <View style={styles.marker}>
-      <Text style={styles.text}>{children}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   marker: {
     paddingVertical: 10,
@@ -22,5 +14,13 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
 });
+
+function MapMarker({ children }: { children: string }) {
+  return (
+    <View style={styles.marker}>
+      <Text style={styles.text}>{children}</Text>
+    </View>
+  );
+}
 
 export default MapMarker;

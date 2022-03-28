@@ -50,6 +50,10 @@ module.exports = {
       "WithStatement",
     ],
     "no-param-reassign": ["error", { props: false }],
+    "no-shadow": [
+      "error",
+      { allow: ["createdDate", "duration", "distance", "calories", "coords"] },
+    ],
   },
   settings: {
     react: {
