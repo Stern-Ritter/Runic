@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
-import LoggedOutNavigation from "./src/navigators/logged-out-nav";
-import LoggedInNavigation from "./src/navigators/logged-in-nav";
 import AppLoading from "expo-app-loading";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
+import LoggedInNavigation from "./src/navigators/logged-in-nav";
+import LoggedOutNavigation from "./src/navigators/logged-out-nav";
 import { store } from "./src/services/store/store";
 
 // import * as Location from "expo-location";
@@ -43,11 +43,11 @@ export default function App() {
   };
 
   return loading ? (
-    <AppLoading 
+    <AppLoading
       // @ts-ignore
       startAsync={onLoading}
       onFinish={onFinish}
-      onError={console.warn} 
+      onError={console.warn}
     />
   ) : (
     <Provider store={store}>

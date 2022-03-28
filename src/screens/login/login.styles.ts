@@ -1,8 +1,5 @@
 import { StyleSheet } from "react-native";
-import {
-  MEDIUM_STATE_BLUE_COLOR,
-  WHITE_COLOR,
-} from "../../constants/colors";
+import { MEDIUM_STATE_BLUE_COLOR, WHITE_COLOR } from "../../constants/colors";
 
 const styles = StyleSheet.create({
   button: {

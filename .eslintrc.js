@@ -54,6 +54,7 @@ module.exports = {
       "error",
       { allow: ["createdDate", "duration", "distance", "calories", "coords"] },
     ],
+    "global-require": "off",
   },
   settings: {
     react: {

@@ -8,29 +8,29 @@ function LoggedOutNavigation() {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator>
-      <Stack.Screen 
+      <Stack.Screen
         name="Preview"
         component={Preview}
         options={{
           title: "Runic",
         }}
       />
-      <Stack.Screen 
+      <Stack.Screen
         name="Login"
         component={Login}
         options={{
-          title: "Аутентификация"
+          title: "Аутентификация",
         }}
       />
       <Stack.Screen
         name="CreateAccount"
         component={CreateAccount}
         options={{
-          title: "Регистрация"
+          title: "Регистрация",
         }}
       />
     </Stack.Navigator>
-  )
+  );
 }
 
 export default LoggedOutNavigation;
