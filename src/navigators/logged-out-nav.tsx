@@ -7,19 +7,23 @@ import CreateAccount from "../screens/create-account/create-account";
 function LoggedOutNavigation() {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerBackVisible: false
+      }}
+    >
       <Stack.Screen
         name="Preview"
         component={Preview}
         options={{
-          title: "Runic",
+          headerShown: false
         }}
       />
       <Stack.Screen
         name="Login"
         component={Login}
         options={{
-          title: "Аутентификация",
+          title: "Войти",
         }}
       />
       <Stack.Screen

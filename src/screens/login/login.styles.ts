@@ -3,7 +3,7 @@ import { MEDIUM_STATE_BLUE_COLOR, WHITE_COLOR } from "../../constants/colors";
 
 const styles = StyleSheet.create({
   button: {
-    width: "60%",
+    width: "70%",
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: "400",
     color: WHITE_COLOR,
+    textTransform: "uppercase"
   },
 });
 

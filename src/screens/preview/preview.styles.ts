@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 48,
@@ -24,15 +25,16 @@ const styles = StyleSheet.create({
     color: RICH_BLACK_COLOR,
   },
   description: {
+    marginBottom: 32,
     color: RICH_BLACK_COLOR,
   },
   image: {
-    width: 96,
-    height: 96,
+    width: 128,
+    height: 128,
     marginBottom: 16,
   },
   button: {
-    width: "60%",
+    width: "70%",
     justifyContent: "center",
     alignItems: "center",
     padding: 8,
@@ -42,8 +44,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: "400",
     color: WHITE_COLOR,
+    textTransform: "uppercase"
   },
 });
 

@@ -52,8 +52,8 @@ export default function App() {
   ) : (
     <Provider store={store}>
       <NavigationContainer>
-        {/* <LoggedOutNavigation /> */}
-        <LoggedInNavigation />
+        <LoggedOutNavigation />
+        {/* <LoggedInNavigation /> */}
       </NavigationContainer>
     </Provider>
   );
