@@ -79,6 +79,7 @@ function CreateAccount() {
             placeholder="E-mail"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
             keyboardType="email-address"
+            autoCapitalize="none"
             returnKeyType="next"
             onSubmitEditing={() => nextInputFocus(passwordRef.current)}
             onChangeText={(text) => onInputChange("email", text)}

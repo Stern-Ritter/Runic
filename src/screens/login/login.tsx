@@ -76,6 +76,7 @@ function Login({ navigation }: LoginScreenProps) {
             placeholder="E-mail"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
             keyboardType="email-address"
+            autoCapitalize="none"
             returnKeyType="next"
             onChangeText={(text) => onInputChange("email", text)}
             onSubmitEditing={() => nextInputFocus(passwordRef.current)}
