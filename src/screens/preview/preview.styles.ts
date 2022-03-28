@@ -4,7 +4,7 @@ import {
   ALICE_BLUE_CLOR,
   MEDIUM_STATE_BLUE_COLOR,
   WHITE_COLOR,
-} from "../constants/colors";
+} from "../../constants/colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,14 +32,16 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   button: {
+    width: "60%",
     justifyContent: "center",
     alignItems: "center",
-    padding: 15,
+    padding: 8,
+    marginBottom: 8,
     backgroundColor: MEDIUM_STATE_BLUE_COLOR,
     borderRadius: 20,
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "600",
     color: WHITE_COLOR,
   },

@@ -4,17 +4,17 @@ import { Alert, Platform, StyleSheet, Text, View, Button } from "react-native";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
-import MapMarker from "../components/map-marker/map-marker";
-import Activity from "../models/activity/Activity";
+import MapMarker from "../../components/map-marker/map-marker";
+import Activity from "../../models/activity/Activity";
 import {
   START_ACTIVITY,
   PAUSE_ACTIVITY,
   RESUME_ACTIVITY,
   ADD_COORDINATE,
   createActivity,
-} from "../services/actions";
-import { State } from "../services/store/store";
-import formatTime from "../utils/formatTime";
+} from "../../services/actions";
+import { State } from "../../services/store/store";
+import formatTime from "../../utils/formatTime";
 
 const geoPositionUpdateInterval = 1000;
 const TASK_FETCH_LOCATION = "TASK_FETCH_LOCATION";

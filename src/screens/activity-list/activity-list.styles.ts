@@ -3,7 +3,7 @@ import {
   RICH_BLACK_COLOR,
   ALICE_BLUE_CLOR,
   GREY_COLOR,
-} from "../constants/colors";
+} from "../../constants/colors";
 
 const styles = StyleSheet.create({
   container: {

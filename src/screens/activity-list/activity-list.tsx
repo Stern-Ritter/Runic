@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { collection, getDocs } from "firebase/firestore";
-import { store, auth } from "../models/storage";
-import { collectionName } from "../utils/api";
 import styles from "./activity-list.styles";
 
 function ActivityList() {
   const [data, setData] = useState([]);
-  useEffect(() => {
-    const ref = collection(store, collectionName);
-    getDocs(ref).then((querySnapshot) => {
-      querySnapshot.forEach((document) => console.log(document.data()));
-    });
-  }, []);
+  // useEffect(() => {
+  //   const ref = collection(store, collectionName);
+  //   getDocs(ref).then((querySnapshot) => {
+  //     querySnapshot.forEach((document) => console.log(document.data()));
+  //   });
+  // }, []);
 
   const workoutsActivities = [];
 
