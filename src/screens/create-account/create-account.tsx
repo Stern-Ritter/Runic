@@ -103,6 +103,7 @@ function CreateAccount() {
             returnKeyType="done"
             secureTextEntry
             onChangeText={(text) => onInputChange("repeatPassword", text)}
+            onSubmitEditing={onFormSend}
             value={repeatPassword}
             style={styles.input}
           />

@@ -89,6 +89,7 @@ function Login({ navigation }: LoginScreenProps) {
             returnKeyType="done"
             secureTextEntry
             onChangeText={(text) => onInputChange("password", text)}
+            onSubmitEditing={onFormSend}
             value={password}
             style={styles.input}
           />
