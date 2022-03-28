@@ -6,6 +6,7 @@ import {
   MINT_CREAM_COLOR,
   WHITE_SMOKE_COLOR,
   CRIMSON_COLOR,
+  TEAL_COLOR,
 } from "../../constants/colors";
 
 const styles = StyleSheet.create({
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 12,
-    marginBottom: 12,
+    marginTop: 18,
     backgroundColor: MINT_CREAM_COLOR,
     borderWidth: 1,
     borderColor: ROYAL_BLUE_COLOR,
@@ -58,6 +59,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "400",
     color: CRIMSON_COLOR,
+  },
+  success: {
+    marginTop: 28,
+    fontSize: 16,
+    fontWeight: "500",
+    color: TEAL_COLOR,
   },
 });
 

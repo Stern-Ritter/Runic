@@ -1,7 +1,6 @@
 import React from "react";
 import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import { View, Text, TouchableOpacity, Easing } from "react-native";
-import { Animated } from "react-native";
+import { View, Text, TouchableOpacity, Easing, Animated } from "react-native";
 import styles from "./preview.styles";
 
 interface PreviewScreenProps {
@@ -34,10 +33,10 @@ function Preview({ navigation }: PreviewScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
-      <Animated.Image 
-        style={{...styles.image, transform: [{rotate: spin}]}} 
-        source={require("../../assets/images/rune.png")} 
-      />
+        <Animated.Image
+          style={{ ...styles.image, transform: [{ rotate: spin }] }}
+          source={require("../../assets/images/rune.png")}
+        />
         <Text style={styles.title}>Runic</Text>
         <Text style={styles.description}>The best app for running.</Text>
         <TouchableOpacity style={styles.button} onPress={goToCreateAccount}>

@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import {
   RICH_BLACK_COLOR,
-  ALICE_BLUE_CLOR,
+  ALICE_BLUE_COLOR,
   MEDIUM_STATE_BLUE_COLOR,
   WHITE_COLOR,
 } from "../../constants/colors";
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     paddingBottom: 48,
     flex: 1,
     justifyContent: "center",
-    backgroundColor: ALICE_BLUE_CLOR,
+    backgroundColor: ALICE_BLUE_COLOR,
   },
   mainContainer: {
     flex: 1,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "400",
     color: WHITE_COLOR,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
 });
 
