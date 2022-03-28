@@ -100,7 +100,7 @@ function CreateAccount() {
             ref={repeatPasswordRef}
             placeholder="Повторите пароль"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
-            returnKeyType="next"
+            returnKeyType="done"
             secureTextEntry
             onChangeText={(text) => onInputChange("repeatPassword", text)}
             value={repeatPassword}

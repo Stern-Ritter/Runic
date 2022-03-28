@@ -86,7 +86,7 @@ function Login({ navigation }: LoginScreenProps) {
             ref={passwordRef}
             placeholder="Пароль"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
-            returnKeyType="next"
+            returnKeyType="done"
             secureTextEntry
             onChangeText={(text) => onInputChange("password", text)}
             value={password}
