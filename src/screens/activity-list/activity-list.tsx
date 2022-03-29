@@ -1,27 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import Activity from "../../models/activity/Activity";
+import { State } from "../../services/store/store";
+import { SET_ACTIVITIES_FILTERS } from "../../services/actions";
 import styles from "./activity-list.styles";
 
 function ActivityList() {
-  const [data, setData] = useState([]);
-  // useEffect(() => {
-  //   const ref = collection(store, collectionName);
-  //   getDocs(ref).then((querySnapshot) => {
-  //     querySnapshot.forEach((document) => console.log(document.data()));
+  const dispatch = useDispatch();
+
+  const {
+    loading,
+    hasError,
+    data
+  } = useSelector((store: State) => store.activities.activities);
+  
+  const range = useSelector((store: State) => store.activities.filters);
+
+  const filteredActivities = useMemo(
+    () =>
+      data.filter((activity) => {
+        const date = new Date(activity.createdDate);
+        return(
+          (!range.startDate || date >= range.startDate) &&
+          (!range.endDate || date <= range.endDate)
+        );
+      }),
+    [data, range]
+  )
+
+  // const handleSelect = () => {
+  //   dispatch({
+  //     type: SET_ACTIVITIES_FILTERS,
+  //     payload: ,
   //   });
-  // }, []);
-
-  const workoutsActivities = [];
-
-  const renderItem = ({ item }) => (
+  // }
+  
+  const renderItem = ({ item } : { item: Activity }) => (
     <View style={styles.itemContainer}>
       <View style={styles.infoContainer}>
         <View>
           <Text style={styles.name}>{item.name}</Text>
-          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.date}>{item.createdDate}</Text>
         </View>
-        <Text style={styles.time}>{item.time}</Text>
+        <Text style={styles.time}>{item.duration}</Text>
         <Text style={styles.distance}>{item.distance} km.</Text>
+        <Text style={styles.distance}>{item.calories} calories</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity>
@@ -33,13 +57,13 @@ function ActivityList() {
 
   const renderSeparator = () => <View style={styles.separator}></View>;
 
-  const keyExtractor = (item) => item.id;
+  const keyExtractor = (item: Activity) => item.id;
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Последние тренировки:</Text>
       <FlatList
-        data={workoutsActivities}
+        data={filteredActivities}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         ItemSeparatorComponent={renderSeparator}

@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Map from "../screens/map/map";
 import ActivityList from "../screens/activity-list/activity-list";
 import Analytics from "../screens/analytics/analytics";
+import { auth } from "../models/storage";
+import { getActivities } from '../services/actions';
+
+const Tab = createBottomTabNavigator();
 
 function LoggedInNavigation() {
-  const Tab = createBottomTabNavigator();
+  const dispatch = useDispatch();
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    if(user) {
+      dispatch(getActivities(user.uid));
+    }
+  }, [user]);
+
   return (
     <Tab.Navigator initialRouteName="Map" backBehavior="initialRoute">
       <Tab.Screen
