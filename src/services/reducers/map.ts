@@ -41,7 +41,7 @@ const mapInitialState = {
   isStarted: false,
   isPaused: false,
   indicators: {
-    createdDate: 0,
+    createdDate: new Date(),
     distance: 0,
     calories: 0,
   },
@@ -56,7 +56,7 @@ const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
         isStarted: true,
         indicators: {
           ...state.indicators,
-          createdDate: Date.now(),
+          createdDate: new Date()
         },
       };
     }

@@ -19,7 +19,7 @@ import {
 } from "../../services/actions";
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
-import { MEDIUM_STATE_BLUE_COLOR } from "../../constants/colors";
+import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import styles from "./login.styles";
 
 interface LoginScreenProps {

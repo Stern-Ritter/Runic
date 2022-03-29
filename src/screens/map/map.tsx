@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Alert, Platform, StyleSheet, Text, View, Button } from "react-native";
 import * as Location from "expo-location";
 import * as TaskManager from "expo-task-manager";
@@ -14,6 +15,7 @@ import {
   createActivity,
 } from "../../services/actions";
 import { State } from "../../services/store/store";
+import { auth } from "../../models/storage";
 import formatTime from "../../utils/formatTime";
 
 const geoPositionUpdateInterval = 1000;
@@ -31,6 +33,8 @@ const fetchLocationOptions = {
 
 function Map() {
   const dispatch = useDispatch();
+  const [user] = useAuthState(auth);
+
   const [duration, setDuration] = useState(0);
   const [startGeoPosition, setStartGeoPosition] =
     useState<Location.LocationObjectCoords>();
@@ -120,15 +124,17 @@ function Map() {
     );
     if (timerInterval) clearInterval(timerInterval);
     const activity = new Activity({
-      name: "Бег",
+      name: "Тренировка",
       createdDate,
       duration,
       distance,
       calories,
       coords,
     });
-    dispatch(createActivity("testUID", activity));
-    setDuration(0);
+    if (user?.uid) {
+      dispatch(createActivity(user.uid, activity));
+      setDuration(0);
+    }
   };
 
   return (

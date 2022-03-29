@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Preview from "../screens/preview/preview";
 import Login from "../screens/login/login";
 import CreateAccount from "../screens/create-account/create-account";
-import { MEDIUM_STATE_BLUE_COLOR } from "../constants/colors";
+import { MEDIUM_STATE_BLUE_COLOR } from "../utils/colors";
 
 function LoggedOutNavigation() {
   const Stack = createNativeStackNavigator();

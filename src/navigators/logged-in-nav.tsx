@@ -8,7 +8,7 @@ import ActivityList from "../screens/activity-list/activity-list";
 import Analytics from "../screens/analytics/analytics";
 import { auth } from "../models/storage";
 import { getActivities } from "../services/actions";
-import { MEDIUM_STATE_BLUE_COLOR } from "../constants/colors";
+import { MEDIUM_STATE_BLUE_COLOR } from "../utils/colors";
 
 const Tab = createBottomTabNavigator();
 

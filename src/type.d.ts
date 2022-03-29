@@ -1,7 +1,7 @@
 type ActivityOptions = {
   id?: string;
   name: string;
-  createdDate: number;
+  createdDate: Date;
   duration: number;
   distance: number;
   calories: number;

@@ -4,7 +4,7 @@ import {
   ALICE_BLUE_COLOR,
   MEDIUM_STATE_BLUE_COLOR,
   WHITE_COLOR,
-} from "../../constants/colors";
+} from "../../utils/colors";
 
 const styles = StyleSheet.create({
   container: {

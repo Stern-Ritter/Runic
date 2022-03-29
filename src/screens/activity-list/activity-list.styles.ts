@@ -1,57 +1,62 @@
 import { StyleSheet } from "react-native";
 import {
   RICH_BLACK_COLOR,
-  ALICE_BLUE_CLOR,
+  WHITE_SMOKE_COLOR,
   GREY_COLOR,
-} from "../../constants/colors";
+  ROYAL_BLUE_COLOR
+} from "../../utils/colors";
 
 const styles = StyleSheet.create({
   container: {
     paddingTop: 48,
-    backgroundColor: ALICE_BLUE_CLOR,
-  },
-  title: {
-    fontSize: 32,
-    marginBottom: 24,
+    backgroundColor: WHITE_SMOKE_COLOR,
   },
   itemContainer: {
     flexDirection: "row",
+    borderWidth: 1,
+    borderColor: 'rgba(65, 105, 225, 0.3)',
   },
   infoContainer: {
-    padding: 24,
+    padding: 12,
     flex: 1,
-    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
+  },
+  rowContainer: {
+    flexDirection: "row",
+  },
+  icon: {
+    marginRight: 4,
   },
   name: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: ROYAL_BLUE_COLOR,
+  },
+  infoElement: {
     marginBottom: 8,
-    fontSize: 18,
-    color: RICH_BLACK_COLOR,
-  },
-  time: {
-    fontSize: 18,
-    color: RICH_BLACK_COLOR,
-  },
-  distance: {
-    fontSize: 18,
-    color: RICH_BLACK_COLOR,
+    fontSize: 16,
+    fontWeight: "600",
+    color: ROYAL_BLUE_COLOR,
   },
   date: {
-    fontSize: 14,
+    fontSize: 12,
+    fontWeight: "600",
     color: GREY_COLOR,
   },
   buttonContainer: {
-    padding: 10,
-    justifyContent: "center",
+    paddingVertical: 20,
+    paddingHorizontal: 5,
+    justifyContent: "flex-start",
     alignItems: "center",
   },
   delete: {
     fontSize: 12,
-    color: GREY_COLOR,
+    color: RICH_BLACK_COLOR,
   },
   separator: {
     borderBottomWidth: 1,
+    borderColor: 'rgba(65, 105, 225, 0.3)',
   },
 });
 

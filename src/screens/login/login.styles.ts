@@ -6,7 +6,7 @@ import {
   MINT_CREAM_COLOR,
   WHITE_SMOKE_COLOR,
   CRIMSON_COLOR,
-} from "../../constants/colors";
+} from "../../utils/colors";
 
 const styles = StyleSheet.create({
   container: {
