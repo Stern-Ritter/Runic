@@ -9,25 +9,23 @@ import styles from "./activity-list.styles";
 function ActivityList() {
   const dispatch = useDispatch();
 
-  const {
-    loading,
-    hasError,
-    data
-  } = useSelector((store: State) => store.activities.activities);
-  
+  const { loading, hasError, data } = useSelector(
+    (store: State) => store.activities.activities
+  );
+
   const range = useSelector((store: State) => store.activities.filters);
 
   const filteredActivities = useMemo(
     () =>
       data.filter((activity) => {
         const date = new Date(activity.createdDate);
-        return(
+        return (
           (!range.startDate || date >= range.startDate) &&
           (!range.endDate || date <= range.endDate)
         );
       }),
     [data, range]
-  )
+  );
 
   // const handleSelect = () => {
   //   dispatch({
@@ -35,8 +33,8 @@ function ActivityList() {
   //     payload: ,
   //   });
   // }
-  
-  const renderItem = ({ item } : { item: Activity }) => (
+
+  const renderItem = ({ item }: { item: Activity }) => (
     <View style={styles.itemContainer}>
       <View style={styles.infoContainer}>
         <View>

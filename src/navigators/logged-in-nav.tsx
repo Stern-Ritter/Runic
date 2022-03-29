@@ -7,7 +7,8 @@ import Map from "../screens/map/map";
 import ActivityList from "../screens/activity-list/activity-list";
 import Analytics from "../screens/analytics/analytics";
 import { auth } from "../models/storage";
-import { getActivities } from '../services/actions';
+import { getActivities } from "../services/actions";
+import { MEDIUM_STATE_BLUE_COLOR } from "../constants/colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,20 +17,35 @@ function LoggedInNavigation() {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    if(user) {
+    if (user) {
       dispatch(getActivities(user.uid));
     }
   }, [user]);
 
   return (
-    <Tab.Navigator initialRouteName="Map" backBehavior="initialRoute">
+    <Tab.Navigator
+      initialRouteName="Map"
+      backBehavior="initialRoute"
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: MEDIUM_STATE_BLUE_COLOR,
+        tabBarStyle: {
+          borderTopWidth: 1,
+          borderTopColor: "rgba(119, 136, 153, 0.4)",
+        },
+      }}
+    >
       <Tab.Screen
         name="Map"
         component={Map}
         options={{
           title: "Тренировка",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="running" color={color} size={size} />
+          tabBarIcon: ({ focused, color }) => (
+            <FontAwesome5
+              name="running"
+              color={color}
+              size={focused ? 28 : 24}
+            />
           ),
         }}
       />
@@ -38,8 +54,12 @@ function LoggedInNavigation() {
         component={ActivityList}
         options={{
           title: "Список тренировок",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="list-ol" color={color} size={size} />
+          tabBarIcon: ({ focused, color }) => (
+            <FontAwesome5
+              name="list-ol"
+              color={color}
+              size={focused ? 28 : 24}
+            />
           ),
         }}
       />
@@ -48,8 +68,12 @@ function LoggedInNavigation() {
         component={Analytics}
         options={{
           title: "Статистика",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="chart-line" color={color} size={size} />
+          tabBarIcon: ({ focused, color }) => (
+            <FontAwesome5
+              name="chart-line"
+              color={color}
+              size={focused ? 28 : 24}
+            />
           ),
         }}
       />
