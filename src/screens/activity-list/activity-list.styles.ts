@@ -3,7 +3,6 @@ import {
   RICH_BLACK_COLOR,
   GREY_COLOR,
   ROYAL_BLUE_COLOR,
-  GHOST_WHITE_COLOR,
   WHITE_COLOR,
 } from "../../utils/colors";
 
