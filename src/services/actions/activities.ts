@@ -12,6 +12,10 @@ export const CREATE_ACTIVITY = "CREATE_ACTIVITY";
 export const CREATE_ACTIVITY_SUCCESS = "CREATE_ACTIVITY_SUCCESS";
 export const CREATE_ACTIVITY_FAILED = "CREATE_ACTIVITY_FAILED";
 
+export const DELETE_ACTIVITY = "DELETE_ACTIVITY";
+export const DELETE_ACTIVITY_SUCCESS = "DELETE_ACTIVITY_SUCCESS";
+export const DELETE_ACTIVITY_FAILED = "DELETE_ACTIVITY_FAILED";
+
 export function getActivities(userUID: string) {
   return async function (dispatch: AppDispatch) {
     dispatch({ type: GET_ACTIVITIES });
@@ -44,6 +48,22 @@ export function createActivity(userUID: string, activity: Activity) {
       }
     } catch (err) {
       dispatch({ type: CREATE_ACTIVITY_FAILED });
+    }
+  };
+}
+
+export function deleteActivity(userUID: string, id: string) {
+  return async function (dispatch: AppDispatch) {
+    dispatch({ type: DELETE_ACTIVITY });
+    try {
+      const success = await activitiesStorage.delete(userUID, id);
+      if (success) {
+        dispatch({ type: DELETE_ACTIVITY_SUCCESS, payload: id });
+      } else {
+        dispatch({ type: DELETE_ACTIVITY_FAILED });
+      }
+    } catch (err) {
+      dispatch({ type: DELETE_ACTIVITY_FAILED });
     }
   };
 }

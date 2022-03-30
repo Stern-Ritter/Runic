@@ -14,8 +14,12 @@ export {
   CREATE_ACTIVITY,
   CREATE_ACTIVITY_SUCCESS,
   CREATE_ACTIVITY_FAILED,
+  DELETE_ACTIVITY,
+  DELETE_ACTIVITY_SUCCESS,
+  DELETE_ACTIVITY_FAILED,
   getActivities,
   createActivity,
+  deleteActivity,
 } from "./activities";
 
 export {

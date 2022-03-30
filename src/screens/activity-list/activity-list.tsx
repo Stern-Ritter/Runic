@@ -1,88 +1,145 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { View, Text, FlatList, Button, TouchableOpacity } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Activity from "../../models/activity/Activity";
 import { State } from "../../services/store/store";
-import { SET_ACTIVITIES_FILTERS } from "../../services/actions";
-import { GREY_COLOR, ROYAL_BLUE_COLOR } from '../../utils/colors';
-import { createdDateTimeFormat, durationTimeFormat } from "../../utils/constants";
+import { deleteActivity, SET_ACTIVITIES_FILTERS } from "../../services/actions";
+import { GREY_COLOR, ROYAL_BLUE_COLOR } from "../../utils/colors";
+import {
+  filterDateTimeFormat,
+  createdDateTimeFormat,
+} from "../../utils/constants";
+import formatTime from "../../utils/formatTime";
+import { auth } from "../../models/storage";
 import styles from "./activity-list.styles";
 
 function ActivityList() {
   const dispatch = useDispatch();
+  const [user] = useAuthState(auth);
 
-  const { loading, hasError, data } = useSelector((store: State) => store.activities.activities);
+  const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
+  const [openEndDatePicker, setOpenEndDatePicker] = useState(false);
+
+  const { loading, hasError, data } = useSelector(
+    (store: State) => store.activities.activities
+  );
 
   const range = useSelector((store: State) => store.activities.filters);
 
+  const formatedStartDate = range.startDate.toLocaleString(
+    "Ru-ru",
+    filterDateTimeFormat
+  );
+  const formatedEndDate = range.endDate.toLocaleString(
+    "Ru-ru",
+    filterDateTimeFormat
+  );
+
   const filteredActivities = useMemo(
     () =>
-      data.filter(
-        (activity) =>
-          (!range.startDate || activity.createdDate >= range.startDate) &&
-          (!range.endDate || activity.createdDate <= range.endDate)
-      ),
+      data.filter((activity) => {
+        const comparedDate = new Date(
+          activity.createdDate.getFullYear(),
+          activity.createdDate.getMonth(),
+          activity.createdDate.getDate()
+        );
+        return (
+          (!range.startDate || comparedDate >= range.startDate) &&
+          (!range.endDate || comparedDate <= range.endDate)
+        );
+      }),
     [data, range]
   );
 
-  // const handleSelect = () => {
-  //   dispatch({
-  //     type: SET_ACTIVITIES_FILTERS,
-  //     payload: ,
-  //   });
-  // }
+  const deleteHandler = (id: string) => {
+    if (user?.uid) {
+      dispatch(deleteActivity(user.uid, id));
+    }
+  };
+
+  const showStartDatePicker = () => {
+    setOpenStartDatePicker(true);
+  };
+  const hideStartDatePicker = () => {
+    setOpenStartDatePicker(false);
+  };
+  const showEndDatePicker = () => {
+    setOpenEndDatePicker(true);
+  };
+  const hideEndDatePicker = () => {
+    setOpenEndDatePicker(false);
+  };
+  const handleConfirmStartDatePicker = (date: Date) => {
+    dispatch({
+      type: SET_ACTIVITIES_FILTERS,
+      payload: { startDate: date },
+    });
+    hideStartDatePicker();
+  };
+  const handleConfirmEndDatePicker = (date: Date) => {
+    dispatch({
+      type: SET_ACTIVITIES_FILTERS,
+      payload: { endDate: date },
+    });
+    hideEndDatePicker();
+  };
 
   const renderItem = ({ item }: { item: Activity }) => {
     const { name, createdDate, duration, distance, calories } = item;
-    const formatedCreatedDate = createdDate.toLocaleString("Ru-ru", createdDateTimeFormat);
-    const formatedDuration = new Date(duration).toLocaleString("Ru-ru", durationTimeFormat);
+    const formatedCreatedDate = createdDate.toLocaleString(
+      "Ru-ru",
+      createdDateTimeFormat
+    );
+    const formatedDuration = formatTime(duration);
 
     return (
       <View style={styles.itemContainer}>
         <View style={styles.infoContainer}>
-            <Text style={styles.name}>{name}</Text>
-            <View style={styles.rowContainer}>
-              <FontAwesome5 
-                name="calendar-check" 
-                size={16} 
-                color={GREY_COLOR} 
-                style={styles.icon}
-              />
-              <Text style={styles.date}>{formatedCreatedDate}</Text>
-            </View>
+          <Text style={styles.name}>{name}</Text>
+          <View style={styles.rowContainer}>
+            <FontAwesome5
+              name="calendar-check"
+              size={16}
+              color={GREY_COLOR}
+              style={styles.icon}
+            />
+            <Text style={styles.date}>{formatedCreatedDate}</Text>
+          </View>
         </View>
         <View style={styles.infoContainer}>
-        <View style={styles.rowContainer}>
-            <FontAwesome5 
-              name="stopwatch" 
-              size={18} 
+          <View style={styles.rowContainer}>
+            <FontAwesome5
+              name="stopwatch"
+              size={18}
               color={ROYAL_BLUE_COLOR}
-              style={styles.icon} 
+              style={styles.icon}
             />
             <Text style={styles.infoElement}>{formatedDuration}</Text>
-        </View>
-        <View style={styles.rowContainer}>
-            <FontAwesome5 
-              name="map-marker-alt" 
-              size={18} 
+          </View>
+          <View style={styles.rowContainer}>
+            <FontAwesome5
+              name="map-marker-alt"
+              size={18}
               color={ROYAL_BLUE_COLOR}
-              style={styles.icon} 
+              style={styles.icon}
             />
             <Text style={styles.infoElement}>{distance} km</Text>
           </View>
           <View style={styles.rowContainer}>
-            <FontAwesome5 
-              name="briefcase-medical" 
-              size={18} 
+            <FontAwesome5
+              name="burn"
+              size={18}
               color={ROYAL_BLUE_COLOR}
-              style={styles.icon} 
+              style={styles.icon}
             />
             <Text style={styles.infoElement}>{calories} calories</Text>
-            </View>
+          </View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => deleteHandler(item.id)}>
             <Text style={styles.delete}>Удалить</Text>
           </TouchableOpacity>
         </View>
@@ -96,6 +153,50 @@ function ActivityList() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.filterContainer}>
+        <View>
+          <View style={styles.filterTextContainer}>
+            <FontAwesome5
+              name="calendar-check"
+              size={22}
+              color={ROYAL_BLUE_COLOR}
+            />
+            <Text style={styles.filterText}>{formatedStartDate}</Text>
+          </View>
+          <Button title="Выбрать дату" onPress={showStartDatePicker} />
+        </View>
+        <Text style={styles.filterDelimiter}>-</Text>
+        <View>
+          <View style={styles.filterTextContainer}>
+            <FontAwesome5
+              name="calendar-check"
+              size={22}
+              color={ROYAL_BLUE_COLOR}
+            />
+            <Text style={styles.filterText}>{formatedEndDate}</Text>
+          </View>
+          <Button title="Выбрать дату" onPress={showEndDatePicker} />
+        </View>
+      </View>
+      <DateTimePickerModal
+        date={range.startDate}
+        isVisible={openStartDatePicker}
+        mode="date"
+        onConfirm={handleConfirmStartDatePicker}
+        onCancel={hideStartDatePicker}
+        confirmTextIOS="Выбрать"
+        cancelTextIOS="Отменить"
+      />
+      <DateTimePickerModal
+        date={range.endDate}
+        isVisible={openEndDatePicker}
+        mode="date"
+        onConfirm={handleConfirmEndDatePicker}
+        onCancel={hideEndDatePicker}
+        confirmTextIOS="Выбрать"
+        cancelTextIOS="Отменить"
+      />
+
       <FlatList
         data={filteredActivities}
         renderItem={renderItem}

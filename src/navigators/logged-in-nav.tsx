@@ -8,7 +8,7 @@ import ActivityList from "../screens/activity-list/activity-list";
 import Analytics from "../screens/analytics/analytics";
 import { auth } from "../models/storage";
 import { getActivities } from "../services/actions";
-import { MEDIUM_STATE_BLUE_COLOR } from "../utils/colors";
+import { MEDIUM_STATE_BLUE_COLOR, ROYAL_BLUE_COLOR } from "../utils/colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,6 +27,8 @@ function LoggedInNavigation() {
       initialRouteName="Map"
       backBehavior="initialRoute"
       screenOptions={{
+        headerShadowVisible: false,
+        headerTintColor: ROYAL_BLUE_COLOR,
         tabBarShowLabel: false,
         tabBarActiveTintColor: MEDIUM_STATE_BLUE_COLOR,
         tabBarStyle: {

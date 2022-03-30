@@ -56,7 +56,7 @@ const mapReducer = (state = mapInitialState, action: MAP_ACTION) => {
         isStarted: true,
         indicators: {
           ...state.indicators,
-          createdDate: new Date()
+          createdDate: new Date(),
         },
       };
     }

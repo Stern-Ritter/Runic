@@ -124,7 +124,7 @@ function Map() {
     );
     if (timerInterval) clearInterval(timerInterval);
     const activity = new Activity({
-      name: "Тренировка",
+      name: "Бег",
       createdDate,
       duration,
       distance,

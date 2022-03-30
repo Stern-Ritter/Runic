@@ -1,4 +1,5 @@
 import Activity from "../../models/activity/activity";
+import { getDateWithoutTimeWithShift } from "../../utils/date";
 
 import {
   GET_ACTIVITIES,
@@ -8,6 +9,9 @@ import {
   CREATE_ACTIVITY,
   CREATE_ACTIVITY_SUCCESS,
   CREATE_ACTIVITY_FAILED,
+  DELETE_ACTIVITY,
+  DELETE_ACTIVITY_SUCCESS,
+  DELETE_ACTIVITY_FAILED,
 } from "../actions";
 
 type IGET_ACTIVITIES = {
@@ -26,8 +30,8 @@ type IGET_ACTIVITIES_FAILED = {
 type IGET_ACTIVITIES_FILTERS = {
   type: "GET_ACTIVITIES_FILTERS";
   payload: {
-    startDate: Date;
-    endDate: Date;
+    startDate?: Date;
+    endDate?: Date;
   };
 };
 
@@ -44,6 +48,19 @@ type ICREATE_ACTIVITY_FAILED = {
   type: "CREATE_ACTIVITY_FAILED";
 };
 
+type IDELETE_ACTIVITY = {
+  type: "DELETE_ACTIVITY";
+};
+
+type IDELETE_ACTIVITY_SUCCESS = {
+  type: "DELETE_ACTIVITY_SUCCESS";
+  payload: string;
+};
+
+type IDELETE_ACTIVITY_FAILED = {
+  type: "DELETE_ACTIVITY_FAILED";
+};
+
 type ACTIVITIES_ACTION =
   | IGET_ACTIVITIES
   | IGET_ACTIVITIES_SUCCESS
@@ -51,7 +68,10 @@ type ACTIVITIES_ACTION =
   | IGET_ACTIVITIES_FILTERS
   | ICREATE_ACTIVITY
   | ICREATE_ACTIVITY_SUCCESS
-  | ICREATE_ACTIVITY_FAILED;
+  | ICREATE_ACTIVITY_FAILED
+  | IDELETE_ACTIVITY
+  | IDELETE_ACTIVITY_SUCCESS
+  | IDELETE_ACTIVITY_FAILED;
 
 const activitiesInitialState = {
   activities: {
@@ -60,11 +80,13 @@ const activitiesInitialState = {
     data: [] as Activity[],
   },
   filters: {
-    startDate: undefined as Date | undefined,
-    endDate: undefined as Date | undefined,
+    startDate: getDateWithoutTimeWithShift(-7),
+    endDate: getDateWithoutTimeWithShift(0),
   },
   createActivityRequest: false,
   createActivityFailed: false,
+  deleteActivityRequest: false,
+  deleteActivityFailed: false,
 };
 
 const activitiesReducer = (
@@ -133,6 +155,32 @@ const activitiesReducer = (
         ...state,
         createActivityRequest: false,
         createActivityFailed: true,
+      };
+    }
+    case DELETE_ACTIVITY: {
+      return {
+        ...state,
+        deleteActivityRequest: true,
+        deleteActivityFailed: false,
+      };
+    }
+    case DELETE_ACTIVITY_SUCCESS: {
+      return {
+        ...state,
+        deleteActivityRequest: false,
+        activities: {
+          ...state.activities,
+          data: [...state.activities.data].filter(
+            (activity) => activity.id !== action.payload
+          ),
+        },
+      };
+    }
+    case DELETE_ACTIVITY_FAILED: {
+      return {
+        ...state,
+        deleteActivityRequest: false,
+        deleteActivityFailed: true,
       };
     }
     default: {
