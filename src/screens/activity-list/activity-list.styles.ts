@@ -11,6 +11,7 @@ import {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: ALICE_BLUE_COLOR,
   },
   filterContainer: {

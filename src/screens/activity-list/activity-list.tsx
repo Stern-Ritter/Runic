@@ -40,17 +40,19 @@ function ActivityList() {
 
   const filteredActivities = useMemo(
     () =>
-      data.filter((activity) => {
-        const comparedDate = new Date(
-          activity.createdDate.getFullYear(),
-          activity.createdDate.getMonth(),
-          activity.createdDate.getDate()
-        );
-        return (
-          (!range.startDate || comparedDate >= range.startDate) &&
-          (!range.endDate || comparedDate <= range.endDate)
-        );
-      }),
+      data
+        .filter((activity) => {
+          const comparedDate = new Date(
+            activity.createdDate.getFullYear(),
+            activity.createdDate.getMonth(),
+            activity.createdDate.getDate()
+          );
+          return (
+            (!range.startDate || comparedDate >= range.startDate) &&
+            (!range.endDate || comparedDate <= range.endDate)
+          );
+        })
+        .sort((f, s) => s.createdDate.getTime() - f.createdDate.getTime()),
     [data, range]
   );
 
