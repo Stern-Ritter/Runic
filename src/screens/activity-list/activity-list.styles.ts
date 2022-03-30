@@ -3,20 +3,25 @@ import {
   RICH_BLACK_COLOR,
   GREY_COLOR,
   ROYAL_BLUE_COLOR,
-  WHITE_COLOR,
+  ALICE_BLUE_COLOR,
+  MEDIUM_STATE_BLUE_COLOR,
+  WHITE_SMOKE_COLOR,
+  WHITE_COLOR
 } from "../../utils/colors";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: WHITE_COLOR,
+    backgroundColor: ALICE_BLUE_COLOR,
   },
   filterContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
     paddingVertical: 28,
+    paddingHorizontal: 8,
     borderBottomWidth: 1,
     borderColor: `rgba(0, 0, 0, 0.3)`,
+    backgroundColor: WHITE_COLOR,
   },
   filterTextContainer: {
     flexDirection: "row",
@@ -32,8 +37,16 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "600",
   },
+  list: {
+    height: "100%"
+  },
   itemContainer: {
+    margin: 8,
     flexDirection: "row",
+    borderWidth: 1,
+    borderColor: MEDIUM_STATE_BLUE_COLOR,
+    borderRadius: 12,
+    backgroundColor: WHITE_SMOKE_COLOR,
   },
   infoContainer: {
     paddingVertical: 10,

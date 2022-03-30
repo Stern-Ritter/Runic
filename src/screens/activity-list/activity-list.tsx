@@ -198,6 +198,7 @@ function ActivityList() {
       />
 
       <FlatList
+        style={styles.list}
         data={filteredActivities}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
