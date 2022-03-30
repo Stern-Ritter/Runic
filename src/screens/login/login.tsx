@@ -71,7 +71,6 @@ function Login({ navigation }: LoginScreenProps) {
             style={styles.image}
             source={require("../../assets/images/rune.png")}
           />
-          <Text style={styles.title}>Введите данные:</Text>
           <TextInput
             placeholder="E-mail"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}

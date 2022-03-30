@@ -22,12 +22,6 @@ const styles = StyleSheet.create({
     height: 128,
     marginBottom: 36,
   },
-  title: {
-    marginBottom: 16,
-    fontSize: 26,
-    fontWeight: "500",
-    color: ROYAL_BLUE_COLOR,
-  },
   input: {
     width: "70%",
     padding: 16,
