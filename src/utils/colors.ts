@@ -11,3 +11,4 @@ export const ROYAL_BLUE_COLOR = "#4169E1";
 export const CRIMSON_COLOR = "#DC143C";
 export const TEAL_COLOR = "#008080";
 export const GHOST_WHITE_COLOR = "#F8F8FF";
+export const MIDNIGHT_MOSS_COLOR = "#1E2923";
