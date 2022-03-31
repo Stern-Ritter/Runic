@@ -8,7 +8,7 @@ import ActivityList from "../screens/activity-list/activity-list";
 import Analytics from "../screens/analytics/analytics";
 import Profile from "../screens/profile/profile";
 import { auth } from "../models/storage";
-import { getActivities } from "../services/actions";
+import { getActivities, getSettings } from "../services/actions";
 import { MEDIUM_STATE_BLUE_COLOR, ROYAL_BLUE_COLOR } from "../utils/colors";
 
 const Tab = createBottomTabNavigator();
@@ -20,6 +20,7 @@ function LoggedInNavigation() {
   useEffect(() => {
     if (user) {
       dispatch(getActivities(user.uid));
+      dispatch(getSettings(user.uid));
     }
   }, [user]);
 

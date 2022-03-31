@@ -13,11 +13,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Settings from "../../models/settings/Settings";
-import {
-  setSettingsFormValue,
-  getSettings,
-  updateSettings,
-} from "../../services/actions";
+import { setSettingsFormValue, updateSettings } from "../../services/actions";
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
 import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
@@ -26,12 +22,6 @@ import styles from "./profile.styles";
 function Profile() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
-
-  useEffect(() => {
-    if (user) {
-      dispatch(getSettings(user.uid));
-    }
-  }, [user]);
 
   const {
     loading,
@@ -134,7 +124,7 @@ function Profile() {
             <Text style={styles.buttonText}>Сменить пользователя</Text>
           </TouchableOpacity>
         </View>
-        </ScrollView>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }

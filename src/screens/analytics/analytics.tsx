@@ -9,8 +9,11 @@ import {
   ProgressChart,
   ContributionGraph,
 } from "react-native-chart-kit";
+import {} from 'expo-font';
 import alasql from "alasql";
+import Tab from "../../components/tab/tab";
 import { yearMonthDateFormat } from "../../utils/constants";
+import { getDateWithoutTimeWithShift } from "../../utils/date";
 import { MIDNIGHT_MOSS_COLOR, ROYAL_BLUE_COLOR } from "../../utils/colors";
 import { State } from "../../services/store/store";
 import styles from "./analytics.styles";
@@ -23,6 +26,10 @@ const chartConfig = {
   strokeWidth: 2,
   barPercentage: 0.5,
   useShadowColorFromDataset: false,
+  decimalPlaces: 2,
+  style: {
+    borderRadius: 16,
+  },
 };
 const lineChartConfig = {
   ...chartConfig,
@@ -31,7 +38,7 @@ const lineChartConfig = {
 
 const progressRingConfig = {
   ...chartConfig,
-  color: (opacity = 1) => `rgba(0, 80, 0, ${opacity})`,
+  color: (opacity = 1) => `rgba(123, 104, 238, ${opacity})`,
 };
 
 const heatmapConfig = {
@@ -39,12 +46,15 @@ const heatmapConfig = {
   color: (opacity = 1) => `rgba(0, 128, 128, ${opacity})`,
 };
 
-function Analytics() {
-  const screenWidth = Dimensions.get("window").width;
-  const renderTabBar = () => <ScrollableTabBar />;
+const handleToolTip: any = {};
 
+function Analytics() {
   const { loading, hasError, data } = useSelector(
     (store: State) => store.activities.activities
+  );
+
+  const { distanceGoal, caloriesGoal } = useSelector(
+    (store: State) => store.settings.settings.data
   );
 
   const formatedData = useMemo(
@@ -80,10 +90,46 @@ function Analytics() {
     };
   }, [formatedData]);
 
-  const progressRingData = {
-    labels: ["Дистанция", "Калории"],
-    data: [0.4, 0.6],
-  };
+  const progressRingData = useMemo(() => {
+    const minDate = getDateWithoutTimeWithShift(-7);
+    const maxDate = getDateWithoutTimeWithShift(0);
+
+    const filteredAggrData = data
+      .filter((activity) => {
+        const comparedDate = new Date(
+          activity.createdDate.getFullYear(),
+          activity.createdDate.getMonth(),
+          activity.createdDate.getDate()
+        );
+        return comparedDate >= minDate && comparedDate <= maxDate;
+      })
+      .reduce(
+        (acc, el) => ({
+          distance: acc.distance + el.distance,
+          calories: acc.calories + el.calories,
+        }),
+        { distance: 0, calories: 0 }
+      );
+
+    const distanceGoalPercentageComplete =
+      Math.round((filteredAggrData.distance / distanceGoal) * 100) / 100;
+    const caloriesGoalPercentageComplete =
+      Math.round((filteredAggrData.calories / caloriesGoal) * 100) / 100;
+
+    const chartData = [
+      (distanceGoalPercentageComplete > 1
+        ? 1
+        : distanceGoalPercentageComplete) || 0,
+      (caloriesGoalPercentageComplete > 1
+        ? 1
+        : caloriesGoalPercentageComplete) || 0,
+    ];
+
+    return {
+      labels: ["Км.", "Калории"],
+      data: chartData,
+    };
+  }, [data, distanceGoal, caloriesGoal]);
 
   const heatmapData = useMemo(
     () =>
@@ -94,24 +140,35 @@ function Analytics() {
     [formatedData]
   );
 
+  const screenWidth = Dimensions.get("window").width;
+  const renderTabBar = () => <ScrollableTabBar />;
+
   return (
-    <ScrollableTabView style={styles.tabView} renderTabBar={renderTabBar}>
-      <View tabLabel="Цели">
+    <ScrollableTabView
+      style={styles.tabView}
+      initialPage={1}
+      renderTabBar={renderTabBar}
+      tabBarActiveTextColor={ROYAL_BLUE_COLOR}
+      tabBarTextStyle={{fontFamily: 'Roboto', fontSize: 15}}
+      scrollWithoutAnimation
+    >
+      <Tab tabLabel="Цели">
         <ProgressChart
           data={progressRingData}
           width={screenWidth}
-          height={320}
-          strokeWidth={32}
-          radius={32}
+          height={screenWidth}
+          strokeWidth={28}
+          radius={28}
           chartConfig={progressRingConfig}
           hideLegend={false}
+          style={styles.chart}
         />
-      </View>
-      <View tabLabel="Динамика">
+      </Tab>
+      <Tab tabLabel="Динамика">
         <LineChart
           data={lineChartData}
           width={screenWidth}
-          height={320}
+          height={screenWidth}
           chartConfig={lineChartConfig}
           bezier
           verticalLabelRotation={25}
@@ -127,20 +184,23 @@ function Analytics() {
               <Text style={{ fontSize: 12 }}>{indexData}</Text>
             </View>
           )}
+          style={styles.chart}
         />
-      </View>
-      <View tabLabel="Активность">
+      </Tab>
+      <Tab tabLabel="Активность">
         <ContributionGraph
+          tooltipDataAttrs={(value) => handleToolTip}
           values={heatmapData}
           endDate={new Date()}
           numDays={110}
           width={screenWidth}
-          height={320}
+          height={screenWidth}
           gutterSize={4}
           squareSize={16}
           chartConfig={heatmapConfig}
+          style={styles.chart}
         />
-      </View>
+      </Tab>
     </ScrollableTabView>
   );
 }

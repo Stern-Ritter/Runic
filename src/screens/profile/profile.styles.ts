@@ -5,7 +5,7 @@ import {
   MINT_CREAM_COLOR,
   WHITE_SMOKE_COLOR,
   CRIMSON_COLOR,
-  WHITE_COLOR
+  WHITE_COLOR,
 } from "../../utils/colors";
 
 const styles = StyleSheet.create({

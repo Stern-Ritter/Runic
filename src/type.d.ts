@@ -14,6 +14,11 @@ type SettingsOptions = {
   caloriesGoal: number;
 };
 
+type TabOptions = {
+  tabLabel: string;
+  children: React.ReactChild | React.ReactChildren;
+};
+
 type ActivityIndicators = {
   createdDate: number;
   duration: number;
