@@ -5,10 +5,26 @@ import { AppDispatch } from "../store/store";
 export const GET_SETTINGS = "GET_SETTINGS";
 export const GET_SETTINGS_SUCCESS = "GET_SETTINGS_SUCCESS";
 export const GET_SETTINGS_FAILED = "GET_SETTINGS_FAILED";
+export const SETTINGS_FORM_SET_VALUE = "SETTINGS_FORM_SET_VALUE";
 
 export const UPDATE_SETTINGS = "UPDATE_SETTINGS";
 export const UPDATE_SETTINGS_SUCCESS = "UPDATE_SETTINGS_SUCCESS";
 export const UPDATE_SETTINGS_FAILED = "UPDATE_SETTINGS_FAILED";
+
+export const setSettingsFormValue = ({
+  field,
+  value,
+}: {
+  field: string;
+  value: string | number
+}) => ({
+  type: SETTINGS_FORM_SET_VALUE,
+  payload: { field, value },
+} as const );
+
+export type ISETTINGS_FORM_SET_VALUE = ReturnType<
+  typeof setSettingsFormValue
+>;
 
 export function getSettings(userUID: string) {
   return async function (dispatch: AppDispatch) {

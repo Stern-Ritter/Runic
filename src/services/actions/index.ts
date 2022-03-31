@@ -43,9 +43,11 @@ export {
   GET_SETTINGS,
   GET_SETTINGS_SUCCESS,
   GET_SETTINGS_FAILED,
+  SETTINGS_FORM_SET_VALUE,
   UPDATE_SETTINGS,
   UPDATE_SETTINGS_SUCCESS,
   UPDATE_SETTINGS_FAILED,
+  setSettingsFormValue,
   getSettings,
   updateSettings,
 } from "./settings";

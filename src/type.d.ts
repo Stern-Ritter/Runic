@@ -8,6 +8,12 @@ type ActivityOptions = {
   coords: LocationObjectCoords[];
 };
 
+type SettingsOptions = {
+  nickName: string;
+  distanceGoal: number;
+  caloriesGoal: number;
+}
+
 type ActivityIndicators = {
   createdDate: number;
   duration: number;
