@@ -100,7 +100,7 @@ function Profile() {
             ref={distanceGoalRef}
             placeholder="Цель дистанции"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
-            keyboardType="phone-pad"
+            keyboardType="default"
             returnKeyType="next"
             onSubmitEditing={() => nextInputFocus(caloriesGoalRef.current)}
             onChangeText={(value) =>
@@ -113,7 +113,7 @@ function Profile() {
             ref={distanceGoalRef}
             placeholder="Цель калорий"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
-            keyboardType="phone-pad"
+            keyboardType="default"
             returnKeyType="next"
             onChangeText={(value) =>
               onInputChange("caloriesGoal", Number(value))

@@ -1,4 +1,4 @@
-import { FINISH_ACTIVITY } from "../actions";
+import { FINISH_ACTIVITY } from "./map";
 import { activitiesStorage } from "../../models/storage";
 import Activity from "../../models/activity/activity";
 import { AppDispatch } from "../store/store";
