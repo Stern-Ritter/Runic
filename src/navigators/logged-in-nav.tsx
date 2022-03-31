@@ -6,6 +6,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Map from "../screens/map/map";
 import ActivityList from "../screens/activity-list/activity-list";
 import Analytics from "../screens/analytics/analytics";
+import Profile from "../screens/profile/profile";
 import { auth } from "../models/storage";
 import { getActivities } from "../services/actions";
 import { MEDIUM_STATE_BLUE_COLOR, ROYAL_BLUE_COLOR } from "../utils/colors";
@@ -73,6 +74,20 @@ function LoggedInNavigation() {
           tabBarIcon: ({ focused, color }) => (
             <FontAwesome5
               name="chart-line"
+              color={color}
+              size={focused ? 28 : 24}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: "Настройки профиля",
+          tabBarIcon: ({ focused, color }) => (
+            <FontAwesome5
+              name="user-cog"
               color={color}
               size={focused ? 28 : 24}
             />
