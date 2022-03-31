@@ -14,3 +14,8 @@ type ActivityIndicators = {
   distance: number;
   calories: 0;
 };
+
+type LineChartDataElement = {
+  month: string,
+  distance: number 
+}
