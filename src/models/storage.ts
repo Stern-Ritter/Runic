@@ -4,9 +4,11 @@ import { getAuth } from "firebase/auth";
 import {
   rootCollectionName,
   activitiesCollectionName,
+  settingsDocumentName,
   firebaseConfig,
 } from "../utils/api";
 import FirebaseActivityModel from "./activity/FireBaseActivityModel";
+import FirebaseSettingsModel from "./settings/FireBaseSettingsModel";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -15,7 +17,12 @@ const activitiesStorage = new FirebaseActivityModel(
   rootCollectionName,
   activitiesCollectionName
 );
+const settingsStorage = new FirebaseSettingsModel(
+  db,
+  rootCollectionName,
+  activitiesCollectionName
+);
 
 const auth = getAuth();
 
-export { db, auth, activitiesStorage };
+export { db, auth, activitiesStorage, settingsStorage };
