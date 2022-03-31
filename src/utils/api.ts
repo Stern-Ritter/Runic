@@ -1,6 +1,7 @@
 const rootCollectionName = "user";
 const activitiesCollectionName = "activities";
-const settingsDocumentName = "settings";
+const settingsCollectionName = "settings";
+const mainSettingsDocumentName = 'main';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA84nZZKXPOuM8r1Tpj-rOHYpbVlmhI0ek",
@@ -14,6 +15,7 @@ const firebaseConfig = {
 export {
   rootCollectionName,
   activitiesCollectionName,
-  settingsDocumentName,
+  settingsCollectionName,
+  mainSettingsDocumentName,
   firebaseConfig,
 };

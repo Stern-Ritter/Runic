@@ -6,12 +6,19 @@ import settingsConverter from "../../utils/settingsConverter";
 class FirebaseSettingsModel extends SettingsModel {
   private db;
   private rootCollectionName;
+  private collectionName;
   private documentName;
 
-  constructor(db: Firestore, rootCollectionName: string, documentName: string) {
+  constructor(
+    db: Firestore,
+    rootCollectionName: string,
+    collectionName: string,
+    documentName: string,
+    ) {
     super();
     this.db = db;
     this.rootCollectionName = rootCollectionName;
+    this.collectionName = collectionName;
     this.documentName = documentName;
   }
 
@@ -21,13 +28,14 @@ class FirebaseSettingsModel extends SettingsModel {
         this.db,
         this.rootCollectionName,
         userUID,
+        this.collectionName,
         this.documentName
       ).withConverter(settingsConverter);
       const querySnapshot = await getDoc(ref);
       console.log("Received settings");
       return querySnapshot.exists() ? querySnapshot.data() : new Settings();
     } catch (err) {
-      console.log("Error receiving settings");
+      console.log("Error receiving settings: ", err);
       return null;
     }
   }
@@ -38,6 +46,7 @@ class FirebaseSettingsModel extends SettingsModel {
         this.db,
         this.rootCollectionName,
         userUID,
+        this.collectionName,
         this.documentName
       ).withConverter(settingsConverter);
       await setDoc(ref, settings);
