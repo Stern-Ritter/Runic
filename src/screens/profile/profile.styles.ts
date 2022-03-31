@@ -1,29 +1,44 @@
 import { StyleSheet } from "react-native";
 import {
-  ALICE_BLUE_COLOR,
   MEDIUM_STATE_BLUE_COLOR,
   ROYAL_BLUE_COLOR,
   MINT_CREAM_COLOR,
   WHITE_SMOKE_COLOR,
   CRIMSON_COLOR,
+  WHITE_COLOR
 } from "../../utils/colors";
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    paddingVertical: 32,
+    backgroundColor: WHITE_COLOR,
+  },
   container: {
     padding: 0,
-    paddingBottom: 48,
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: ALICE_BLUE_COLOR,
   },
   image: {
-    width: 128,
-    height: 128,
+    width: 96,
+    height: 96,
     marginBottom: 36,
   },
+  section: {
+    marginBottom: 8,
+    fontSize: 22,
+    fontWeight: "600",
+    color: MEDIUM_STATE_BLUE_COLOR,
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  label: {
+    alignSelf: "flex-start",
+    fontSize: 18,
+    textAlign: "left",
+  },
   input: {
-    width: "70%",
     padding: 16,
     marginBottom: 18,
     borderWidth: 1,

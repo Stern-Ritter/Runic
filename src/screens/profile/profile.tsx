@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import {
+  ScrollView,
   View,
   Image,
   Text,
   TextInput,
   TouchableOpacity,
   Keyboard,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
 import Settings from "../../models/settings/Settings";
@@ -26,9 +26,6 @@ import styles from "./profile.styles";
 function Profile() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
-
-  const distanceGoalRef = useRef<TextInput>(null);
-  const caloriesGoalRef = useRef<TextInput>(null);
 
   useEffect(() => {
     if (user) {
@@ -48,12 +45,6 @@ function Profile() {
   const updateHasError = useSelector(
     (store: State) => store.settings.updateSettingsFailed
   );
-
-  const nextInputFocus = (ref: TextInput | null) => {
-    if (ref) {
-      ref.focus();
-    }
-  };
 
   const hideKeyboard = () => {
     Keyboard.dismiss();
@@ -80,47 +71,47 @@ function Profile() {
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <ScrollView style={styles.mainContainer}>
         <View style={styles.container}>
           <Image
             style={styles.image}
             source={require("../../assets/images/rune.png")}
           />
-          <TextInput
-            placeholder="Никнейм"
-            placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
-            keyboardType="phone-pad"
-            returnKeyType="next"
-            onSubmitEditing={() => nextInputFocus(distanceGoalRef.current)}
-            onChangeText={(value) => onInputChange("nickName", value)}
-            value={nickName}
-            style={styles.input}
-          />
-          <TextInput
-            ref={distanceGoalRef}
-            placeholder="Цель дистанции"
-            placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
-            keyboardType="default"
-            returnKeyType="next"
-            onSubmitEditing={() => nextInputFocus(caloriesGoalRef.current)}
-            onChangeText={(value) =>
-              onInputChange("distanceGoal", Number(value))
-            }
-            value={String(distanceGoal)}
-            style={styles.input}
-          />
-          <TextInput
-            ref={distanceGoalRef}
-            placeholder="Цель калорий"
-            placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
-            keyboardType="default"
-            returnKeyType="next"
-            onChangeText={(value) =>
-              onInputChange("caloriesGoal", Number(value))
-            }
-            value={String(caloriesGoal)}
-            style={styles.input}
-          />
+          <Text style={styles.section}>Основные:</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Имя пользователя</Text>
+            <TextInput
+              placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
+              onChangeText={(value) => onInputChange("nickName", value)}
+              value={nickName}
+              style={styles.input}
+            />
+          </View>
+          <Text style={styles.section}>Цели на неделю:</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Километры</Text>
+            <TextInput
+              keyboardType="numeric"
+              placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
+              onChangeText={(value) =>
+                onInputChange("distanceGoal", Number(value))
+              }
+              value={String(distanceGoal)}
+              style={styles.input}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Калории</Text>
+            <TextInput
+              keyboardType="numeric"
+              placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
+              onChangeText={(value) =>
+                onInputChange("caloriesGoal", Number(value))
+              }
+              value={String(caloriesGoal)}
+              style={styles.input}
+            />
+          </View>
 
           {updateHasError && (
             <Text style={styles.error}>
@@ -143,7 +134,7 @@ function Profile() {
             <Text style={styles.buttonText}>Сменить пользователя</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+        </ScrollView>
     </TouchableWithoutFeedback>
   );
 }

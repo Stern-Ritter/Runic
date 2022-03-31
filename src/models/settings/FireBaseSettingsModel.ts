@@ -13,8 +13,8 @@ class FirebaseSettingsModel extends SettingsModel {
     db: Firestore,
     rootCollectionName: string,
     collectionName: string,
-    documentName: string,
-    ) {
+    documentName: string
+  ) {
     super();
     this.db = db;
     this.rootCollectionName = rootCollectionName;
