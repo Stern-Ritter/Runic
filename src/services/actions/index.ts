@@ -47,5 +47,5 @@ export {
   UPDATE_SETTINGS_SUCCESS,
   UPDATE_SETTINGS_FAILED,
   getSettings,
-  updateSettings
-} from './settings';
+  updateSettings,
+} from "./settings";

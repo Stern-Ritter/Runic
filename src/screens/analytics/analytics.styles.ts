@@ -1,8 +1,5 @@
 import { StyleSheet } from "react-native";
-import {
-    ROYAL_BLUE_COLOR,
-    WHITE_COLOR
-} from "../../utils/colors";
+import { ROYAL_BLUE_COLOR, WHITE_COLOR } from "../../utils/colors";
 
 const styles = StyleSheet.create({
   tabView: {
@@ -12,9 +9,9 @@ const styles = StyleSheet.create({
   labelStyle: {
     color: ROYAL_BLUE_COLOR,
     marginVertical: 10,
-    textAlign: 'center',
-    fontSize: 16
-  }
+    textAlign: "center",
+    fontSize: 16,
+  },
 });
 
 export default styles;

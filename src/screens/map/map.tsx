@@ -19,78 +19,78 @@ import { auth } from "../../models/storage";
 import formatTime from "../../utils/formatTime";
 
 // const exapleActivities = [
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2022, 2, 28),
-  //   duration: 77 * 1000,
-  //   distance: 17,
-  //   calories: 17 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2022, 2, 24),
-  //   duration: 47 * 1000,
-  //   distance: 10,
-  //   calories: 10 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2022, 2, 22),
-  //   duration: 53 * 1000,
-  //   distance: 12,
-  //   calories: 12 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2022, 2, 1),
-  //   duration: 60 * 1000,
-  //   distance: 12,
-  //   calories: 12 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2022, 1, 10),
-  //   duration: 45 * 1000,
-  //   distance: 8,
-  //   calories: 8 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2022, 1, 1),
-  //   duration: 38 * 1000,
-  //   distance: 5,
-  //   calories: 5 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2022, 0, 1),
-  //   duration: 22 * 1000,
-  //   distance: 3,
-  //   calories: 3 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2021, 11, 28),
-  //   duration: 110 * 1000,
-  //   distance: 20,
-  //   calories: 20 * 70,
-  //   coords: []
-  // }),
-  // new Activity({
-  //   name: "Бег",
-  //   createdDate: new Date(2021, 10, 12),
-  //   duration: 35 * 1000,
-  //   distance: 9,
-  //   calories: 9 * 70,
-  //   coords: []
-  // }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2022, 2, 28),
+//   duration: 77 * 1000,
+//   distance: 17,
+//   calories: 17 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2022, 2, 24),
+//   duration: 47 * 1000,
+//   distance: 10,
+//   calories: 10 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2022, 2, 22),
+//   duration: 53 * 1000,
+//   distance: 12,
+//   calories: 12 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2022, 2, 1),
+//   duration: 60 * 1000,
+//   distance: 12,
+//   calories: 12 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2022, 1, 10),
+//   duration: 45 * 1000,
+//   distance: 8,
+//   calories: 8 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2022, 1, 1),
+//   duration: 38 * 1000,
+//   distance: 5,
+//   calories: 5 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2022, 0, 1),
+//   duration: 22 * 1000,
+//   distance: 3,
+//   calories: 3 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2021, 11, 28),
+//   duration: 110 * 1000,
+//   distance: 20,
+//   calories: 20 * 70,
+//   coords: []
+// }),
+// new Activity({
+//   name: "Бег",
+//   createdDate: new Date(2021, 10, 12),
+//   duration: 35 * 1000,
+//   distance: 9,
+//   calories: 9 * 70,
+//   coords: []
+// }),
 // ];
 
 const geoPositionUpdateInterval = 1000;
@@ -133,7 +133,7 @@ function Map() {
     //     dispatch(createActivity(user.uid, el));
     //   }
     // })
-  },[]);
+  }, []);
 
   TaskManager.defineTask(
     TASK_FETCH_LOCATION,

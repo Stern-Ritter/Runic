@@ -1,7 +1,14 @@
 import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { View, Text, FlatList, Button, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Activity from "../../models/activity/Activity";
@@ -62,21 +69,16 @@ function ActivityList() {
     }
   };
 
-  const confirmeDelete = (id: string) => {
-    return Alert.alert(
-      "Подтверждение",
-      "Вы хотите удалить эту тренировку?",
-      [
-        {
-          text: 'Да',
-          onPress: () => deleteHandler(id)
-        },
-        {
-          text: 'Нет'
-        }
-      ]
-    )
-  }
+  const confirmeDelete = (id: string) =>
+    Alert.alert("Подтверждение", "Вы хотите удалить эту тренировку?", [
+      {
+        text: "Да",
+        onPress: () => deleteHandler(id),
+      },
+      {
+        text: "Нет",
+      },
+    ]);
 
   const showStartDatePicker = () => {
     setOpenStartDatePicker(true);

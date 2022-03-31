@@ -54,8 +54,8 @@ const settingsInitialState = {
 };
 
 const settingsReducer = (
-    state = settingsInitialState,
-    action: SETTINGS_ACTION
+  state = settingsInitialState,
+  action: SETTINGS_ACTION
 ) => {
   switch (action.type) {
     case GET_SETTINGS: {

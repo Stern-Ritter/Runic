@@ -17,8 +17,12 @@ class FirebaseSettingsModel extends SettingsModel {
 
   async get(userUID: string): Promise<Settings | null> {
     try {
-      const ref = doc(this.db, this.rootCollectionName, userUID, this.documentName)
-        .withConverter(settingsConverter);
+      const ref = doc(
+        this.db,
+        this.rootCollectionName,
+        userUID,
+        this.documentName
+      ).withConverter(settingsConverter);
       const querySnapshot = await getDoc(ref);
       console.log("Received settings");
       return querySnapshot.exists() ? querySnapshot.data() : new Settings();

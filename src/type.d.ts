@@ -16,6 +16,6 @@ type ActivityIndicators = {
 };
 
 type LineChartDataElement = {
-  month: string,
-  distance: number 
-}
+  month: string;
+  distance: number;
+};

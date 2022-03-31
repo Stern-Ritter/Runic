@@ -11,9 +11,9 @@ const firebaseConfig = {
   appId: "1:841740018255:web:a0c73529c42b0ec842403a",
 };
 
-export { 
+export {
   rootCollectionName,
   activitiesCollectionName,
   settingsDocumentName,
-  firebaseConfig 
+  firebaseConfig,
 };

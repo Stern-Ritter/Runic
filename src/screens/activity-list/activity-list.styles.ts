@@ -6,7 +6,7 @@ import {
   ALICE_BLUE_COLOR,
   MEDIUM_STATE_BLUE_COLOR,
   WHITE_SMOKE_COLOR,
-  WHITE_COLOR
+  WHITE_COLOR,
 } from "../../utils/colors";
 
 const styles = StyleSheet.create({
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   list: {
-    height: "100%"
+    height: "100%",
   },
   itemContainer: {
     margin: 8,

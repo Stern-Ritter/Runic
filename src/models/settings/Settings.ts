@@ -3,11 +3,13 @@ class Settings {
   distanceGoal: number;
   caloriesGoal: number;
 
-  constructor(option = { 
+  constructor(
+    option = {
       nickName: "Пользователь",
       distanceGoal: 10,
-      caloriesGoal: 1000 
-    }) {
+      caloriesGoal: 1000,
+    }
+  ) {
     const { nickName, distanceGoal, caloriesGoal } = option;
     this.nickName = nickName;
     this.distanceGoal = distanceGoal;
