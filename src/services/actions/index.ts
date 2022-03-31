@@ -38,3 +38,14 @@ export {
   setAuthenticationFormValue,
   setAuthenticationFormErrorMessage,
 } from "./authentication-form";
+
+export {
+  GET_SETTINGS,
+  GET_SETTINGS_SUCCESS,
+  GET_SETTINGS_FAILED,
+  UPDATE_SETTINGS,
+  UPDATE_SETTINGS_SUCCESS,
+  UPDATE_SETTINGS_FAILED,
+  getSettings,
+  updateSettings
+} from './settings';
