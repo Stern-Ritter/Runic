@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
     color: ROYAL_BLUE_COLOR,
+    textAlign: "center",
     textTransform: "uppercase",
   },
   error: {

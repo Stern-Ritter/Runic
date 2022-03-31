@@ -96,7 +96,7 @@ function Analytics() {
 
   return (
     <ScrollableTabView style={styles.tabView} renderTabBar={renderTabBar}>
-      <View tabLabel="Цели" key="progress">
+      <View tabLabel="Цели">
         <ProgressChart
           data={progressRingData}
           width={screenWidth}
@@ -107,7 +107,7 @@ function Analytics() {
           hideLegend={false}
         />
       </View>
-      <View tabLabel="Динамика" key="line">
+      <View tabLabel="Динамика">
         <LineChart
           data={lineChartData}
           width={screenWidth}
@@ -117,6 +117,7 @@ function Analytics() {
           verticalLabelRotation={25}
           renderDotContent={({ x, y, index, indexData }) => (
             <View
+              key={index}
               style={{
                 position: "absolute",
                 top: y,
@@ -128,7 +129,7 @@ function Analytics() {
           )}
         />
       </View>
-      <View tabLabel="Активность" key="activities">
+      <View tabLabel="Активность">
         <ContributionGraph
           values={heatmapData}
           endDate={new Date()}
