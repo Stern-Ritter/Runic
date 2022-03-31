@@ -8,9 +8,7 @@ import {
   UPDATE_SETTINGS_FAILED,
 } from "../actions";
 
-import {
-  ISETTINGS_FORM_SET_VALUE
-} from '../actions/settings';
+import { ISETTINGS_FORM_SET_VALUE } from "../actions/settings";
 
 type IGET_SETTINGS = {
   type: "GET_SETTINGS";
@@ -100,9 +98,9 @@ const settingsReducer = (
           data: {
             ...state.settings.data,
             [action.payload.field]: action.payload.value,
-          }
-        }
-      }
+          },
+        },
+      };
     }
     case UPDATE_SETTINGS: {
       return {

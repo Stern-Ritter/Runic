@@ -16,15 +16,14 @@ export const setSettingsFormValue = ({
   value,
 }: {
   field: string;
-  value: string | number
-}) => ({
-  type: SETTINGS_FORM_SET_VALUE,
-  payload: { field, value },
-} as const );
+  value: string | number;
+}) =>
+  ({
+    type: SETTINGS_FORM_SET_VALUE,
+    payload: { field, value },
+  } as const);
 
-export type ISETTINGS_FORM_SET_VALUE = ReturnType<
-  typeof setSettingsFormValue
->;
+export type ISETTINGS_FORM_SET_VALUE = ReturnType<typeof setSettingsFormValue>;
 
 export function getSettings(userUID: string) {
   return async function (dispatch: AppDispatch) {

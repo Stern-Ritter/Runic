@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
@@ -12,7 +12,11 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import Settings from "../../models/settings/Settings";
-import { setSettingsFormValue, getSettings, updateSettings } from "../../services/actions";
+import {
+  setSettingsFormValue,
+  getSettings,
+  updateSettings,
+} from "../../services/actions";
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
 import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
@@ -37,8 +41,12 @@ function Profile() {
     data: { nickName, distanceGoal, caloriesGoal },
   } = useSelector((store: State) => store.settings.settings);
 
-  const updateIsLoading = useSelector((store: State) => store.settings.updateSettingsRequest);
-  const updateHasError = useSelector((store: State) => store.settings.updateSettingsFailed);
+  const updateIsLoading = useSelector(
+    (store: State) => store.settings.updateSettingsRequest
+  );
+  const updateHasError = useSelector(
+    (store: State) => store.settings.updateSettingsFailed
+  );
 
   const nextInputFocus = (ref: TextInput | null) => {
     if (ref) {
@@ -68,12 +76,12 @@ function Profile() {
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <Image
+        <View style={styles.container}>
+          <Image
             style={styles.image}
             source={require("../../assets/images/rune.png")}
-        />
-        <TextInput
+          />
+          <TextInput
             placeholder="Никнейм"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
             keyboardType="phone-pad"
@@ -83,14 +91,16 @@ function Profile() {
             value={nickName}
             style={styles.input}
           />
-        <TextInput
+          <TextInput
             ref={distanceGoalRef}
             placeholder="Цель дистанции"
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
             keyboardType="phone-pad"
             returnKeyType="next"
             onSubmitEditing={() => nextInputFocus(caloriesGoalRef.current)}
-            onChangeText={(value) => onInputChange("distanceGoal", Number(value))}
+            onChangeText={(value) =>
+              onInputChange("distanceGoal", Number(value))
+            }
             value={String(distanceGoal)}
             style={styles.input}
           />
@@ -100,7 +110,9 @@ function Profile() {
             placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
             keyboardType="phone-pad"
             returnKeyType="next"
-            onChangeText={(value) => onInputChange("caloriesGoal", Number(value))}
+            onChangeText={(value) =>
+              onInputChange("caloriesGoal", Number(value))
+            }
             value={String(caloriesGoal)}
             style={styles.input}
           />
@@ -118,7 +130,7 @@ function Profile() {
           >
             <Text style={styles.buttonText}>Зарегистрироваться</Text>
           </TouchableOpacity>
-      </View>
+        </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
