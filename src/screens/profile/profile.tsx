@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
 import {
   View,
   Image,
@@ -73,6 +74,10 @@ function Profile() {
     }
   };
 
+  const logout = () => {
+    signOut(auth);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
@@ -129,6 +134,13 @@ function Profile() {
             style={styles.button}
           >
             <Text style={styles.buttonText}>Сохранить</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={logout}
+            disabled={updateIsLoading}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Сменить пользователя</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
