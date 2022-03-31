@@ -99,9 +99,6 @@ function Login({ navigation }: LoginScreenProps) {
           <TouchableOpacity onPress={onFormSend} style={styles.button}>
             <Text style={styles.buttonText}>Войти</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={goToCreateAccount} style={styles.button}>
-            <Text style={styles.buttonText}>Зарегистрироваться</Text>
-          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
