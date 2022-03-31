@@ -128,7 +128,7 @@ function Profile() {
             disabled={updateIsLoading}
             style={styles.button}
           >
-            <Text style={styles.buttonText}>Зарегистрироваться</Text>
+            <Text style={styles.buttonText}>Сохранить</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

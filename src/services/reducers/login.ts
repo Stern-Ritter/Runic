@@ -7,7 +7,7 @@ import {
 import {
   IAUTHENTICATION_FORM_SET_VALUE,
   IAUTHENTICATION_FORM_SET_ERROR_MESSAGE,
-} from "../actions/authentication-form";
+} from "../actions/login";
 
 type IAUTHENTICATION_FORM_CLEAR_STATE = {
   type: "AUTHENTICATION_FORM_CLEAR_STATE";

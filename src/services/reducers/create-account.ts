@@ -8,7 +8,7 @@ import {
 import {
   ICREATE_USER_FORM_SET_VALUE,
   ICREATE_USER_FORM_SET_ERROR_MESSAGE,
-} from "../actions/create-user-form";
+} from "../actions/create-account";
 
 type ICREATE_USER_FORM_CLEAR_STATE = {
   type: "CREATE_USER_FORM_CLEAR_STATE";

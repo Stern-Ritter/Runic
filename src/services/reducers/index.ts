@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 import activitiesReducer from "./activities";
 import mapReducer from "./map";
-import authenticationReducer from "./authentication-from";
-import createUserReducer from "./create-user-form";
-import settingsReducer from "./settings";
+import authenticationReducer from "./login";
+import createUserReducer from "./create-account";
+import settingsReducer from "./profile";
 
 export const rootReducer = combineReducers({
   createUserForm: createUserReducer,

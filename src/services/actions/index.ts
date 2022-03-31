@@ -29,7 +29,7 @@ export {
   CREATE_USER_FROM_SUCCESS,
   setCreateUserFormValue,
   setCreateUserFormErrorMessage,
-} from "./create-user-form";
+} from "./create-account";
 
 export {
   AUTHENTICATION_FORM_SET_VALUE,
@@ -37,7 +37,7 @@ export {
   AUTHENTICATION_FORM_SET_ERROR_MESSAGE,
   setAuthenticationFormValue,
   setAuthenticationFormErrorMessage,
-} from "./authentication-form";
+} from "./login";
 
 export {
   GET_SETTINGS,
@@ -50,4 +50,4 @@ export {
   setSettingsFormValue,
   getSettings,
   updateSettings,
-} from "./settings";
+} from "./profile";
