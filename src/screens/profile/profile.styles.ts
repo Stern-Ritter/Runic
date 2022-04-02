@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 8,
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: "600",
     color: MEDIUM_STATE_BLUE_COLOR,
   },
@@ -35,16 +35,17 @@ const styles = StyleSheet.create({
   },
   label: {
     alignSelf: "flex-start",
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "left",
   },
   input: {
-    padding: 16,
+    padding: 8,
     marginBottom: 18,
     borderWidth: 1,
     borderColor: MEDIUM_STATE_BLUE_COLOR,
     borderRadius: 12,
     backgroundColor: WHITE_SMOKE_COLOR,
+    fontSize: 12,
   },
   button: {
     width: "55%",
