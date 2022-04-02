@@ -13,7 +13,10 @@ import {} from 'expo-font';
 import alasql from "alasql";
 import Tab from "../../components/tab/tab";
 import { yearMonthDateFormat } from "../../utils/constants";
-import { getDateWithoutTimeWithShift } from "../../utils/date";
+import { 
+  getDateWithoutTimeWithShift,
+  getFirstAndLastWeekDaysWithoutTime
+} from "../../utils/date";
 import { MIDNIGHT_MOSS_COLOR, ROYAL_BLUE_COLOR } from "../../utils/colors";
 import { State } from "../../services/store/store";
 import styles from "./analytics.styles";
@@ -62,6 +65,7 @@ function Analytics() {
       data.map((element) => ({
         ...element,
         createdDate: element.createdDate.toISOString().slice(0, 10),
+        orderMonth: element.createdDate.toISOString().slice(0, 7),
         month: element.createdDate.toLocaleString("Ru-ru", yearMonthDateFormat),
       })),
     [data]
@@ -72,11 +76,14 @@ function Analytics() {
       `
     SELECT 
       month,
+      orderMonth,
       SUM(distance) AS distance
     FROM ? 
-    GROUP BY month`,
-      [formatedData]
+    GROUP BY month, orderMonth
+    ORDER BY orderMonth ASC`,
+    [formatedData]
     ) as LineChartDataElement[];
+
     return {
       labels: res.map((element) => element.month),
       datasets: [
@@ -91,8 +98,7 @@ function Analytics() {
   }, [formatedData]);
 
   const progressRingData = useMemo(() => {
-    const minDate = getDateWithoutTimeWithShift(-7);
-    const maxDate = getDateWithoutTimeWithShift(0);
+    const [ minDate, maxDate ] = getFirstAndLastWeekDaysWithoutTime();
 
     const filteredAggrData = data
       .filter((activity) => {

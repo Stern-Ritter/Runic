@@ -13,8 +13,8 @@ const filterDateTimeFormat: Intl.DateTimeFormatOptions = {
 };
 
 const yearMonthDateFormat: Intl.DateTimeFormatOptions = {
-  year: "numeric",
   month: "short",
+  year: "numeric",
 };
 
 export { createdDateTimeFormat, filterDateTimeFormat, yearMonthDateFormat };
