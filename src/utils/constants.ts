@@ -17,4 +17,6 @@ const yearMonthDateFormat: Intl.DateTimeFormatOptions = {
   year: "numeric",
 };
 
-export { createdDateTimeFormat, filterDateTimeFormat, yearMonthDateFormat };
+const monthCount = 6;
+
+export { createdDateTimeFormat, filterDateTimeFormat, yearMonthDateFormat, monthCount };

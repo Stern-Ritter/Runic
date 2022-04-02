@@ -12,7 +12,10 @@ import {
 import {} from 'expo-font';
 import alasql from "alasql";
 import Tab from "../../components/tab/tab";
-import { yearMonthDateFormat } from "../../utils/constants";
+import { 
+  yearMonthDateFormat,
+  monthCount
+} from "../../utils/constants";
 import { 
   getFirstAndLastWeekDaysWithoutTime
 } from "../../utils/date";
@@ -84,12 +87,12 @@ function Analytics() {
     ) as LineChartDataElement[];
 
     return {
-      labels: res.map((element) => element.month),
+      labels: res.map((element) => element.month).slice(-monthCount),
       datasets: [
         {
           data: res.map(
             (element: { month: string; distance: number }) => element.distance
-          ),
+          ).slice(-monthCount),
         },
       ],
       legend: ["Километры"],
