@@ -14,7 +14,6 @@ import alasql from "alasql";
 import Tab from "../../components/tab/tab";
 import { yearMonthDateFormat } from "../../utils/constants";
 import { 
-  getDateWithoutTimeWithShift,
   getFirstAndLastWeekDaysWithoutTime
 } from "../../utils/date";
 import { MIDNIGHT_MOSS_COLOR, ROYAL_BLUE_COLOR } from "../../utils/colors";
