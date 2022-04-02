@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Platform,
   View,
   Image,
   Text,
@@ -68,7 +69,10 @@ function CreateAccount() {
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView 
+        behavior={(Platform.OS === 'ios')? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
         <View style={styles.container}>
           <Image
             style={styles.image}
