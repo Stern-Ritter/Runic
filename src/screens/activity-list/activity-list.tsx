@@ -5,7 +5,6 @@ import {
   View,
   Text,
   FlatList,
-  Button,
   TouchableOpacity,
   Alert,
 } from "react-native";
@@ -14,7 +13,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import Activity from "../../models/activity/Activity";
 import { State } from "../../services/store/store";
 import { deleteActivity, SET_ACTIVITIES_FILTERS } from "../../services/actions";
-import { GREY_COLOR, ROYAL_BLUE_COLOR } from "../../utils/colors";
+import { GREY_COLOR, MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import {
   filterDateTimeFormat,
   createdDateTimeFormat,
@@ -134,7 +133,7 @@ function ActivityList() {
             <FontAwesome5
               name="stopwatch"
               size={18}
-              color={ROYAL_BLUE_COLOR}
+              color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.icon}
             />
             <Text style={styles.infoElement}>{formatedDuration}</Text>
@@ -143,7 +142,7 @@ function ActivityList() {
             <FontAwesome5
               name="map-marker-alt"
               size={18}
-              color={ROYAL_BLUE_COLOR}
+              color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.icon}
             />
             <Text style={styles.infoElement}>{distance} km</Text>
@@ -152,7 +151,7 @@ function ActivityList() {
             <FontAwesome5
               name="burn"
               size={18}
-              color={ROYAL_BLUE_COLOR}
+              color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.icon}
             />
             <Text style={styles.infoElement}>{calories} calories</Text>
@@ -179,11 +178,13 @@ function ActivityList() {
             <FontAwesome5
               name="calendar-check"
               size={22}
-              color={ROYAL_BLUE_COLOR}
+              color={MEDIUM_STATE_BLUE_COLOR}
             />
             <Text style={styles.filterText}>{formatedStartDate}</Text>
           </View>
-          <Button title="Выбрать дату" onPress={showStartDatePicker} />
+          <TouchableOpacity onPress={showStartDatePicker} style={styles.button}>
+            <Text style={styles.buttonText}>Выбрать дату</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.filterDelimiter}>-</Text>
         <View>
@@ -191,11 +192,13 @@ function ActivityList() {
             <FontAwesome5
               name="calendar-check"
               size={22}
-              color={ROYAL_BLUE_COLOR}
+              color={MEDIUM_STATE_BLUE_COLOR}
             />
             <Text style={styles.filterText}>{formatedEndDate}</Text>
           </View>
-          <Button title="Выбрать дату" onPress={showEndDatePicker} />
+          <TouchableOpacity onPress={showEndDatePicker} style={styles.button}>
+            <Text style={styles.buttonText}>Выбрать дату</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <DateTimePickerModal

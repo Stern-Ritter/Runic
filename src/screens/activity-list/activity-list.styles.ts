@@ -7,6 +7,7 @@ import {
   MEDIUM_STATE_BLUE_COLOR,
   WHITE_SMOKE_COLOR,
   WHITE_COLOR,
+  MINT_CREAM_COLOR,
 } from "../../utils/colors";
 
 const styles = StyleSheet.create({
@@ -37,6 +38,20 @@ const styles = StyleSheet.create({
   filterDelimiter: {
     fontSize: 22,
     fontWeight: "600",
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 4,
+    marginTop: 8,
+    backgroundColor: MEDIUM_STATE_BLUE_COLOR,
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontSize: 12,
+    fontWeight: "400",
+    color: WHITE_COLOR,
+    textTransform: "uppercase",
   },
   list: {
     height: "100%",
