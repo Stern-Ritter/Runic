@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useCallback, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Alert, Text, View, Button } from "react-native";
+import { ActivityIndicator, Alert, Text, View, TouchableOpacity } from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
+import { FontAwesome5 } from "@expo/vector-icons";
 import MapMarker from "../../components/map-marker/map-marker";
 import Activity from "../../models/activity/Activity";
 import {
@@ -16,12 +17,31 @@ import {
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
 import formatTime from "../../utils/formatTime";
+import {MEDIUM_STATE_BLUE_COLOR} from '../../utils/colors';
+import styles from "./map.styles";
 
 const geoPositionUpdateInterval = 1000;
 
 function Map() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
+  const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
+  const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
+
+  useEffect(() => {
+    getForPerm();
+    getBackPerm();
+    Location.enableNetworkProviderAsync();
+  }, []);
+
+  const getForPerm = async () => {
+    await requestForegroundPermission();
+    console.log("for", foregroundStatus?.granted);
+  };
+  const getBackPerm = async () => {
+    await requesBackgroundPermission();
+    console.log("back", backgroundStatus?.granted);
+  };
 
   const [duration, setDuration] = useState(0);
   const [startGeoPosition, setStartGeoPosition] = useState<Location.LocationObjectCoords>();
@@ -89,19 +109,59 @@ function Map() {
   };
 
   return (
-    <>
-      <Text style={{ flex: 1, marginTop: 30, marginLeft: 40 }}>
-        {`
-        Количество координат: ${coords.length}
-        Время: ${formatTime(duration)}
-        Расстояние: ${distance.toFixed(2)}
-        Калории: ${calories.toFixed(0)}
-        `}
-      </Text>
-      {startGeoPosition && (
+    <View style={styles.main}>
+      <Text >{coords.length}</Text>
+
+      <View style={styles.info}>
+      <View style={styles.infoContainer}>
+          <View style={styles.indicatorContainer}>
+          <FontAwesome5
+              name="stopwatch"
+              size={24}
+              color={MEDIUM_STATE_BLUE_COLOR}
+              style={styles.indicatorIcon}
+          />
+          <Text style={styles.indicator}>{formatTime(duration)}</Text>
+          </View>
+          <View style={styles.indicatorContainer}>
+          <FontAwesome5
+              name="map-marker-alt"
+              size={24}
+              color={MEDIUM_STATE_BLUE_COLOR}
+              style={styles.indicatorIcon}
+          />
+          <Text style={styles.indicator}>{`${distance.toFixed(2)} km`}</Text>
+          </View>
+      </View>
+
+      <View style={styles.infoContainer}>
+          <View style={styles.indicatorContainer}>
+          <FontAwesome5
+              name="running"
+              size={24}
+              color={MEDIUM_STATE_BLUE_COLOR}
+              style={styles.indicatorIcon}
+          />
+          <Text style={styles.indicator}>{`${(distance / (duration / 3600000) || 0).toFixed(2)} km/h`}</Text>
+          </View>
+          <View style={styles.indicatorContainer}>
+          <FontAwesome5
+              name="burn"
+              size={24}
+              color={MEDIUM_STATE_BLUE_COLOR}
+              style={styles.indicatorIcon}
+          />
+          <Text style={styles.indicator}>{`${calories.toFixed(0)} cal`}</Text>
+          </View>
+      </View>
+      </View>
+
+
+      {startGeoPosition ? (
         <>
+        <View style={styles.mapContainer}>
           <MapView
-            style={{ position: "relative", flex: 6 }}
+            style={styles.map}
             provider={PROVIDER_GOOGLE}
             showsUserLocation
             initialRegion={{
@@ -137,33 +197,45 @@ function Map() {
 
             <Polyline
               coordinates={coords}
-              strokeColor={"#4169E1"}
+              strokeColor={MEDIUM_STATE_BLUE_COLOR}
               strokeWidth={10}
               lineDashPattern={[1]}
             />
           </MapView>
+          </View>
 
           <View
-            style={{
-              position: "absolute",
-              bottom: 50,
-              left: 0,
-              padding: 20,
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
+            style={styles.buttons}
           >
-            {!isStarted && <Button onPress={startHandler} title="Старт" />}
+            {!isStarted && 
+              <TouchableOpacity onPress={startHandler} style={styles.button}>
+                <Text style={styles.buttonText}>Начать</Text>
+              </TouchableOpacity>
+            }
+
             {isStarted && !isPaused && (
-              <Button onPress={pauseHandler} title="Пауза" />
+              <TouchableOpacity onPress={pauseHandler} style={styles.button}>
+                <Text style={styles.buttonText}>Пауза</Text>
+              </TouchableOpacity>
             )}
-            {isPaused && <Button onPress={resumeHandler} title="Продолжить" />}
-            {isStarted && <Button onPress={finishHandler} title="Завершить" />}
+
+            {isPaused && 
+              <TouchableOpacity onPress={resumeHandler} style={styles.button}>
+                <Text style={styles.buttonText}>Продолжить</Text>
+              </TouchableOpacity>
+            }
+
+            {isStarted && 
+              <TouchableOpacity onPress={finishHandler} style={styles.button}>
+                <Text style={styles.buttonText}>Завершить</Text>
+              </TouchableOpacity>
+            }
           </View>
         </>
+      ) : (
+          <ActivityIndicator  style={styles.loading} size="large" color={MEDIUM_STATE_BLUE_COLOR}/>
       )}
-    </>
+    </View>
   );
 }
 

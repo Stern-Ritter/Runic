@@ -36,7 +36,8 @@ function LoggedInNavigation() {
         tabBarActiveTintColor: MEDIUM_STATE_BLUE_COLOR,
         tabBarStyle: {
           borderTopWidth: 1,
-          borderTopColor: "rgba(119, 136, 153, 0.4)",
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
         },
       }}
     >

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Provider } from "react-redux";
-import * as Location from "expo-location";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -14,35 +13,16 @@ import { auth } from "./src/models/storage";
 import 'intl';
 import 'intl/locale-data/jsonp/ru';
 
-
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [user] = useAuthState(auth);
 
-  const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
-  const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
-
-  useEffect(() => {
-    getForPerm();
-    getBackPerm();
-    Location.enableNetworkProviderAsync();
-  }, []);
-
-  const getForPerm = async () => {
-    const res = await requestForegroundPermission();
-    console.log("for", res);
-  };
-  const getBackPerm = async () => {
-    const res = await requesBackgroundPermission();
-    console.log("back", res);
-  };
-
-  const onLoading = () => {
+  const onLoading = async () => {
     const fontsToLoad = [FontAwesome5.font];
     const imagesToLoad = [require("./src/assets/images/rune.png")];
     const fontsPromises = fontsToLoad.map((font) => Font.loadAsync(font));
     const imagesPromises = imagesToLoad.map((image) => Asset.loadAsync(image));
-    return Promise.all([...fontsPromises, ...imagesPromises]);
+    Promise.all([...fontsPromises, ...imagesPromises]);
   };
   const onFinish = () => {
     setLoading(false);
@@ -50,7 +30,6 @@ export default function App() {
 
   return loading ? (
     <AppLoading
-      // @ts-ignore
       startAsync={onLoading}
       onFinish={onFinish}
       onError={console.warn}
