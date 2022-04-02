@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Alert, Platform, StyleSheet, Text, View, Button } from "react-native";
+import { Alert, Text, View, Button } from "react-native";
 import * as Location from "expo-location";
-import * as TaskManager from "expo-task-manager";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import MapMarker from "../../components/map-marker/map-marker";
 import Activity from "../../models/activity/Activity";
@@ -18,101 +17,14 @@ import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
 import formatTime from "../../utils/formatTime";
 
-// const exapleActivities = [
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2022, 2, 28),
-//   duration: 77 * 1000,
-//   distance: 17,
-//   calories: 17 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2022, 2, 24),
-//   duration: 47 * 1000,
-//   distance: 10,
-//   calories: 10 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2022, 2, 22),
-//   duration: 53 * 1000,
-//   distance: 12,
-//   calories: 12 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2022, 2, 1),
-//   duration: 60 * 1000,
-//   distance: 12,
-//   calories: 12 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2022, 1, 10),
-//   duration: 45 * 1000,
-//   distance: 8,
-//   calories: 8 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2022, 1, 1),
-//   duration: 38 * 1000,
-//   distance: 5,
-//   calories: 5 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2022, 0, 1),
-//   duration: 22 * 1000,
-//   distance: 3,
-//   calories: 3 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2021, 11, 28),
-//   duration: 110 * 1000,
-//   distance: 20,
-//   calories: 20 * 70,
-//   coords: []
-// }),
-// new Activity({
-//   name: "Бег",
-//   createdDate: new Date(2021, 10, 12),
-//   duration: 35 * 1000,
-//   distance: 9,
-//   calories: 9 * 70,
-//   coords: []
-// }),
-// ];
-
 const geoPositionUpdateInterval = 1000;
-const TASK_FETCH_LOCATION = "TASK_FETCH_LOCATION";
-const fetchLocationOptions = {
-  accuracy: Location.Accuracy.Highest,
-  distanceInterval: 1, // minimum change (in meters) betweens updates
-  deferredUpdatesInterval: 1000, // minimum interval (in milliseconds) between updates
-  foregroundService: {
-    notificationTitle: "Using your location",
-    notificationBody:
-      "To turn off, go back to the app and switch something off.",
-  },
-};
 
 function Map() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
 
   const [duration, setDuration] = useState(0);
-  const [startGeoPosition, setStartGeoPosition] =
-    useState<Location.LocationObjectCoords>();
+  const [startGeoPosition, setStartGeoPosition] = useState<Location.LocationObjectCoords>();
   const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
 
   const getStartGeoPosition = async () => {
@@ -128,25 +40,7 @@ function Map() {
 
   useEffect(() => {
     getStartGeoPosition();
-    // exapleActivities.forEach((el) => {
-    //   if(user?.uid) {
-    //     dispatch(createActivity(user.uid, el));
-    //   }
-    // })
   }, []);
-
-  TaskManager.defineTask(
-    TASK_FETCH_LOCATION,
-    async ({ data: { locations }, error }) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-      console.log(locations);
-      const [location] = locations;
-      dispatch({ type: ADD_COORDINATE, payload: location });
-    }
-  );
 
   const {
     isStarted,
@@ -163,45 +57,22 @@ function Map() {
 
   const startHandler = async () => {
     dispatch({ type: START_ACTIVITY });
-    dispatch({ type: ADD_COORDINATE, payload: startGeoPosition });
-    Location.startLocationUpdatesAsync(
-      TASK_FETCH_LOCATION,
-      fetchLocationOptions
-    );
     const timerIntervalId = setInterval(updateTimer, 1000);
     setTimerInterval(timerIntervalId);
   };
 
   const pauseHandler = () => {
     dispatch({ type: PAUSE_ACTIVITY });
-    Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
-      (task) => {
-        if (task) {
-          Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION);
-        }
-      }
-    );
     if (timerInterval) clearInterval(timerInterval);
   };
 
   const resumeHandler = async () => {
     dispatch({ type: RESUME_ACTIVITY });
-    Location.startLocationUpdatesAsync(
-      TASK_FETCH_LOCATION,
-      fetchLocationOptions
-    );
     const timerIntervalId = setInterval(updateTimer, 1000);
     setTimerInterval(timerIntervalId);
   };
 
   const finishHandler = () => {
-    Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
-      (task) => {
-        if (task) {
-          Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION);
-        }
-      }
-    );
     if (timerInterval) clearInterval(timerInterval);
     const activity = new Activity({
       name: "Бег",
