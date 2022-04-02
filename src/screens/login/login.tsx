@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Platform,
   View,
   Image,
   Text,
@@ -49,10 +50,6 @@ function Login({ navigation }: LoginScreenProps) {
     Keyboard.dismiss();
   };
 
-  const goToCreateAccount = () => {
-    navigation.navigate("CreateAccount");
-  };
-
   const onInputChange = (field: string, value: string) => {
     dispatch(setAuthenticationFormValue({ field, value }));
   };
@@ -65,7 +62,10 @@ function Login({ navigation }: LoginScreenProps) {
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={(Platform.OS === 'ios')? "padding" : undefined} 
+        style={{ flex: 1 }}
+      >
         <View style={styles.container}>
           <Image
             style={styles.image}
