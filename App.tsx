@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Provider } from "react-redux";
+import * as Location from "expo-location";
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -10,30 +11,31 @@ import LoggedInNavigation from "./src/navigators/logged-in-nav";
 import LoggedOutNavigation from "./src/navigators/logged-out-nav";
 import { store } from "./src/services/store/store";
 import { auth } from "./src/models/storage";
+import 'intl';
+import 'intl/locale-data/jsonp/ru';
 
-// import * as Location from "expo-location";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [user] = useAuthState(auth);
 
-  // const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
-  // const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
+  const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
+  const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
 
-  // useEffect(() => {
-  //   getForPerm();
-  //   getBackPerm();
-  //   Location.enableNetworkProviderAsync();
-  // }, []);
+  useEffect(() => {
+    getForPerm();
+    getBackPerm();
+    Location.enableNetworkProviderAsync();
+  }, []);
 
-  // const getForPerm = async () => {
-  //   const res = await requestForegroundPermission();
-  //   console.log("for", res);
-  // };
-  // const getBackPerm = async () => {
-  //   const res = await requesBackgroundPermission();
-  //   console.log("back", res);
-  // };
+  const getForPerm = async () => {
+    const res = await requestForegroundPermission();
+    console.log("for", res);
+  };
+  const getBackPerm = async () => {
+    const res = await requesBackgroundPermission();
+    console.log("back", res);
+  };
 
   const onLoading = () => {
     const fontsToLoad = [FontAwesome5.font];
