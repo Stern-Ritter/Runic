@@ -149,7 +149,7 @@ function Analytics() {
       initialPage={1}
       renderTabBar={renderTabBar}
       tabBarActiveTextColor={ROYAL_BLUE_COLOR}
-      tabBarTextStyle={{fontFamily: 'Roboto', fontSize: 15}}
+      tabBarTextStyle={{fontSize: 15}}
       scrollWithoutAnimation
     >
       <Tab tabLabel="Цели">
