@@ -31,6 +31,7 @@ function LoggedInNavigation() {
       screenOptions={{
         headerShadowVisible: false,
         headerTintColor: ROYAL_BLUE_COLOR,
+        headerTitleAlign: "center",
         tabBarShowLabel: false,
         tabBarActiveTintColor: MEDIUM_STATE_BLUE_COLOR,
         tabBarStyle: {
