@@ -12,7 +12,9 @@ function LoggedOutNavigation() {
       screenOptions={{
         headerBackVisible: false,
         headerTransparent: true,
+        headerBlurEffect: "extraLight",
         headerTintColor: MEDIUM_STATE_BLUE_COLOR,
+        headerTitleAlign: "center",
       }}
     >
       <Stack.Screen
