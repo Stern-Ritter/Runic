@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
+  Platform,
   View,
   Text,
   FlatList,
@@ -92,6 +93,7 @@ function ActivityList() {
     setOpenEndDatePicker(false);
   };
   const handleConfirmStartDatePicker = (date: Date) => {
+    setOpenStartDatePicker(Platform.OS === 'ios');
     dispatch({
       type: SET_ACTIVITIES_FILTERS,
       payload: { startDate: date },
@@ -99,6 +101,7 @@ function ActivityList() {
     hideStartDatePicker();
   };
   const handleConfirmEndDatePicker = (date: Date) => {
+    setOpenEndDatePicker(Platform.OS === 'ios');
     dispatch({
       type: SET_ACTIVITIES_FILTERS,
       payload: { endDate: date },
