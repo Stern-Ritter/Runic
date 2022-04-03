@@ -69,8 +69,8 @@ function CreateAccount() {
 
   return (
     <TouchableWithoutFeedback onPress={hideKeyboard}>
-      <KeyboardAvoidingView 
-        behavior={(Platform.OS === 'ios')? "padding" : undefined}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={{ flex: 1 }}
       >
         <View style={styles.container}>

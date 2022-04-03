@@ -10,8 +10,8 @@ import LoggedInNavigation from "./src/navigators/logged-in-nav";
 import LoggedOutNavigation from "./src/navigators/logged-out-nav";
 import { store } from "./src/services/store/store";
 import { auth } from "./src/models/storage";
-import 'intl';
-import 'intl/locale-data/jsonp/ru';
+import "intl";
+import "intl/locale-data/jsonp/ru";
 
 export default function App() {
   const [loading, setLoading] = useState(true);

@@ -9,16 +9,11 @@ import {
   ProgressChart,
   ContributionGraph,
 } from "react-native-chart-kit";
-import {} from 'expo-font';
+import {} from "expo-font";
 import alasql from "alasql";
 import Tab from "../../components/tab/tab";
-import { 
-  yearMonthDateFormat,
-  monthCount
-} from "../../utils/constants";
-import { 
-  getFirstAndLastWeekDaysWithoutTime
-} from "../../utils/date";
+import { yearMonthDateFormat, monthCount } from "../../utils/constants";
+import { getFirstAndLastWeekDaysWithoutTime } from "../../utils/date";
 import { MIDNIGHT_MOSS_COLOR, ROYAL_BLUE_COLOR } from "../../utils/colors";
 import { State } from "../../services/store/store";
 import styles from "./analytics.styles";
@@ -83,16 +78,18 @@ function Analytics() {
     FROM ? 
     GROUP BY month, orderMonth
     ORDER BY orderMonth ASC`,
-    [formatedData]
+      [formatedData]
     ) as LineChartDataElement[];
 
     return {
       labels: res.map((element) => element.month).slice(-monthCount),
       datasets: [
         {
-          data: res.map(
-            (element: { month: string; distance: number }) => element.distance
-          ).slice(-monthCount),
+          data: res
+            .map(
+              (element: { month: string; distance: number }) => element.distance
+            )
+            .slice(-monthCount),
         },
       ],
       legend: ["Километры"],
@@ -100,7 +97,7 @@ function Analytics() {
   }, [formatedData]);
 
   const progressRingData = useMemo(() => {
-    const [ minDate, maxDate ] = getFirstAndLastWeekDaysWithoutTime();
+    const [minDate, maxDate] = getFirstAndLastWeekDaysWithoutTime();
 
     const filteredAggrData = data
       .filter((activity) => {
@@ -157,7 +154,7 @@ function Analytics() {
       initialPage={1}
       renderTabBar={renderTabBar}
       tabBarActiveTextColor={ROYAL_BLUE_COLOR}
-      tabBarTextStyle={{fontSize: 15}}
+      tabBarTextStyle={{ fontSize: 15 }}
       scrollWithoutAnimation
     >
       <Tab tabLabel="Цели">

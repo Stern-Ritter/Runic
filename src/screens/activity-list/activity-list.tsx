@@ -93,7 +93,7 @@ function ActivityList() {
     setOpenEndDatePicker(false);
   };
   const handleConfirmStartDatePicker = (date: Date) => {
-    setOpenStartDatePicker(Platform.OS === 'ios');
+    setOpenStartDatePicker(Platform.OS === "ios");
     dispatch({
       type: SET_ACTIVITIES_FILTERS,
       payload: { startDate: date },
@@ -101,7 +101,7 @@ function ActivityList() {
     hideStartDatePicker();
   };
   const handleConfirmEndDatePicker = (date: Date) => {
-    setOpenEndDatePicker(Platform.OS === 'ios');
+    setOpenEndDatePicker(Platform.OS === "ios");
     dispatch({
       type: SET_ACTIVITIES_FILTERS,
       payload: { endDate: date },

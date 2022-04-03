@@ -1,7 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { ActivityIndicator, Alert, Text, View, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -17,7 +23,7 @@ import {
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
 import formatTime from "../../utils/formatTime";
-import {MEDIUM_STATE_BLUE_COLOR} from '../../utils/colors';
+import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import styles from "./map.styles";
 
 const geoPositionUpdateInterval = 1000;
@@ -25,14 +31,10 @@ const geoPositionUpdateInterval = 1000;
 function Map() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
-  const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
-  const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
-
-  useEffect(() => {
-    getForPerm();
-    getBackPerm();
-    Location.enableNetworkProviderAsync();
-  }, []);
+  const [foregroundStatus, requestForegroundPermission] =
+    Location.useForegroundPermissions();
+  const [backgroundStatus, requesBackgroundPermission] =
+    Location.useBackgroundPermissions();
 
   const getForPerm = async () => {
     await requestForegroundPermission();
@@ -43,8 +45,15 @@ function Map() {
     console.log("back", backgroundStatus?.granted);
   };
 
+  useEffect(() => {
+    getForPerm();
+    getBackPerm();
+    Location.enableNetworkProviderAsync();
+  }, []);
+
   const [duration, setDuration] = useState(0);
-  const [startGeoPosition, setStartGeoPosition] = useState<Location.LocationObjectCoords>();
+  const [startGeoPosition, setStartGeoPosition] =
+    useState<Location.LocationObjectCoords>();
   const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
 
   const getStartGeoPosition = async () => {
@@ -110,108 +119,108 @@ function Map() {
 
   return (
     <View style={styles.main}>
-      <Text >{coords.length}</Text>
+      <Text>{coords.length}</Text>
 
       <View style={styles.info}>
-      <View style={styles.infoContainer}>
+        <View style={styles.infoContainer}>
           <View style={styles.indicatorContainer}>
-          <FontAwesome5
+            <FontAwesome5
               name="stopwatch"
               size={24}
               color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.indicatorIcon}
-          />
-          <Text style={styles.indicator}>{formatTime(duration)}</Text>
+            />
+            <Text style={styles.indicator}>{formatTime(duration)}</Text>
           </View>
           <View style={styles.indicatorContainer}>
-          <FontAwesome5
+            <FontAwesome5
               name="map-marker-alt"
               size={24}
               color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.indicatorIcon}
-          />
-          <Text style={styles.indicator}>{`${distance.toFixed(2)} km`}</Text>
+            />
+            <Text style={styles.indicator}>{`${distance.toFixed(2)} km`}</Text>
           </View>
-      </View>
+        </View>
 
-      <View style={styles.infoContainer}>
+        <View style={styles.infoContainer}>
           <View style={styles.indicatorContainer}>
-          <FontAwesome5
+            <FontAwesome5
               name="running"
               size={24}
               color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.indicatorIcon}
-          />
-          <Text style={styles.indicator}>{`${(distance / (duration / 3600000) || 0).toFixed(2)} km/h`}</Text>
+            />
+            <Text style={styles.indicator}>
+              {`${(distance / (duration / 3600000) || 0).toFixed(2)} km/h`}
+            </Text>
           </View>
           <View style={styles.indicatorContainer}>
-          <FontAwesome5
+            <FontAwesome5
               name="burn"
               size={24}
               color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.indicatorIcon}
-          />
-          <Text style={styles.indicator}>{`${calories.toFixed(0)} cal`}</Text>
+            />
+            <Text style={styles.indicator}>{`${calories.toFixed(0)} cal`}</Text>
           </View>
+        </View>
       </View>
-      </View>
-
 
       {startGeoPosition ? (
         <>
-        <View style={styles.mapContainer}>
-          <MapView
-            style={styles.map}
-            provider={PROVIDER_GOOGLE}
-            showsUserLocation
-            initialRegion={{
-              latitude: lastGeoPosition?.latitude || startGeoPosition.latitude,
-              longitude:
-                lastGeoPosition?.longitude || startGeoPosition.longitude,
-              latitudeDelta: 0.0015,
-              longitudeDelta: 0.0015,
-            }}
-            // onRegionChangeComplete={}
-          >
-            {isStarted && coords.length > 0 && (
-              <Marker
-                coordinate={{
-                  latitude: coords[0].latitude,
-                  longitude: coords[0].longitude,
-                }}
-              >
-                <MapMarker>Старт</MapMarker>
-              </Marker>
-            )}
+          <View style={styles.mapContainer}>
+            <MapView
+              style={styles.map}
+              provider={PROVIDER_GOOGLE}
+              showsUserLocation
+              initialRegion={{
+                latitude:
+                  lastGeoPosition?.latitude || startGeoPosition.latitude,
+                longitude:
+                  lastGeoPosition?.longitude || startGeoPosition.longitude,
+                latitudeDelta: 0.0015,
+                longitudeDelta: 0.0015,
+              }}
+              // onRegionChangeComplete={}
+            >
+              {isStarted && coords.length > 0 && (
+                <Marker
+                  coordinate={{
+                    latitude: coords[0].latitude,
+                    longitude: coords[0].longitude,
+                  }}
+                >
+                  <MapMarker>Старт</MapMarker>
+                </Marker>
+              )}
 
-            {!isStarted && coords.length > 0 && (
-              <Marker
-                coordinate={{
-                  latitude: coords[coords.length - 1].latitude,
-                  longitude: coords[coords.length - 1].longitude,
-                }}
-              >
-                <MapMarker>Финиш</MapMarker>
-              </Marker>
-            )}
+              {!isStarted && coords.length > 0 && (
+                <Marker
+                  coordinate={{
+                    latitude: coords[coords.length - 1].latitude,
+                    longitude: coords[coords.length - 1].longitude,
+                  }}
+                >
+                  <MapMarker>Финиш</MapMarker>
+                </Marker>
+              )}
 
-            <Polyline
-              coordinates={coords}
-              strokeColor={MEDIUM_STATE_BLUE_COLOR}
-              strokeWidth={10}
-              lineDashPattern={[1]}
-            />
-          </MapView>
+              <Polyline
+                coordinates={coords}
+                strokeColor={MEDIUM_STATE_BLUE_COLOR}
+                strokeWidth={10}
+                lineDashPattern={[1]}
+              />
+            </MapView>
           </View>
 
-          <View
-            style={styles.buttons}
-          >
-            {!isStarted && 
+          <View style={styles.buttons}>
+            {!isStarted && (
               <TouchableOpacity onPress={startHandler} style={styles.button}>
                 <Text style={styles.buttonText}>Начать</Text>
               </TouchableOpacity>
-            }
+            )}
 
             {isStarted && !isPaused && (
               <TouchableOpacity onPress={pauseHandler} style={styles.button}>
@@ -219,21 +228,25 @@ function Map() {
               </TouchableOpacity>
             )}
 
-            {isPaused && 
+            {isPaused && (
               <TouchableOpacity onPress={resumeHandler} style={styles.button}>
                 <Text style={styles.buttonText}>Продолжить</Text>
               </TouchableOpacity>
-            }
+            )}
 
-            {isStarted && 
+            {isStarted && (
               <TouchableOpacity onPress={finishHandler} style={styles.button}>
                 <Text style={styles.buttonText}>Завершить</Text>
               </TouchableOpacity>
-            }
+            )}
           </View>
         </>
       ) : (
-          <ActivityIndicator  style={styles.loading} size="large" color={MEDIUM_STATE_BLUE_COLOR}/>
+        <ActivityIndicator
+          style={styles.loading}
+          size="large"
+          color={MEDIUM_STATE_BLUE_COLOR}
+        />
       )}
     </View>
   );
