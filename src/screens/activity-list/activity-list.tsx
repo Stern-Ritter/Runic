@@ -148,7 +148,7 @@ function ActivityList() {
               color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.icon}
             />
-            <Text style={styles.infoElement}>{distance} km</Text>
+            <Text style={styles.infoElement}>{distance.toFixed(2)} km</Text>
           </View>
           <View style={styles.rowContainer}>
             <FontAwesome5
@@ -157,7 +157,7 @@ function ActivityList() {
               color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.icon}
             />
-            <Text style={styles.infoElement}>{calories} calories</Text>
+            <Text style={styles.infoElement}>{calories.toFixed(0)} calories</Text>
           </View>
         </View>
         <View style={styles.buttonContainer}>
