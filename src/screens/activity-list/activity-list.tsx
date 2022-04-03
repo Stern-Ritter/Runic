@@ -19,7 +19,7 @@ import {
   filterDateTimeFormat,
   createdDateTimeFormat,
 } from "../../utils/constants";
-import formatTime from "../../utils/formatTime";
+import { formatTime } from "../../utils/date";
 import { auth } from "../../models/storage";
 import styles from "./activity-list.styles";
 

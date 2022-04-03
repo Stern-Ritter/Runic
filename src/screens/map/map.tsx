@@ -29,7 +29,7 @@ import {
   fetchCurrentLocationOptions,
   fetchLocationOptions 
 } from '../../utils/location';
-import formatTime from "../../utils/formatTime";
+import { formatTime } from "../../utils/date";
 import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import styles from "./map.styles";
 
@@ -173,7 +173,6 @@ function Map() {
   ) : (
     <View style={styles.main}>
       <View style={styles.info}>
-      <Text>{coords.length}</Text>
         <View style={styles.infoContainer}>
           <View style={styles.indicatorContainer}>
             <FontAwesome5
