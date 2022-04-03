@@ -80,7 +80,7 @@ const activitiesInitialState = {
     data: [] as Activity[],
   },
   filters: {
-    startDate: getDateWithoutTimeWithShift(-7),
+    startDate: getDateWithoutTimeWithShift(-6),
     endDate: getDateWithoutTimeWithShift(0),
   },
   createActivityRequest: false,
