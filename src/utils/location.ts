@@ -5,8 +5,8 @@ const TASK_FETCH_LOCATION = "TASK_FETCH_LOCATION";
 
 const fetchCurrentLocationOptions = {
     accuracy: Location.Accuracy.High,
-    distanceInterval: 5, // minimum change (in meters) betweens updates
-    deferredUpdatesInterval: 3000, // minimum interval (in milliseconds) between updates
+    distanceInterval: 5,
+    deferredUpdatesInterval: 3000,
     foregroundService: {
       notificationTitle: "Используется геолокация.",
       notificationBody: "Геолокация необходима для отслеживания тренировки.",
@@ -15,8 +15,8 @@ const fetchCurrentLocationOptions = {
 
 const fetchLocationOptions = {
   accuracy: Location.Accuracy.BestForNavigation,
-  distanceInterval: 3, // minimum change (in meters) betweens updates
-  deferredUpdatesInterval: 1000, // minimum interval (in milliseconds) between updates
+  distanceInterval: 3,
+  deferredUpdatesInterval: 1000,
   foregroundService: {
     notificationTitle: "Используется геолокация.",
     notificationBody: "Геолокация необходима для отслеживания тренировки.",

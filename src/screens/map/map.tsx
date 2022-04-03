@@ -234,9 +234,8 @@ function Map() {
                 latitudeDelta: 0.0015,
                 longitudeDelta: 0.0015,
               }}
-              // onRegionChangeComplete={}
             >
-              {/* {isStarted && coords.length > 0 && (
+              {isStarted && coords.length > 0 && (
                 <Marker
                   coordinate={{
                     latitude: coords[0].latitude,
@@ -245,7 +244,7 @@ function Map() {
                 >
                   <MapMarker>Старт</MapMarker>
                 </Marker>
-              )} */}
+              )}
 
               {!isStarted && coords.length > 0 && (
                 <Marker
