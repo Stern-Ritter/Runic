@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
-  ActivityIndicator,
   Alert,
+  ActivityIndicator,
   Text,
   View,
   TouchableOpacity,
@@ -23,29 +23,49 @@ import {
 } from "../../services/actions";
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
+import {
+  TASK_FETCH_CURRENT_LOCATION,
+  TASK_FETCH_LOCATION,
+  fetchCurrentLocationOptions,
+  fetchLocationOptions 
+} from '../../utils/location';
 import formatTime from "../../utils/formatTime";
 import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import styles from "./map.styles";
 
-const geoPositionUpdateInterval = 1000;
-const TASK_FETCH_LOCATION = "TASK_FETCH_LOCATION";
-const fetchLocationOptions = {
-  accuracy: Location.Accuracy.BestForNavigation,
-  distanceInterval: 1, // minimum change (in meters) betweens updates
-  deferredUpdatesInterval: 1000, // minimum interval (in milliseconds) between updates
-  foregroundService: {
-    notificationTitle: "Using your location",
-    notificationBody: "To turn off, go back to the app and switch something off.",
-  },
-};
+const timerUpdateInterval = 1000;
 
 function Map() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
-  const [foregroundStatus, requestForegroundPermission] =
-    Location.useForegroundPermissions();
-  const [backgroundStatus, requesBackgroundPermission] =
-    Location.useBackgroundPermissions();
+  const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
+  const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
+
+  const [duration, setDuration] = useState(0);
+  const [startGeoPosition, setStartGeoPosition] = useState<Location.LocationObjectCoords>();
+  const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
+
+  TaskManager.defineTask(
+    TASK_FETCH_CURRENT_LOCATION,
+    async ({ data, error }) => {
+      if (error) return;
+      const [location] = (
+          data as { locations: {coords: Location.LocationObjectCoords}[]}
+        ).locations;
+      setStartGeoPosition(location.coords);
+    }
+  );
+
+  TaskManager.defineTask(
+    TASK_FETCH_LOCATION,
+    async ({ data, error }) => {
+      if (error) return;
+      const [location] = (
+          data as { locations: {coords: Location.LocationObjectCoords}[]}
+        ).locations;
+      dispatch({ type: ADD_COORDINATE, payload: location.coords });
+    }
+  );
 
   const getForegroundPermissions = async () => {
     await requestForegroundPermission();
@@ -70,25 +90,11 @@ function Map() {
     getBackgroundPermissions();
     Location.enableNetworkProviderAsync();
     getStartGeoPosition();
+    Location.startLocationUpdatesAsync(
+      TASK_FETCH_CURRENT_LOCATION,
+      fetchCurrentLocationOptions
+    );
   }, []);
-
-  TaskManager.defineTask(
-    TASK_FETCH_LOCATION,
-    async ({ data: { locations }, error }) => {
-      if (error) {
-        console.error('ошибка', error);
-        return;
-      }
-      console.log(locations);
-      const [location] = locations;
-      console.log(location.coords);
-      dispatch({ type: ADD_COORDINATE, payload: location.coords });
-    }
-  );
-
-  const [duration, setDuration] = useState(0);
-  const [startGeoPosition, setStartGeoPosition] = useState<Location.LocationObjectCoords>();
-  const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
 
   const {
     isStarted,
@@ -100,12 +106,15 @@ function Map() {
   const lastGeoPosition = useMemo(() => coords[coords.length - 1], [coords]);
 
   const updateTimer = () => {
-    setDuration((prevState) => prevState + geoPositionUpdateInterval);
+    setDuration((prevState) => prevState + timerUpdateInterval);
   };
 
   const startHandler = async () => {
     dispatch({ type: START_ACTIVITY });
     dispatch({ type: ADD_COORDINATE, payload: startGeoPosition });
+    Location.hasStartedLocationUpdatesAsync(TASK_FETCH_CURRENT_LOCATION).then(
+      (task) => { if(task) Location.stopLocationUpdatesAsync(TASK_FETCH_CURRENT_LOCATION)}
+    );
     Location.startLocationUpdatesAsync(
       TASK_FETCH_LOCATION,
       fetchLocationOptions
@@ -148,6 +157,10 @@ function Map() {
     if (user?.uid) {
       dispatch(createActivity(user.uid, activity));
       setDuration(0);
+      Location.startLocationUpdatesAsync(
+        TASK_FETCH_CURRENT_LOCATION,
+        fetchCurrentLocationOptions
+      );
     }
   };
 
@@ -223,7 +236,7 @@ function Map() {
               }}
               // onRegionChangeComplete={}
             >
-              {isStarted && coords.length > 0 && (
+              {/* {isStarted && coords.length > 0 && (
                 <Marker
                   coordinate={{
                     latitude: coords[0].latitude,
@@ -232,7 +245,7 @@ function Map() {
                 >
                   <MapMarker>Старт</MapMarker>
                 </Marker>
-              )}
+              )} */}
 
               {!isStarted && coords.length > 0 && (
                 <Marker
@@ -249,6 +262,8 @@ function Map() {
                 coordinates={coords}
                 strokeColor={MEDIUM_STATE_BLUE_COLOR}
                 strokeWidth={10}
+                lineCap="butt"
+                lineJoin="bevel"
               />
             </MapView>
           </View>
