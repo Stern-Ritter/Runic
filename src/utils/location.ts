@@ -4,14 +4,14 @@ const TASK_FETCH_CURRENT_LOCATION = "TASK_FETCH_CURRENT_LOCATION ";
 const TASK_FETCH_LOCATION = "TASK_FETCH_LOCATION";
 
 const fetchCurrentLocationOptions = {
-    accuracy: Location.Accuracy.High,
-    distanceInterval: 5,
-    deferredUpdatesInterval: 3000,
-    foregroundService: {
-      notificationTitle: "Используется геолокация.",
-      notificationBody: "Геолокация необходима для отслеживания тренировки.",
-    },
-  };
+  accuracy: Location.Accuracy.High,
+  distanceInterval: 5,
+  deferredUpdatesInterval: 3000,
+  foregroundService: {
+    notificationTitle: "Используется геолокация.",
+    notificationBody: "Геолокация необходима для отслеживания тренировки.",
+  },
+};
 
 const fetchLocationOptions = {
   accuracy: Location.Accuracy.BestForNavigation,
@@ -23,9 +23,9 @@ const fetchLocationOptions = {
   },
 };
 
-export { 
-    TASK_FETCH_CURRENT_LOCATION,
-    TASK_FETCH_LOCATION,
-    fetchCurrentLocationOptions,
-    fetchLocationOptions 
+export {
+  TASK_FETCH_CURRENT_LOCATION,
+  TASK_FETCH_LOCATION,
+  fetchCurrentLocationOptions,
+  fetchLocationOptions,
 };

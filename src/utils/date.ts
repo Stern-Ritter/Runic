@@ -21,8 +21,8 @@ function formatTime(ms: number) {
   );
 }
 
-export { 
+export {
   getDateWithoutTimeWithShift,
   getFirstAndLastWeekDaysWithoutTime,
-  formatTime 
+  formatTime,
 };

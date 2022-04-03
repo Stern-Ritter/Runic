@@ -157,7 +157,9 @@ function ActivityList() {
               color={MEDIUM_STATE_BLUE_COLOR}
               style={styles.icon}
             />
-            <Text style={styles.infoElement}>{calories.toFixed(0)} calories</Text>
+            <Text style={styles.infoElement}>
+              {calories.toFixed(0)} calories
+            </Text>
           </View>
         </View>
         <View style={styles.buttonContainer}>

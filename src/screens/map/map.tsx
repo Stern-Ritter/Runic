@@ -27,8 +27,8 @@ import {
   TASK_FETCH_CURRENT_LOCATION,
   TASK_FETCH_LOCATION,
   fetchCurrentLocationOptions,
-  fetchLocationOptions 
-} from '../../utils/location';
+  fetchLocationOptions,
+} from "../../utils/location";
 import { formatTime } from "../../utils/date";
 import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import styles from "./map.styles";
@@ -38,11 +38,14 @@ const timerUpdateInterval = 1000;
 function Map() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
-  const [foregroundStatus, requestForegroundPermission] = Location.useForegroundPermissions();
-  const [backgroundStatus, requesBackgroundPermission] = Location.useBackgroundPermissions();
+  const [foregroundStatus, requestForegroundPermission] =
+    Location.useForegroundPermissions();
+  const [backgroundStatus, requesBackgroundPermission] =
+    Location.useBackgroundPermissions();
 
   const [duration, setDuration] = useState(0);
-  const [startGeoPosition, setStartGeoPosition] = useState<Location.LocationObjectCoords>();
+  const [startGeoPosition, setStartGeoPosition] =
+    useState<Location.LocationObjectCoords>();
   const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
 
   TaskManager.defineTask(
@@ -50,22 +53,19 @@ function Map() {
     async ({ data, error }) => {
       if (error) return;
       const [location] = (
-          data as { locations: {coords: Location.LocationObjectCoords}[]}
-        ).locations;
+        data as { locations: { coords: Location.LocationObjectCoords }[] }
+      ).locations;
       setStartGeoPosition(location.coords);
     }
   );
 
-  TaskManager.defineTask(
-    TASK_FETCH_LOCATION,
-    async ({ data, error }) => {
-      if (error) return;
-      const [location] = (
-          data as { locations: {coords: Location.LocationObjectCoords}[]}
-        ).locations;
-      dispatch({ type: ADD_COORDINATE, payload: location.coords });
-    }
-  );
+  TaskManager.defineTask(TASK_FETCH_LOCATION, async ({ data, error }) => {
+    if (error) return;
+    const [location] = (
+      data as { locations: { coords: Location.LocationObjectCoords }[] }
+    ).locations;
+    dispatch({ type: ADD_COORDINATE, payload: location.coords });
+  });
 
   const getForegroundPermissions = async () => {
     await requestForegroundPermission();
@@ -113,7 +113,10 @@ function Map() {
     dispatch({ type: START_ACTIVITY });
     dispatch({ type: ADD_COORDINATE, payload: startGeoPosition });
     Location.hasStartedLocationUpdatesAsync(TASK_FETCH_CURRENT_LOCATION).then(
-      (task) => { if(task) Location.stopLocationUpdatesAsync(TASK_FETCH_CURRENT_LOCATION)}
+      (task) => {
+        if (task)
+          Location.stopLocationUpdatesAsync(TASK_FETCH_CURRENT_LOCATION);
+      }
     );
     Location.startLocationUpdatesAsync(
       TASK_FETCH_LOCATION,
@@ -126,7 +129,9 @@ function Map() {
   const pauseHandler = () => {
     dispatch({ type: PAUSE_ACTIVITY });
     Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
-      (task) => { if(task) Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION)}
+      (task) => {
+        if (task) Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION);
+      }
     );
     if (timerInterval) clearInterval(timerInterval);
   };
@@ -143,7 +148,9 @@ function Map() {
 
   const finishHandler = () => {
     Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
-      (task) => { if(task) Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION)}
+      (task) => {
+        if (task) Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION);
+      }
     );
     if (timerInterval) clearInterval(timerInterval);
     const activity = new Activity({
