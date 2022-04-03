@@ -186,7 +186,7 @@ function Analytics() {
                 left: x,
               }}
             >
-              <Text style={{ fontSize: 12 }}>{indexData}</Text>
+              <Text style={{ fontSize: 12 }}>{indexData.toFixed(2)}</Text>
             </View>
           )}
           style={styles.chart}

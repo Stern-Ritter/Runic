@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as Location from "expo-location";
+import * as TaskManager from "expo-task-manager";
 import MapView, { Marker, Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
 import MapMarker from "../../components/map-marker/map-marker";
@@ -27,6 +28,16 @@ import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import styles from "./map.styles";
 
 const geoPositionUpdateInterval = 1000;
+const TASK_FETCH_LOCATION = "TASK_FETCH_LOCATION";
+const fetchLocationOptions = {
+  accuracy: Location.Accuracy.BestForNavigation,
+  distanceInterval: 1, // minimum change (in meters) betweens updates
+  deferredUpdatesInterval: 1000, // minimum interval (in milliseconds) between updates
+  foregroundService: {
+    notificationTitle: "Using your location",
+    notificationBody: "To turn off, go back to the app and switch something off.",
+  },
+};
 
 function Map() {
   const dispatch = useDispatch();
@@ -36,25 +47,12 @@ function Map() {
   const [backgroundStatus, requesBackgroundPermission] =
     Location.useBackgroundPermissions();
 
-  const getForPerm = async () => {
+  const getForegroundPermissions = async () => {
     await requestForegroundPermission();
-    console.log("for", foregroundStatus?.granted);
   };
-  const getBackPerm = async () => {
+  const getBackgroundPermissions = async () => {
     await requesBackgroundPermission();
-    console.log("back", backgroundStatus?.granted);
   };
-
-  useEffect(() => {
-    getForPerm();
-    getBackPerm();
-    Location.enableNetworkProviderAsync();
-  }, []);
-
-  const [duration, setDuration] = useState(0);
-  const [startGeoPosition, setStartGeoPosition] =
-    useState<Location.LocationObjectCoords>();
-  const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
 
   const getStartGeoPosition = async () => {
     try {
@@ -68,8 +66,29 @@ function Map() {
   };
 
   useEffect(() => {
+    getForegroundPermissions();
+    getBackgroundPermissions();
+    Location.enableNetworkProviderAsync();
     getStartGeoPosition();
   }, []);
+
+  TaskManager.defineTask(
+    TASK_FETCH_LOCATION,
+    async ({ data: { locations }, error }) => {
+      if (error) {
+        console.error('ошибка', error);
+        return;
+      }
+      console.log(locations);
+      const [location] = locations;
+      console.log(location.coords);
+      dispatch({ type: ADD_COORDINATE, payload: location.coords });
+    }
+  );
+
+  const [duration, setDuration] = useState(0);
+  const [startGeoPosition, setStartGeoPosition] = useState<Location.LocationObjectCoords>();
+  const [timerInterval, setTimerInterval] = useState<NodeJS.Timer>();
 
   const {
     isStarted,
@@ -86,22 +105,37 @@ function Map() {
 
   const startHandler = async () => {
     dispatch({ type: START_ACTIVITY });
+    dispatch({ type: ADD_COORDINATE, payload: startGeoPosition });
+    Location.startLocationUpdatesAsync(
+      TASK_FETCH_LOCATION,
+      fetchLocationOptions
+    );
     const timerIntervalId = setInterval(updateTimer, 1000);
     setTimerInterval(timerIntervalId);
   };
 
   const pauseHandler = () => {
     dispatch({ type: PAUSE_ACTIVITY });
+    Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
+      (task) => { if(task) Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION)}
+    );
     if (timerInterval) clearInterval(timerInterval);
   };
 
   const resumeHandler = async () => {
     dispatch({ type: RESUME_ACTIVITY });
+    Location.startLocationUpdatesAsync(
+      TASK_FETCH_LOCATION,
+      fetchLocationOptions
+    );
     const timerIntervalId = setInterval(updateTimer, 1000);
     setTimerInterval(timerIntervalId);
   };
 
   const finishHandler = () => {
+    Location.hasStartedLocationUpdatesAsync(TASK_FETCH_LOCATION).then(
+      (task) => { if(task) Location.stopLocationUpdatesAsync(TASK_FETCH_LOCATION)}
+    );
     if (timerInterval) clearInterval(timerInterval);
     const activity = new Activity({
       name: "Бег",
@@ -117,11 +151,16 @@ function Map() {
     }
   };
 
-  return (
+  return !(foregroundStatus?.granted && backgroundStatus?.granted) ? (
+    <View style={styles.errorContainer}>
+      <Text style={styles.error}>
+        Для работы с картой предоставьте приложению доступ к геопозиции.
+      </Text>
+    </View>
+  ) : (
     <View style={styles.main}>
-      <Text>{coords.length}</Text>
-
       <View style={styles.info}>
+      <Text>{coords.length}</Text>
         <View style={styles.infoContainer}>
           <View style={styles.indicatorContainer}>
             <FontAwesome5
@@ -210,7 +249,6 @@ function Map() {
                 coordinates={coords}
                 strokeColor={MEDIUM_STATE_BLUE_COLOR}
                 strokeWidth={10}
-                lineDashPattern={[1]}
               />
             </MapView>
           </View>

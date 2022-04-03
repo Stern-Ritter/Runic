@@ -1,7 +1,21 @@
 import { StyleSheet } from "react-native";
-import { MEDIUM_STATE_BLUE_COLOR, WHITE_COLOR } from "../../utils/colors";
+import {
+  MEDIUM_STATE_BLUE_COLOR,
+  WHITE_COLOR,
+  CRIMSON_COLOR,
+} from "../../utils/colors";
 
 const styles = StyleSheet.create({
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: WHITE_COLOR,
+  },
+  error: {
+    fontSize: 16,
+    color: CRIMSON_COLOR,
+  },
   main: {
     flex: 1,
     backgroundColor: WHITE_COLOR,
