@@ -30,20 +30,29 @@ function ActivityList() {
   const [openStartDatePicker, setOpenStartDatePicker] = useState(false);
   const [openEndDatePicker, setOpenEndDatePicker] = useState(false);
 
-  const { loading, hasError, data } = useSelector(
-    (store: State) => store.activities.activities
+  const {
+      activities: {
+        loading,
+        hasError,
+        data 
+      },
+      filters: {
+        startDate,
+        endDate
+      }
+    } = useSelector(
+    (store: State) => store.activities
   );
 
-  const range = useSelector((store: State) => store.activities.filters);
+  const formatedStartDate = useMemo(() => startDate.toLocaleString(
+    "Ru-ru",
+    filterDateTimeFormat
+  ), [startDate]);
 
-  const formatedStartDate = range.startDate.toLocaleString(
+  const formatedEndDate = useMemo(() => endDate.toLocaleString(
     "Ru-ru",
     filterDateTimeFormat
-  );
-  const formatedEndDate = range.endDate.toLocaleString(
-    "Ru-ru",
-    filterDateTimeFormat
-  );
+  ), [endDate]);
 
   const filteredActivities = useMemo(
     () =>
@@ -55,12 +64,12 @@ function ActivityList() {
             activity.createdDate.getDate()
           );
           return (
-            (!range.startDate || comparedDate >= range.startDate) &&
-            (!range.endDate || comparedDate <= range.endDate)
+            (!startDate || comparedDate >= startDate) &&
+            (!endDate || comparedDate <= endDate)
           );
         })
         .sort((f, s) => s.createdDate.getTime() - f.createdDate.getTime()),
-    [data, range]
+    [data, startDate, endDate]
   );
 
   const deleteHandler = (id: string) => {
@@ -69,7 +78,7 @@ function ActivityList() {
     }
   };
 
-  const confirmeDelete = (id: string) =>
+  const confirmeDelete = (id: string) => {
     Alert.alert("Подтверждение", "Вы хотите удалить эту тренировку?", [
       {
         text: "Да",
@@ -79,6 +88,7 @@ function ActivityList() {
         text: "Нет",
       },
     ]);
+  }
 
   const showStartDatePicker = () => {
     setOpenStartDatePicker(true);
@@ -207,7 +217,7 @@ function ActivityList() {
         </View>
       </View>
       <DateTimePickerModal
-        date={range.startDate}
+        date={startDate}
         isVisible={openStartDatePicker}
         mode="date"
         onConfirm={handleConfirmStartDatePicker}
@@ -216,7 +226,7 @@ function ActivityList() {
         cancelTextIOS="Отменить"
       />
       <DateTimePickerModal
-        date={range.endDate}
+        date={endDate}
         isVisible={openEndDatePicker}
         mode="date"
         onConfirm={handleConfirmEndDatePicker}
