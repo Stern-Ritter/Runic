@@ -36,6 +36,7 @@ export {
   AUTHENTICATION_FORM_SET_VALUE,
   AUTHENTICATION_FORM_CLEAR_STATE,
   AUTHENTICATION_FORM_SET_ERROR_MESSAGE,
+  login,
   setAuthenticationFormValue,
   setAuthenticationFormErrorMessage,
 } from "./login";

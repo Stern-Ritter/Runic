@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for screens/preview/preview.styles.ts</title>
+    <title>Code coverage report for screens/login/login.styles.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">screens/preview</a> preview.styles.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">screens/login</a> login.styles.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -116,7 +116,14 @@
 <a name='L51'></a><a href='#L51'>51</a>
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
-<a name='L54'></a><a href='#L54'>54</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,55 +176,63 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { StyleSheet } from "react-native";
 import {
-  RICH_BLACK_COLOR,
   ALICE_BLUE_COLOR,
   MEDIUM_STATE_BLUE_COLOR,
-  WHITE_COLOR,
+  ROYAL_BLUE_COLOR,
+  MINT_CREAM_COLOR,
+  WHITE_SMOKE_COLOR,
+  CRIMSON_COLOR,
 } from "../../utils/colors";
 &nbsp;
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 0,
     paddingBottom: 48,
     flex: 1,
     justifyContent: "center",
-    backgroundColor: ALICE_BLUE_COLOR,
-  },
-  mainContainer: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-  },
-  title: {
-    fontSize: 48,
-    marginBottom: 24,
-    color: RICH_BLACK_COLOR,
-  },
-  description: {
-    marginBottom: 32,
-    color: RICH_BLACK_COLOR,
+    backgroundColor: ALICE_BLUE_COLOR,
   },
   image: {
     width: 128,
     height: 128,
-    marginBottom: 16,
+    marginBottom: 36,
+  },
+  input: {
+    width: "70%",
+    padding: 8,
+    marginBottom: 18,
+    borderWidth: 1,
+    borderColor: MEDIUM_STATE_BLUE_COLOR,
+    borderRadius: 12,
+    backgroundColor: WHITE_SMOKE_COLOR,
   },
   button: {
-    width: "70%",
+    width: "55%",
     justifyContent: "center",
     alignItems: "center",
-    padding: 8,
-    marginBottom: 8,
-    backgroundColor: MEDIUM_STATE_BLUE_COLOR,
-    borderRadius: 20,
+    padding: 12,
+    marginBottom: 12,
+    backgroundColor: MINT_CREAM_COLOR,
+    borderWidth: 1,
+    borderColor: ROYAL_BLUE_COLOR,
+    borderRadius: 12,
   },
   buttonText: {
     fontSize: 14,
-    fontWeight: "400",
-    color: WHITE_COLOR,
+    fontWeight: "700",
+    color: ROYAL_BLUE_COLOR,
     textTransform: "uppercase",
+  },
+  error: {
+    fontSize: 12,
+    fontWeight: "400",
+    color: CRIMSON_COLOR,
   },
 });
 &nbsp;

@@ -32,7 +32,6 @@ const createAccountSpy = jest
 
 describe("Create account screen", () => {
   beforeAll(() => {
-    jest.useFakeTimers();
     useDispatchSpy.mockReturnValue(mockDispatchFn);
     originKeyboardDismiss = Keyboard.dismiss;
     Keyboard.dismiss = mockKeyboardDismiss;
@@ -66,7 +65,7 @@ describe("Create account screen", () => {
     mount(<CreateAccount />);
 
     expect(mockDispatchFn).toHaveBeenCalledTimes(1);
-    expect(mockDispatchFn).toHaveBeenLastCalledWith({ type : CREATE_USER_FORM_CLEAR_STATE});
+    expect(mockDispatchFn).toHaveBeenLastCalledWith({ type : CREATE_USER_FORM_CLEAR_STATE });
   });
 
   it(`should render Image`, () => {
@@ -99,6 +98,7 @@ describe("Create account screen", () => {
         .filterWhere((input) => input.props().placeholder === 'Повторите пароль');       
   
     expect(emailInput.prop('returnKeyType')).toBe('next');
+    expect(emailInput.prop('keyboardType')).toBe('email-address');
     expect(emailInput.prop('value')).toBe(createUserForm.data.email);
 
     expect(passwordInput.prop('returnKeyType')).toBe('next');
@@ -109,8 +109,28 @@ describe("Create account screen", () => {
     expect(repeatPasswordInput.prop('secureTextEntry')).toBeTruthy();
     expect(repeatPasswordInput.prop('value')).toBe(createUserForm.data.repeatPassword);
 
-    emailInput.simulate('changeText', 'text');
+    emailInput.simulate('changeText', 'text1');
     expect(setCreateUserFormValueSpy).toHaveBeenCalledTimes(1);
+    expect(setCreateUserFormValueSpy)
+      .toHaveBeenLastCalledWith({field: "email", value: "text1"});
+
+    passwordInput.simulate('changeText', 'text2');
+    expect(setCreateUserFormValueSpy).toHaveBeenCalledTimes(2);
+    expect(setCreateUserFormValueSpy)
+      .toHaveBeenLastCalledWith({field: "password", value: "text2"});
+
+    repeatPasswordInput.simulate('changeText', 'text3')
+    expect(setCreateUserFormValueSpy).toHaveBeenCalledTimes(3);
+    expect(setCreateUserFormValueSpy)
+      .toHaveBeenLastCalledWith({field: "repeatPassword", value: "text3"});
+
+    repeatPasswordInput.simulate('submitEditing');
+    expect(createAccountSpy).toHaveBeenCalledTimes(1);
+    expect(createAccountSpy).toHaveBeenCalledWith(
+      auth,
+      createUserForm.data.email,
+      createUserForm.data.password
+    );
   });
 
   it(`should render button with correct handler`, async () => {
@@ -147,7 +167,7 @@ describe("Create account screen", () => {
       text.text() === 'Create account error').exists()).toBeTruthy();
   });
 
-  it(`should render message about password not math error`, async () => {
+  it(`should render message about password not match error`, async () => {
     useSelectorSpy.mockReturnValue({
       ...createUserForm,
       data: {

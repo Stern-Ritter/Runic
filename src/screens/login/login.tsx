@@ -11,23 +11,17 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
 import {
   AUTHENTICATION_FORM_CLEAR_STATE,
   setAuthenticationFormValue,
-  setAuthenticationFormErrorMessage,
+  login
 } from "../../services/actions";
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
 import { MEDIUM_STATE_BLUE_COLOR } from "../../utils/colors";
 import styles from "./login.styles";
 
-interface LoginScreenProps {
-  navigation: NavigationProp<ParamListBase>;
-}
-
-function Login({ navigation }: LoginScreenProps) {
+function Login() {
   const dispatch = useDispatch();
   const passwordRef = useRef<TextInput>(null);
 
@@ -55,9 +49,7 @@ function Login({ navigation }: LoginScreenProps) {
   };
 
   const onFormSend = () => {
-    signInWithEmailAndPassword(auth, email, password).catch((err) => {
-      dispatch(setAuthenticationFormErrorMessage({ text: err.message }));
-    });
+    dispatch(login(auth, email, password));
   };
 
   return (

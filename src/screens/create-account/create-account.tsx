@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import {
   CREATE_USER_FORM_CLEAR_STATE,
-  CREATE_USER_FROM_SUCCESS,
   createAccount,
   setCreateUserFormValue,
 } from "../../services/actions";
