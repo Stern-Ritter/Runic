@@ -1,26 +1,10 @@
 import React from "react";
-import { NavigationProp, ParamListBase } from "@react-navigation/native";
-import { View, Text, TouchableOpacity, Easing, Animated } from "react-native";
+import { useNavigation, NavigationProp, ParamListBase } from "@react-navigation/native";
+import { Image, View, Text, TouchableOpacity } from "react-native";
 import styles from "./preview.styles";
 
-interface PreviewScreenProps {
-  navigation: NavigationProp<ParamListBase>;
-}
-
-function Preview({ navigation }: PreviewScreenProps) {
-  const spinValue = new Animated.Value(0);
-
-  Animated.timing(spinValue, {
-    toValue: 1,
-    duration: 3000,
-    easing: Easing.sin,
-    useNativeDriver: true,
-  }).start();
-
-  const spin = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
+function Preview() {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   const goToCreateAccount = () => {
     navigation.navigate("CreateAccount");
@@ -33,8 +17,8 @@ function Preview({ navigation }: PreviewScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.mainContainer}>
-        <Animated.Image
-          style={{ ...styles.image, transform: [{ rotate: spin }] }}
+        <Image
+          style={styles.image}
           source={require("../../assets/images/rune.png")}
         />
         <Text style={styles.title}>Runic</Text>
