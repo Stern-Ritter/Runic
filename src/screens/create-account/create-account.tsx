@@ -11,12 +11,11 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   CREATE_USER_FORM_CLEAR_STATE,
   CREATE_USER_FROM_SUCCESS,
+  createAccount,
   setCreateUserFormValue,
-  setCreateUserFormErrorMessage,
 } from "../../services/actions";
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";
@@ -58,13 +57,7 @@ function CreateAccount() {
   };
 
   const onFormSend = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        dispatch({ type: CREATE_USER_FROM_SUCCESS });
-      })
-      .catch((err) => {
-        dispatch(setCreateUserFormErrorMessage({ text: err.message }));
-      });
+    dispatch(createAccount(auth, email, password));
   };
 
   return (

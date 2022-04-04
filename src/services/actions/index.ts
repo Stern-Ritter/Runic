@@ -27,6 +27,7 @@ export {
   CREATE_USER_FORM_CLEAR_STATE,
   CREATE_USER_FORM_SET_ERROR_MESSAGE,
   CREATE_USER_FROM_SUCCESS,
+  createAccount,
   setCreateUserFormValue,
   setCreateUserFormErrorMessage,
 } from "./create-account";
