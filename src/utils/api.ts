@@ -3,6 +3,8 @@ const activitiesCollectionName = "activities";
 const settingsCollectionName = "settings";
 const mainSettingsDocumentName = "main";
 
+const testRootCollectionName = "test-user";
+
 const firebaseConfig = {
   apiKey: "AIzaSyA84nZZKXPOuM8r1Tpj-rOHYpbVlmhI0ek",
   authDomain: "runic-react-native-app.firebaseapp.com",
@@ -14,6 +16,7 @@ const firebaseConfig = {
 
 export {
   rootCollectionName,
+  testRootCollectionName,
   activitiesCollectionName,
   settingsCollectionName,
   mainSettingsDocumentName,

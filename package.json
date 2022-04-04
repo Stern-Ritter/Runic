@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx && prettier --check . && tsc --noEmit",
-    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx && prettier --write ."
+    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx && prettier --write .",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
@@ -52,6 +53,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@types/jest": "^27.4.1",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.64.12",
     "@types/react-native-scrollable-tab-view": "^0.10.3",
