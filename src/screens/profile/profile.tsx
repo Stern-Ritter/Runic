@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
@@ -24,17 +24,14 @@ function Profile() {
   const [user] = useAuthState(auth);
 
   const {
-    loading,
-    hasError,
-    data: { nickName, distanceGoal, caloriesGoal },
-  } = useSelector((store: State) => store.settings.settings);
-
-  const updateIsLoading = useSelector(
-    (store: State) => store.settings.updateSettingsRequest
-  );
-  const updateHasError = useSelector(
-    (store: State) => store.settings.updateSettingsFailed
-  );
+    settings: {
+      loading,
+      hasError,
+      data: { nickName, distanceGoal, caloriesGoal },
+    },
+    updateSettingsRequest,
+    updateSettingsFailed
+  } = useSelector((store: State) => store.settings);
 
   const hideKeyboard = () => {
     Keyboard.dismiss();
@@ -71,6 +68,7 @@ function Profile() {
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Имя пользователя</Text>
             <TextInput
+              placeholder="Ник"
               placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
               onChangeText={(value) => onInputChange("nickName", value)}
               value={nickName}
@@ -81,6 +79,7 @@ function Profile() {
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Километры</Text>
             <TextInput
+              placeholder="Цель километров"
               keyboardType="numeric"
               placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
               onChangeText={(value) =>
@@ -93,6 +92,7 @@ function Profile() {
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Калории</Text>
             <TextInput
+              placeholder="Цель калорий"
               keyboardType="numeric"
               placeholderTextColor={MEDIUM_STATE_BLUE_COLOR}
               onChangeText={(value) =>
@@ -103,7 +103,7 @@ function Profile() {
             />
           </View>
 
-          {updateHasError && (
+          {updateSettingsFailed && (
             <Text style={styles.error}>
               {`При обновлении настроек прозошла ошибка.\nПопробуйте позже.`}
             </Text>
@@ -111,18 +111,20 @@ function Profile() {
 
           <TouchableOpacity
             onPress={onFormSend}
-            disabled={updateIsLoading}
+            disabled={updateSettingsRequest}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Сохранить</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={logout}
-            disabled={updateIsLoading}
+            disabled={updateSettingsRequest}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Сменить пользователя</Text>
           </TouchableOpacity>
+
         </View>
       </ScrollView>
     </TouchableWithoutFeedback>

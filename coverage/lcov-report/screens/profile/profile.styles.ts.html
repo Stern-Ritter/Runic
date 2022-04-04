@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for screens/login/login.styles.ts</title>
+    <title>Code coverage report for screens/profile/profile.styles.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">screens/login</a> login.styles.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">screens/profile</a> profile.styles.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -121,7 +121,24 @@
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -179,45 +196,78 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { StyleSheet } from "react-native";
 import {
-  ALICE_BLUE_COLOR,
   MEDIUM_STATE_BLUE_COLOR,
   ROYAL_BLUE_COLOR,
   MINT_CREAM_COLOR,
   WHITE_SMOKE_COLOR,
   CRIMSON_COLOR,
+  WHITE_COLOR,
 } from "../../utils/colors";
 &nbsp;
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    paddingVertical: 32,
+    backgroundColor: WHITE_COLOR,
+  },
   container: {
     padding: 0,
-    paddingBottom: 48,
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: ALICE_BLUE_COLOR,
   },
   image: {
-    width: 128,
-    height: 128,
+    width: 96,
+    height: 96,
     marginBottom: 36,
   },
+  section: {
+    marginBottom: 8,
+    fontSize: 18,
+    fontWeight: "600",
+    color: MEDIUM_STATE_BLUE_COLOR,
+  },
+  inputContainer: {
+    width: "80%",
+  },
+  label: {
+    alignSelf: "flex-start",
+    fontSize: 16,
+    textAlign: "left",
+  },
   input: {
-    width: "70%",
     padding: 8,
     marginBottom: 18,
     borderWidth: 1,
     borderColor: MEDIUM_STATE_BLUE_COLOR,
     borderRadius: 12,
     backgroundColor: WHITE_SMOKE_COLOR,
+    fontSize: 12,
   },
   button: {
     width: "55%",
     justifyContent: "center",
     alignItems: "center",
     padding: 12,
-    marginBottom: 12,
+    marginTop: 18,
     backgroundColor: MINT_CREAM_COLOR,
     borderWidth: 1,
     borderColor: ROYAL_BLUE_COLOR,
@@ -227,6 +277,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "700",
     color: ROYAL_BLUE_COLOR,
+    textAlign: "center",
     textTransform: "uppercase",
   },
   error: {
