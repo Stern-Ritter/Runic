@@ -146,7 +146,7 @@ describe("Analytics list screen", () => {
 
     expect(wrapper.find("LineChart").exists()).toBeTruthy();
     expect(wrapper.find("LineChart").props().data).toEqual({
-      labels: ["янв. 2022 г.", "март 2022 г.", "апр. 2022 г."],
+      labels: ["дек. 2021 г.", "март 2022 г.", "апр. 2022 г."],
       datasets: [{ data: [3, 17, 12] }],
       legend: ["Километры"],
     });
