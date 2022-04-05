@@ -45,7 +45,7 @@ describe("Activities actions", () => {
     jest.clearAllMocks();
   });
 
-  it("methods getActivities, createActivity, deleteActivity work correct", async () => {
+  it.skip("methods getActivities, createActivity, deleteActivity work correct", async () => {
     const activityObj = new Activity(activity);
 
     const createActivityThunk = createActivity(testUID, activityObj);
