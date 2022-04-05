@@ -9,53 +9,37 @@ import {
   ProgressChart,
   ContributionGraph,
 } from "react-native-chart-kit";
-import {} from "expo-font";
 import alasql from "alasql";
 import Tab from "../../components/tab/tab";
-import { yearMonthDateFormat, monthCount } from "../../utils/constants";
 import { getFirstAndLastWeekDaysWithoutTime } from "../../utils/date";
-import { MIDNIGHT_MOSS_COLOR, ROYAL_BLUE_COLOR } from "../../utils/colors";
+import { ROYAL_BLUE_COLOR } from "../../utils/colors";
+import {
+  yearMonthDateFormat,
+  monthCount,
+  lineChartConfig,
+  progressRingConfig,
+  heatmapConfig
+} from '../../utils/constants';
 import { State } from "../../services/store/store";
 import styles from "./analytics.styles";
-
-const chartConfig = {
-  backgroundGradientFrom: MIDNIGHT_MOSS_COLOR,
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: ROYAL_BLUE_COLOR,
-  backgroundGradientToOpacity: 0.5,
-  strokeWidth: 2,
-  barPercentage: 0.5,
-  useShadowColorFromDataset: false,
-  decimalPlaces: 2,
-  style: {
-    borderRadius: 16,
-  },
-};
-const lineChartConfig = {
-  ...chartConfig,
-  color: (opacity = 1) => `rgba(123, 104, 238, ${opacity})`,
-};
-
-const progressRingConfig = {
-  ...chartConfig,
-  color: (opacity = 1) => `rgba(123, 104, 238, ${opacity})`,
-};
-
-const heatmapConfig = {
-  ...chartConfig,
-  color: (opacity = 1) => `rgba(0, 128, 128, ${opacity})`,
-};
 
 const handleToolTip: any = {};
 
 function Analytics() {
-  const { loading, hasError, data } = useSelector(
-    (store: State) => store.activities.activities
-  );
+  const {
+    activities: {
+      activities: { loading, hasError, data }
+    },
+    settings: {
+      settings: {
+        data: {
+          distanceGoal,
+          caloriesGoal
+        }
+      }
+    }
+  } = useSelector((store: State) => store);
 
-  const { distanceGoal, caloriesGoal } = useSelector(
-    (store: State) => store.settings.settings.data
-  );
 
   const formatedData = useMemo(
     () =>

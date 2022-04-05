@@ -3,9 +3,7 @@ import { shallow } from "enzyme";
 import * as redux from "react-redux";
 import ActivityList from "./activity-list";
 import { getDateWithoutTimeWithShift } from "../../utils/date";
-import {
-  filterDateTimeFormat,
-} from "../../utils/constants";
+import { filterDateTimeFormat } from "../../utils/constants";
 
 const activities = {
   activities: {
@@ -91,7 +89,7 @@ const useSelectorSpy = jest.spyOn(redux, "useSelector");
 const useDispatchSpy = jest.spyOn(redux, "useDispatch");
 const mockDispatchFn = jest.fn();
 
-describe("Actiity list screen", () => {
+describe("Activity list screen", () => {
   beforeAll(() => {
     useDispatchSpy.mockReturnValue(mockDispatchFn);
   });

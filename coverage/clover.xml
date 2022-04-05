@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1649114130078" clover="3.2.0">
-  <project timestamp="1649114130079" name="All files">
-    <metrics statements="319" coveredstatements="221" conditionals="43" coveredconditionals="16" methods="97" coveredmethods="55" elements="459" coveredelements="292" complexity="0" loc="319" ncloc="319" packages="11" files="30" classes="30"/>
+<coverage generated="1649117231082" clover="3.2.0">
+  <project timestamp="1649117231082" name="All files">
+    <metrics statements="354" coveredstatements="251" conditionals="56" coveredconditionals="22" methods="116" coveredmethods="67" elements="526" coveredelements="340" complexity="0" loc="354" ncloc="354" packages="13" files="33" classes="33"/>
     <package name="assets.images">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="rune.png" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\assets\images\rune.png">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.tab">
+      <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="tab.tsx" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\components\tab\tab.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
       </file>
     </package>
     <package name="models">
@@ -168,6 +175,42 @@
         <line num="184" count="4" type="stmt"/>
         <line num="186" count="4" type="stmt"/>
         <line num="188" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="screens.analytics">
+      <metrics statements="27" coveredstatements="25" conditionals="10" coveredconditionals="6" methods="15" coveredmethods="11"/>
+      <file name="analytics.styles.ts" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\screens\analytics\analytics.styles.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="4" count="1" type="stmt"/>
+      </file>
+      <file name="analytics.tsx" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\screens\analytics\analytics.tsx">
+        <metrics statements="26" coveredstatements="24" conditionals="10" coveredconditionals="6" methods="15" coveredmethods="11"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="41" count="5" type="stmt"/>
+        <line num="44" count="5" type="stmt"/>
+        <line num="46" count="15" type="stmt"/>
+        <line num="55" count="5" type="stmt"/>
+        <line num="56" count="5" type="stmt"/>
+        <line num="68" count="5" type="stmt"/>
+        <line num="69" count="15" type="stmt"/>
+        <line num="74" count="15" type="stmt"/>
+        <line num="83" count="5" type="stmt"/>
+        <line num="84" count="5" type="stmt"/>
+        <line num="86" count="5" type="stmt"/>
+        <line num="88" count="15" type="stmt"/>
+        <line num="93" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="96" count="5" type="stmt"/>
+        <line num="104" count="5" type="stmt"/>
+        <line num="106" count="5" type="stmt"/>
+        <line num="108" count="5" type="stmt"/>
+        <line num="117" count="5" type="stmt"/>
+        <line num="123" count="5" type="stmt"/>
+        <line num="125" count="15" type="stmt"/>
+        <line num="132" count="5" type="stmt"/>
+        <line num="133" count="5" type="stmt"/>
+        <line num="135" count="5" type="stmt"/>
+        <line num="165" count="0" type="stmt"/>
+        <line num="181" count="0" type="stmt"/>
       </file>
     </package>
     <package name="screens.create-account">
@@ -386,7 +429,7 @@
       </file>
     </package>
     <package name="utils">
-      <metrics statements="38" coveredstatements="33" conditionals="4" coveredconditionals="0" methods="7" coveredmethods="5"/>
+      <metrics statements="45" coveredstatements="38" conditionals="7" coveredconditionals="0" methods="10" coveredmethods="6"/>
       <file name="activityConverter.ts" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\utils\activityConverter.ts">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="3" count="5" type="stmt"/>
@@ -405,32 +448,39 @@
       </file>
       <file name="colors.ts" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\utils\colors.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="5" type="stmt"/>
-        <line num="2" count="5" type="stmt"/>
-        <line num="3" count="5" type="stmt"/>
-        <line num="4" count="5" type="stmt"/>
-        <line num="5" count="5" type="stmt"/>
-        <line num="6" count="5" type="stmt"/>
-        <line num="7" count="5" type="stmt"/>
-        <line num="8" count="5" type="stmt"/>
-        <line num="9" count="5" type="stmt"/>
-        <line num="10" count="5" type="stmt"/>
-        <line num="11" count="5" type="stmt"/>
-        <line num="12" count="5" type="stmt"/>
-        <line num="13" count="5" type="stmt"/>
-        <line num="14" count="5" type="stmt"/>
+        <line num="1" count="6" type="stmt"/>
+        <line num="2" count="6" type="stmt"/>
+        <line num="3" count="6" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="5" count="6" type="stmt"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="8" count="6" type="stmt"/>
+        <line num="9" count="6" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="11" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
       </file>
       <file name="constants.ts" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\utils\constants.ts">
-        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
+        <metrics statements="11" coveredstatements="8" conditionals="3" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="42" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="47" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="50" count="2" type="stmt"/>
+        <line num="52" count="0" type="cond" truecount="0" falsecount="1"/>
       </file>
       <file name="date.ts" path="C:\Users\user\Desktop\JavaScript Basic\runic\src\utils\date.ts">
-        <metrics statements="6" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <metrics statements="6" coveredstatements="2" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="2"/>
         <line num="4" count="2" type="stmt"/>
-        <line num="8" count="0" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
