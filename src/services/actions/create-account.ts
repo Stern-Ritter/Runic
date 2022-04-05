@@ -1,5 +1,5 @@
-import { AppDispatch } from "../store/store";
 import { createUserWithEmailAndPassword, Auth } from "firebase/auth";
+import { AppDispatch } from "../store/store";
 
 export const CREATE_USER_FORM_SET_VALUE = "CREATE_USER_FORM_SET_VALUE";
 export const CREATE_USER_FORM_CLEAR_STATE = "CREATE_USER_FORM_CLEAR_STATE";
@@ -33,14 +33,13 @@ export type ICREATE_USER_FORM_SET_ERROR_MESSAGE = ReturnType<
   typeof setCreateUserFormErrorMessage
 >;
 
-export const createAccount = (auth: Auth, email: string, password: string) => {
-  return async function (dispatch: AppDispatch) {
+export const createAccount = (auth: Auth, email: string, password: string) =>
+  async function (dispatch: AppDispatch) {
     createUserWithEmailAndPassword(auth, email, password)
-  .then(() => {
-    dispatch({ type: CREATE_USER_FROM_SUCCESS });
-  })
-  .catch((err) => {
-    dispatch(setCreateUserFormErrorMessage({ text: err.message }));
-  });
+      .then(() => {
+        dispatch({ type: CREATE_USER_FROM_SUCCESS });
+      })
+      .catch((err) => {
+        dispatch(setCreateUserFormErrorMessage({ text: err.message }));
+      });
   };
-}

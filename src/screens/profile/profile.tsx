@@ -30,7 +30,7 @@ function Profile() {
       data: { nickName, distanceGoal, caloriesGoal },
     },
     updateSettingsRequest,
-    updateSettingsFailed
+    updateSettingsFailed,
   } = useSelector((store: State) => store.settings);
 
   const hideKeyboard = () => {
@@ -124,7 +124,6 @@ function Profile() {
           >
             <Text style={styles.buttonText}>Сменить пользователя</Text>
           </TouchableOpacity>
-
         </View>
       </ScrollView>
     </TouchableWithoutFeedback>

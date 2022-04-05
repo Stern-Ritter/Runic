@@ -21,10 +21,11 @@ const useDispatchSpy = jest.spyOn(redux, "useDispatch");
 const mockDispatchFn = jest.fn();
 const mockKeyboardDismiss = jest.fn();
 
-const setAuthenticationFormValueSpy = jest
-    .spyOn(loginFormActions, "setAuthenticationFormValue");
-const loginSpy = jest
-    .spyOn(loginFormActions, "login");
+const setAuthenticationFormValueSpy = jest.spyOn(
+  loginFormActions,
+  "setAuthenticationFormValue"
+);
+const loginSpy = jest.spyOn(loginFormActions, "login");
 
 describe("Login screen", () => {
   beforeAll(() => {
@@ -51,7 +52,7 @@ describe("Login screen", () => {
     expect(touchableWithoutFeedback.exists()).toBeTruthy();
     expect(keyboardAvoidingView.exists()).toBeTruthy();
 
-    //@ts-ignore
+    // @ts-ignore
     touchableWithoutFeedback.props().onPress();
     expect(mockKeyboardDismiss).toHaveBeenCalledTimes(1);
   });
@@ -61,7 +62,9 @@ describe("Login screen", () => {
     mount(<Login />);
 
     expect(mockDispatchFn).toHaveBeenCalledTimes(1);
-    expect(mockDispatchFn).toHaveBeenLastCalledWith({ type :AUTHENTICATION_FORM_CLEAR_STATE });
+    expect(mockDispatchFn).toHaveBeenLastCalledWith({
+      type: AUTHENTICATION_FORM_CLEAR_STATE,
+    });
   });
 
   it(`should render Image`, () => {
@@ -76,29 +79,37 @@ describe("Login screen", () => {
     const wrapper = shallow(<Login />);
 
     expect(wrapper.find("TextInput")).toHaveLength(2);
-    const emailInput = wrapper.find("TextInput")
-        .filterWhere((input) => input.props().placeholder === 'E-mail');
-    const passwordInput = wrapper.find("TextInput")
-        .filterWhere((input) => input.props().placeholder === 'Пароль');
-  
-    expect(emailInput.prop('returnKeyType')).toBe('next');
-    expect(emailInput.prop('keyboardType')).toBe('email-address');
-    expect(emailInput.prop('value')).toBe(authenticationForm.data.email);
+    const emailInput = wrapper
+      .find("TextInput")
+      .filterWhere((input) => input.props().placeholder === "E-mail");
+    const passwordInput = wrapper
+      .find("TextInput")
+      .filterWhere((input) => input.props().placeholder === "Пароль");
 
-    expect(passwordInput.prop('returnKeyType')).toBe('done');
-    expect(passwordInput.prop('returnKeyType')).toBe('done');
-    expect(passwordInput.prop('secureTextEntry')).toBeTruthy();
-    expect(passwordInput.prop('value')).toBe(authenticationForm.data.password);
+    expect(emailInput.prop("returnKeyType")).toBe("next");
+    expect(emailInput.prop("keyboardType")).toBe("email-address");
+    expect(emailInput.prop("value")).toBe(authenticationForm.data.email);
 
-    emailInput.simulate('changeText', 'text1');
+    expect(passwordInput.prop("returnKeyType")).toBe("done");
+    expect(passwordInput.prop("returnKeyType")).toBe("done");
+    expect(passwordInput.prop("secureTextEntry")).toBeTruthy();
+    expect(passwordInput.prop("value")).toBe(authenticationForm.data.password);
+
+    emailInput.simulate("changeText", "text1");
     expect(setAuthenticationFormValueSpy).toHaveBeenCalledTimes(1);
-    expect(setAuthenticationFormValueSpy).toHaveBeenLastCalledWith({field: "email", value: "text1"});
+    expect(setAuthenticationFormValueSpy).toHaveBeenLastCalledWith({
+      field: "email",
+      value: "text1",
+    });
 
-    passwordInput.simulate('changeText', 'text2');
+    passwordInput.simulate("changeText", "text2");
     expect(setAuthenticationFormValueSpy).toHaveBeenCalledTimes(2);
-    expect(setAuthenticationFormValueSpy).toHaveBeenLastCalledWith({field: "password", value: "text2"});
+    expect(setAuthenticationFormValueSpy).toHaveBeenLastCalledWith({
+      field: "password",
+      value: "text2",
+    });
 
-    passwordInput.simulate('submitEditing');
+    passwordInput.simulate("submitEditing");
     expect(loginSpy).toHaveBeenCalledTimes(1);
     expect(loginSpy).toHaveBeenCalledWith(
       auth,
@@ -111,9 +122,11 @@ describe("Login screen", () => {
     useSelectorSpy.mockReturnValue(authenticationForm);
     const wrapper = mount(<Login />);
 
-    const createAccountBtn = wrapper.find('ForwardRef')
-      .findWhere((f) => f.text() === 'Войти').first();
-    
+    const createAccountBtn = wrapper
+      .find("ForwardRef")
+      .findWhere((f) => f.text() === "Войти")
+      .first();
+
     createAccountBtn.props().onPress();
     expect(loginSpy).toHaveBeenCalledTimes(1);
     expect(loginSpy).toHaveBeenCalledWith(
@@ -124,11 +137,17 @@ describe("Login screen", () => {
   });
 
   it(`should render message about create account error`, async () => {
-    useSelectorSpy.mockReturnValue({...authenticationForm, error: 'Authentication error'});
+    useSelectorSpy.mockReturnValue({
+      ...authenticationForm,
+      error: "Authentication error",
+    });
     const wrapper = shallow(<Login />);
 
-    expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === 'Authentication error').exists()).toBeTruthy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere((text) => text.text() === "Authentication error")
+        .exists()
+    ).toBeTruthy();
   });
-
 });

@@ -98,7 +98,7 @@ describe("Activity list screen", () => {
     jest.clearAllMocks();
   });
 
-  it('should render FlatList', () => {
+  it("should render FlatList", () => {
     useSelectorSpy.mockReturnValue(activities);
     const wrapper = shallow(<ActivityList />);
 
@@ -106,49 +106,69 @@ describe("Activity list screen", () => {
     expect(flatList.exists()).toBeTruthy();
   });
 
-  it('should render date filter buttons', () => {
+  it("should render date filter buttons", () => {
     useSelectorSpy.mockReturnValue(activities);
     const wrapper = shallow(<ActivityList />);
 
-    expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === activities.filters.startDate.toLocaleString(
-        "Ru-ru",
-        filterDateTimeFormat
-      )).exists()).toBeTruthy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere(
+          (text) =>
+            text.text() ===
+            activities.filters.startDate.toLocaleString(
+              "Ru-ru",
+              filterDateTimeFormat
+            )
+        )
+        .exists()
+    ).toBeTruthy();
 
-      expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === activities.filters.endDate.toLocaleString(
-        "Ru-ru",
-        filterDateTimeFormat
-      )).exists()).toBeTruthy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere(
+          (text) =>
+            text.text() ===
+            activities.filters.endDate.toLocaleString(
+              "Ru-ru",
+              filterDateTimeFormat
+            )
+        )
+        .exists()
+    ).toBeTruthy();
 
-      expect(wrapper.find('ForwardRef')
-        .findWhere((f) => f.text() === 'Выбрать дату')).toHaveLength(2);
+    expect(
+      wrapper.find("ForwardRef").findWhere((f) => f.text() === "Выбрать дату")
+    ).toHaveLength(2);
 
-      expect(wrapper.find('IconClass')).toHaveLength(2);
+    expect(wrapper.find("IconClass")).toHaveLength(2);
 
-      expect(wrapper.find('Memo()')).toHaveLength(2);
+    expect(wrapper.find("Memo()")).toHaveLength(2);
 
-      let startDatePickerProps = wrapper.find('Memo()').first().props();
-      // @ts-ignore
-      const startDatePickerShow = wrapper.find('ForwardRef').first().props().onPress;
-      // @ts-ignore
-      expect(startDatePickerProps.isVisible).toBeFalsy();
-      startDatePickerShow();
-      wrapper.update();
-      startDatePickerProps = wrapper.find('Memo()').first().props();
-      // @ts-ignore
-      expect(startDatePickerProps.isVisible).toBeTruthy();
+    let startDatePickerProps = wrapper.find("Memo()").first().props();
+    // @ts-ignore
+    const startDatePickerShow = wrapper
+      .find("ForwardRef")
+      .first()
+      .props().onPress;
+    // @ts-ignore
+    expect(startDatePickerProps.isVisible).toBeFalsy();
+    startDatePickerShow();
+    wrapper.update();
+    startDatePickerProps = wrapper.find("Memo()").first().props();
+    // @ts-ignore
+    expect(startDatePickerProps.isVisible).toBeTruthy();
 
-      let endDatePickerProps = wrapper.find('Memo()').last().props();
-      // @ts-ignore
-      const endDatePickerShow = wrapper.find('ForwardRef').last().props().onPress;
-      // @ts-ignore
-      expect(endDatePickerProps.isVisible).toBeFalsy();
-      endDatePickerShow();
-      wrapper.update();
-      endDatePickerProps = wrapper.find('Memo()').last().props();
-      // @ts-ignore
-      expect(endDatePickerProps.isVisible).toBeTruthy();
+    let endDatePickerProps = wrapper.find("Memo()").last().props();
+    // @ts-ignore
+    const endDatePickerShow = wrapper.find("ForwardRef").last().props().onPress;
+    // @ts-ignore
+    expect(endDatePickerProps.isVisible).toBeFalsy();
+    endDatePickerShow();
+    wrapper.update();
+    endDatePickerProps = wrapper.find("Memo()").last().props();
+    // @ts-ignore
+    expect(endDatePickerProps.isVisible).toBeTruthy();
   });
 });

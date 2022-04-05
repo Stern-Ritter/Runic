@@ -1,5 +1,9 @@
 import React from "react";
-import { useNavigation, NavigationProp, ParamListBase } from "@react-navigation/native";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
 import { Image, View, Text, TouchableOpacity } from "react-native";
 import styles from "./preview.styles";
 

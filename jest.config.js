@@ -1,4 +1,4 @@
-const { withEnzyme } = require('jest-expo-enzyme');
+const { withEnzyme } = require("jest-expo-enzyme");
 
 module.exports = {
   projects: [

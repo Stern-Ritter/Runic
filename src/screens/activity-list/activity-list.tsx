@@ -31,28 +31,19 @@ function ActivityList() {
   const [openEndDatePicker, setOpenEndDatePicker] = useState(false);
 
   const {
-      activities: {
-        loading,
-        hasError,
-        data 
-      },
-      filters: {
-        startDate,
-        endDate
-      }
-    } = useSelector(
-    (store: State) => store.activities
+    activities: { loading, hasError, data },
+    filters: { startDate, endDate },
+  } = useSelector((store: State) => store.activities);
+
+  const formatedStartDate = useMemo(
+    () => startDate.toLocaleString("Ru-ru", filterDateTimeFormat),
+    [startDate]
   );
 
-  const formatedStartDate = useMemo(() => startDate.toLocaleString(
-    "Ru-ru",
-    filterDateTimeFormat
-  ), [startDate]);
-
-  const formatedEndDate = useMemo(() => endDate.toLocaleString(
-    "Ru-ru",
-    filterDateTimeFormat
-  ), [endDate]);
+  const formatedEndDate = useMemo(
+    () => endDate.toLocaleString("Ru-ru", filterDateTimeFormat),
+    [endDate]
+  );
 
   const filteredActivities = useMemo(
     () =>
@@ -88,7 +79,7 @@ function ActivityList() {
         text: "Нет",
       },
     ]);
-  }
+  };
 
   const showStartDatePicker = () => {
     setOpenStartDatePicker(true);

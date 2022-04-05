@@ -55,6 +55,7 @@ module.exports = {
       { allow: ["createdDate", "duration", "distance", "calories", "coords"] },
     ],
     "global-require": "off",
+    "@typescript-eslint/no-var-requires": "off",
   },
   settings: {
     react: {

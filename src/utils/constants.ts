@@ -1,7 +1,4 @@
-import {
-  MIDNIGHT_MOSS_COLOR,
-  ROYAL_BLUE_COLOR
-} from '../utils/colors';
+import { MIDNIGHT_MOSS_COLOR, ROYAL_BLUE_COLOR } from "../utils/colors";
 
 const createdDateTimeFormat: Intl.DateTimeFormatOptions = {
   year: "numeric",
@@ -59,5 +56,5 @@ export {
   monthCount,
   lineChartConfig,
   progressRingConfig,
-  heatmapConfig
+  heatmapConfig,
 };

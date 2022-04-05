@@ -18,8 +18,8 @@ import {
   monthCount,
   lineChartConfig,
   progressRingConfig,
-  heatmapConfig
-} from '../../utils/constants';
+  heatmapConfig,
+} from "../../utils/constants";
 import { State } from "../../services/store/store";
 import styles from "./analytics.styles";
 
@@ -28,18 +28,14 @@ const handleToolTip: any = {};
 function Analytics() {
   const {
     activities: {
-      activities: { loading, hasError, data }
+      activities: { loading, hasError, data },
     },
     settings: {
       settings: {
-        data: {
-          distanceGoal,
-          caloriesGoal
-        }
-      }
-    }
+        data: { distanceGoal, caloriesGoal },
+      },
+    },
   } = useSelector((store: State) => store);
-
 
   const formatedData = useMemo(
     () =>

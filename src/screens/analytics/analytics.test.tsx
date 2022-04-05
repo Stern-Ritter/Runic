@@ -136,9 +136,9 @@ describe("Analytics list screen", () => {
     expect(wrapper.find("ProgressChart").props().data).toEqual({
       labels: ["Км.", "Калории"],
       data: [
-          Math.round((12 / 33) * 100) / 100,
-          Math.round((840 / 2000) * 100) / 100
-    ],
+        Math.round((12 / 33) * 100) / 100,
+        Math.round((840 / 2000) * 100) / 100,
+      ],
     });
   });
 

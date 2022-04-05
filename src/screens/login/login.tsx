@@ -14,7 +14,7 @@ import {
 import {
   AUTHENTICATION_FORM_CLEAR_STATE,
   setAuthenticationFormValue,
-  login
+  login,
 } from "../../services/actions";
 import { State } from "../../services/store/store";
 import { auth } from "../../models/storage";

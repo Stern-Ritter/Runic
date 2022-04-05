@@ -5,13 +5,11 @@ import { Keyboard } from "react-native";
 import CreateAccount from "./create-account";
 import * as createUserFormActions from "../../services/actions/create-account";
 import { auth } from "../../models/storage";
-import { 
-  CREATE_USER_FORM_CLEAR_STATE,
-} from "../../services/actions";
+import { CREATE_USER_FORM_CLEAR_STATE } from "../../services/actions";
 
 const createUserForm = {
   success: false,
-  error: '',
+  error: "",
   data: {
     email: "test@mail.ru",
     password: "password",
@@ -25,10 +23,11 @@ const useDispatchSpy = jest.spyOn(redux, "useDispatch");
 const mockDispatchFn = jest.fn();
 const mockKeyboardDismiss = jest.fn();
 
-const setCreateUserFormValueSpy = jest
-    .spyOn(createUserFormActions, "setCreateUserFormValue");
-const createAccountSpy = jest
-    .spyOn(createUserFormActions, "createAccount");
+const setCreateUserFormValueSpy = jest.spyOn(
+  createUserFormActions,
+  "setCreateUserFormValue"
+);
+const createAccountSpy = jest.spyOn(createUserFormActions, "createAccount");
 
 describe("Create account screen", () => {
   beforeAll(() => {
@@ -55,7 +54,7 @@ describe("Create account screen", () => {
     expect(touchableWithoutFeedback.exists()).toBeTruthy();
     expect(keyboardAvoidingView.exists()).toBeTruthy();
 
-    //@ts-ignore
+    // @ts-ignore
     touchableWithoutFeedback.props().onPress();
     expect(mockKeyboardDismiss).toHaveBeenCalledTimes(1);
   });
@@ -65,7 +64,9 @@ describe("Create account screen", () => {
     mount(<CreateAccount />);
 
     expect(mockDispatchFn).toHaveBeenCalledTimes(1);
-    expect(mockDispatchFn).toHaveBeenLastCalledWith({ type : CREATE_USER_FORM_CLEAR_STATE });
+    expect(mockDispatchFn).toHaveBeenLastCalledWith({
+      type: CREATE_USER_FORM_CLEAR_STATE,
+    });
   });
 
   it(`should render Image`, () => {
@@ -79,10 +80,18 @@ describe("Create account screen", () => {
     useSelectorSpy.mockReturnValue(createUserForm);
     const wrapper = shallow(<CreateAccount />);
 
-    expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === 'Вы успешно зарегистрированы!').exists()).toBeFalsy();
-    expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === 'Пароли не совпадают').exists()).toBeFalsy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere((text) => text.text() === "Вы успешно зарегистрированы!")
+        .exists()
+    ).toBeFalsy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere((text) => text.text() === "Пароли не совпадают")
+        .exists()
+    ).toBeFalsy();
   });
 
   it(`should render inputs with correct props, values and handlers`, () => {
@@ -90,41 +99,52 @@ describe("Create account screen", () => {
     const wrapper = shallow(<CreateAccount />);
 
     expect(wrapper.find("TextInput")).toHaveLength(3);
-    const emailInput = wrapper.find("TextInput")
-        .filterWhere((input) => input.props().placeholder === 'E-mail');
-    const passwordInput = wrapper.find("TextInput")
-        .filterWhere((input) => input.props().placeholder === 'Пароль');
-    const repeatPasswordInput = wrapper.find("TextInput")
-        .filterWhere((input) => input.props().placeholder === 'Повторите пароль');       
-  
-    expect(emailInput.prop('returnKeyType')).toBe('next');
-    expect(emailInput.prop('keyboardType')).toBe('email-address');
-    expect(emailInput.prop('value')).toBe(createUserForm.data.email);
+    const emailInput = wrapper
+      .find("TextInput")
+      .filterWhere((input) => input.props().placeholder === "E-mail");
+    const passwordInput = wrapper
+      .find("TextInput")
+      .filterWhere((input) => input.props().placeholder === "Пароль");
+    const repeatPasswordInput = wrapper
+      .find("TextInput")
+      .filterWhere((input) => input.props().placeholder === "Повторите пароль");
 
-    expect(passwordInput.prop('returnKeyType')).toBe('next');
-    expect(passwordInput.prop('secureTextEntry')).toBeTruthy();
-    expect(passwordInput.prop('value')).toBe(createUserForm.data.password);
+    expect(emailInput.prop("returnKeyType")).toBe("next");
+    expect(emailInput.prop("keyboardType")).toBe("email-address");
+    expect(emailInput.prop("value")).toBe(createUserForm.data.email);
 
-    expect(repeatPasswordInput.prop('returnKeyType')).toBe('done');
-    expect(repeatPasswordInput.prop('secureTextEntry')).toBeTruthy();
-    expect(repeatPasswordInput.prop('value')).toBe(createUserForm.data.repeatPassword);
+    expect(passwordInput.prop("returnKeyType")).toBe("next");
+    expect(passwordInput.prop("secureTextEntry")).toBeTruthy();
+    expect(passwordInput.prop("value")).toBe(createUserForm.data.password);
 
-    emailInput.simulate('changeText', 'text1');
+    expect(repeatPasswordInput.prop("returnKeyType")).toBe("done");
+    expect(repeatPasswordInput.prop("secureTextEntry")).toBeTruthy();
+    expect(repeatPasswordInput.prop("value")).toBe(
+      createUserForm.data.repeatPassword
+    );
+
+    emailInput.simulate("changeText", "text1");
     expect(setCreateUserFormValueSpy).toHaveBeenCalledTimes(1);
-    expect(setCreateUserFormValueSpy)
-      .toHaveBeenLastCalledWith({field: "email", value: "text1"});
+    expect(setCreateUserFormValueSpy).toHaveBeenLastCalledWith({
+      field: "email",
+      value: "text1",
+    });
 
-    passwordInput.simulate('changeText', 'text2');
+    passwordInput.simulate("changeText", "text2");
     expect(setCreateUserFormValueSpy).toHaveBeenCalledTimes(2);
-    expect(setCreateUserFormValueSpy)
-      .toHaveBeenLastCalledWith({field: "password", value: "text2"});
+    expect(setCreateUserFormValueSpy).toHaveBeenLastCalledWith({
+      field: "password",
+      value: "text2",
+    });
 
-    repeatPasswordInput.simulate('changeText', 'text3')
+    repeatPasswordInput.simulate("changeText", "text3");
     expect(setCreateUserFormValueSpy).toHaveBeenCalledTimes(3);
-    expect(setCreateUserFormValueSpy)
-      .toHaveBeenLastCalledWith({field: "repeatPassword", value: "text3"});
+    expect(setCreateUserFormValueSpy).toHaveBeenLastCalledWith({
+      field: "repeatPassword",
+      value: "text3",
+    });
 
-    repeatPasswordInput.simulate('submitEditing');
+    repeatPasswordInput.simulate("submitEditing");
     expect(createAccountSpy).toHaveBeenCalledTimes(1);
     expect(createAccountSpy).toHaveBeenCalledWith(
       auth,
@@ -137,10 +157,12 @@ describe("Create account screen", () => {
     useSelectorSpy.mockReturnValue(createUserForm);
     const wrapper = mount(<CreateAccount />);
 
-    const createAccountBtn = wrapper.find('ForwardRef')
-      .findWhere((f) => f.text() === 'Зарегистрироваться').first();
-    
-    expect(createAccountBtn.prop('disabled')).toBeFalsy();
+    const createAccountBtn = wrapper
+      .find("ForwardRef")
+      .findWhere((f) => f.text() === "Зарегистрироваться")
+      .first();
+
+    expect(createAccountBtn.prop("disabled")).toBeFalsy();
 
     createAccountBtn.props().onPress();
     expect(createAccountSpy).toHaveBeenCalledTimes(1);
@@ -152,19 +174,30 @@ describe("Create account screen", () => {
   });
 
   it(`should render message about success registration`, async () => {
-    useSelectorSpy.mockReturnValue({...createUserForm, success: true});
+    useSelectorSpy.mockReturnValue({ ...createUserForm, success: true });
     const wrapper = shallow(<CreateAccount />);
 
-    expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === 'Вы успешно зарегистрированы!').exists()).toBeTruthy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere((text) => text.text() === "Вы успешно зарегистрированы!")
+        .exists()
+    ).toBeTruthy();
   });
 
   it(`should render message about create account error`, async () => {
-    useSelectorSpy.mockReturnValue({...createUserForm, error: 'Create account error'});
+    useSelectorSpy.mockReturnValue({
+      ...createUserForm,
+      error: "Create account error",
+    });
     const wrapper = shallow(<CreateAccount />);
 
-    expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === 'Create account error').exists()).toBeTruthy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere((text) => text.text() === "Create account error")
+        .exists()
+    ).toBeTruthy();
   });
 
   it(`should render message about password not match error`, async () => {
@@ -172,13 +205,17 @@ describe("Create account screen", () => {
       ...createUserForm,
       data: {
         ...createUserForm.data,
-        password: 'password',
-        repeatPassword: 'pass'
-      }
+        password: "password",
+        repeatPassword: "pass",
+      },
     });
     const wrapper = mount(<CreateAccount />);
 
-    expect(wrapper.find('Text').findWhere((text) => 
-      text.text() === 'Пароли не совпадают').exists()).toBeTruthy();
+    expect(
+      wrapper
+        .find("Text")
+        .findWhere((text) => text.text() === "Пароли не совпадают")
+        .exists()
+    ).toBeTruthy();
   });
 });
