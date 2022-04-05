@@ -210,7 +210,9 @@ function Map() {
               style={styles.indicatorIcon}
             />
             <Text style={styles.indicator}>
-              {`${(distance / (duration / 3600000) || 0).toFixed(2)} km/h`}
+              {`${(duration ? distance / (duration / 3600000) : 0).toFixed(
+                2
+              )} km/h`}
             </Text>
           </View>
           <View style={styles.indicatorContainer}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import * as redux from "react-redux";
 import Analytics from "./analytics";
 
@@ -129,8 +129,6 @@ describe("Analytics list screen", () => {
   it("should render Progress chart witch correct data", () => {
     useSelectorSpy.mockReturnValue(analytics);
     const wrapper = shallow(<Analytics />);
-
-    console.log(wrapper.find("ProgressChart").props().data);
 
     expect(wrapper.find("ProgressChart").exists()).toBeTruthy();
     expect(wrapper.find("ProgressChart").props().data).toEqual({

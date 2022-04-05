@@ -147,10 +147,10 @@ describe("Activity list screen", () => {
     expect(wrapper.find("Memo()")).toHaveLength(2);
 
     let startDatePickerProps = wrapper.find("Memo()").first().props();
-    // @ts-ignore
     const startDatePickerShow = wrapper
       .find("ForwardRef")
       .first()
+      // @ts-ignore
       .props().onPress;
     // @ts-ignore
     expect(startDatePickerProps.isVisible).toBeFalsy();
