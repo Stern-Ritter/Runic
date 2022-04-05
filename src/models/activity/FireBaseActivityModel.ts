@@ -6,7 +6,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import Activity from "./activity";
+import Activity from "./Activity";
 import ActivityModel from "./ActivityModel";
 import activityConverter from "../../utils/activityConverter";
 

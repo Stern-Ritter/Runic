@@ -1,4 +1,4 @@
-import Activity from "./activity";
+import Activity from "./Activity";
 
 abstract class ActivityModel {
   abstract getAll(userUID: string): any;

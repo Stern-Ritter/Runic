@@ -1,6 +1,6 @@
 import { FINISH_ACTIVITY } from "./map";
 import { activitiesStorage } from "../../models/storage";
-import Activity from "../../models/activity/activity";
+import Activity from "../../models/activity/Activity";
 import { AppDispatch } from "../store/store";
 
 export const GET_ACTIVITIES = "GET_ACTIVITIES";

@@ -1,4 +1,4 @@
-import Activity from "../../models/activity/activity";
+import Activity from "../../models/activity/Activity";
 import { getDateWithoutTimeWithShift } from "../../utils/date";
 
 import {
