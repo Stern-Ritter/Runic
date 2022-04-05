@@ -2,8 +2,8 @@
 
 ## Описание проекта
 
-![Coverage](https://github.com/Stern-Ritter/calendar-app/actions/workflows/coverage.yml/badge.svg)
-![Sanity-check](https://github.com/Stern-Ritter/calendar-app/actions/workflows/sanity-check.yml/badge.svg)
+![Coverage](https://github.com/Stern-Ritter/Runic/actions/workflows/coverage.yml/badge.svg)
+![Sanity-check](https://github.com/Stern-Ritter/Runic/actions/workflows/sanity-check.yml/badge.svg)
 
 Мобильное приложение для отслеживания тренировок.
 

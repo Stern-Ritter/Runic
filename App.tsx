@@ -22,7 +22,7 @@ export default function App() {
     const imagesToLoad = [require("./src/assets/images/rune.png")];
     const fontsPromises = fontsToLoad.map((font) => Font.loadAsync(font));
     const imagesPromises = imagesToLoad.map((image) => Asset.loadAsync(image));
-    Promise.all([...fontsPromises, ...imagesPromises]);
+    await Promise.all([...fontsPromises, ...imagesPromises]);
   };
   const onFinish = () => {
     setLoading(false);
